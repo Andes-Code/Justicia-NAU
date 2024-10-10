@@ -52,14 +52,14 @@ Para correr el proyecto en tu entorno local:
 
 ## Uso del Repositorio
 ### Reglas de Contribución
-1. Todas las contribuciones deben realizarse en ramas individuales.
+1. Todas las contribuciones deben realizarse en ramas individuales correspondientes a la feature que se esté desarrollando. (ej. `feature/[nombre de la feature]`)
 2. Crea un **pull request** cuando hayas finalizado una tarea.
 3. Realiza revisiones de código antes de fusionar cambios a la rama `main`.
 
 ### Estructura de Ramas
-- `main`: Código listo para producción.
-- `development`: Desarrollo activo.
-- Ramas por características (`feature/nueva-caracteristica`) para cada funcionalidad.
+- `main`: Mantedrá el código listo para producción.
+- `development`: Será la rama en la que el programador subirá los cambios y luego se podrán fusionar al main cuando estén listos.
+- Ramas por características (`feature/nueva-caracteristica`) para cada funcionalidad. Se realizará la pull-request para revisión, las cuales deberán detallar los cambios realizados.
 
 ## Licencia
 Este proyecto está bajo la [Licencia MIT](LICENSE).
