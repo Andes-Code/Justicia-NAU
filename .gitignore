@@ -6,3 +6,4 @@ public/images/**/*.jpeg
 !public/images/icons/*.png
 !public/images/icons/*.jpg
 !public/images/icons/*.jpeg
+apikey.php
