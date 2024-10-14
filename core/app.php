@@ -491,6 +491,7 @@ class App{
         $template="peticion.php";
             $this->renderTemplate($template);
     }
+    // IA text generation
     // public function generateFormalText($prompt) {
     //     $openai_key = getenv('OPENAI_API_KEY');
         
