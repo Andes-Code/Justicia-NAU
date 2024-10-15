@@ -40,6 +40,9 @@ html{
     grid-template-columns: 1fr 1fr !important;
     margin-bottom: 4px;
 }
+#logout, #a-no-decorated p{
+    color: var(--primary-color);
+}
 .comparar-button-div{
     grid-column: 1/3;
 }

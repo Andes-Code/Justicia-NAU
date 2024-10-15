@@ -75,31 +75,31 @@ class Rol{
             array_push($opciones,[
                 "icono"=>"interests",
                 "texto"=>"Administrar Intereses",
-                "id"=>"",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=intereses"
             ]);
             array_push($opciones,[
                 "icono"=>"edit",
                 "texto"=>"Editar Perfil",
-                "id"=>"edit",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=administrar_perfil"
             ]);
             array_push($opciones,[
                 "icono"=>"check",
                 "texto"=>"Mis peticiones finalizadas",
-                "id"=>"check",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=mis_peticiones"
             ]);
             array_push($opciones,[
                 "icono"=>"statistics",
                 "texto"=>"Informes",
-                "id"=>"",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?mode=admin&page=informes"
             ]);
             array_push($opciones,[
                 "icono"=>"donate",
                 "texto"=>"Donar",
-                "id"=>"",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?mode=admin&page=informes"
             ]);
             array_push($opciones,[
