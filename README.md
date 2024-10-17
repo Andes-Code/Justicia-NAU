@@ -5,7 +5,7 @@ Este proyecto es una **plataforma web de peticiones** donde los usuarios pueden 
 
 ## Tecnologías Utilizadas
 - **Backend**: PHP (MVC)
-- **Frontend**: HTML5, CSS3, JavaScript (Bootstrap)
+- **Frontend**: HTML5, CSS3 (Bulma), JavaScript 
 - **Base de Datos**: MySQL
 - **API Integradas**: OpenAI (ChatGPT) para sugerencias en redacción de peticiones
 - **Control de Versiones**: Git y GitHub
@@ -60,6 +60,19 @@ Para correr el proyecto en tu entorno local:
 - `main`: Mantedrá el código listo para producción.
 - `development`: Será la rama en la que el programador subirá los cambios y luego se podrán fusionar al main cuando estén listos.
 - Ramas por características (`feature/nueva-caracteristica`) para cada funcionalidad. Se realizará la pull-request para revisión, las cuales deberán detallar los cambios realizados.
+
+# LIBRERIAS UTILIZADAS
+
+1. **DOMPDF**
+   - **Versión recomendada**: 3.0.0 o superior
+
+2. **PHPQRCODE**
+   - **Versión recomendada**: 3 o superior
+
+2. **BULMA By Jeremy Thomas**
+   - **Versión recomendada**: 3 o superior
+
+
 
 ## Licencia
 Este proyecto está bajo la [Licencia MIT](LICENSE).
