@@ -2,16 +2,16 @@
 <nav id="nav-informe" class="tabs">
     <ul>
         <li class="<?php if ($opcion=="mensual") echo "is-active" ?>">
-            <a href="options.php?mode=admin&page=informes&opcion=mensual">Mensual</a>
+            <a href="options.php?mode=admin&page=estadisticas&opcion=mensual">Mensual</a>
         </li>
         <li class="<?php if ($opcion=="anual") echo "is-active" ?>">
-            <a href="options.php?mode=admin&page=informes&opcion=anual">Anual</a>
+            <a href="options.php?mode=admin&page=estadisticas&opcion=anual">Anual</a>
         </li>
         <li class="<?php if ($opcion=="comparar") echo "is-active" ?>">
-            <a href="options.php?mode=admin&page=informes&opcion=comparar">Comparar</a>
+            <a href="options.php?mode=admin&page=estadisticas&opcion=comparar">Comparar</a>
         </li>
         <li class="<?php if ($opcion=="instrucciones") echo "is-active" ?>">
-            <a href="options.php?mode=admin&page=informes&opcion=instrucciones">Instrucciones</a>
+            <a href="options.php?mode=admin&page=estadisticas&opcion=instrucciones">Instrucciones</a>
         </li>
     
     </ul>

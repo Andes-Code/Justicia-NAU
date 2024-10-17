@@ -129,15 +129,15 @@ class Peticion{
                         </div>
                         <div class='dropdown-menu' id='dropdown-menu3' role='menu'>
                             <div class='dropdown-content'>
-                            <a href='#' class='dropdown-item'> Overview </a>
+                            <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> Ver </a>
                             <a href='#' class='dropdown-item'> Modifiers </a>
                             <a href='#' class='dropdown-item'> Grid </a>
                             <a href='#' class='dropdown-item'> Form </a>
                             <a href='#' class='dropdown-item'> Elements </a>
                             <a href='#' class='dropdown-item'> Components </a>
-                            <a href='#' class='dropdown-item'> Layout </a>
+                            <a href='#' class='dropdown-item'> Compartir </a>
                             <hr class='dropdown-divider' />
-                            <a href='#' class='dropdown-item'> More </a>
+                            <a href='#' class='dropdown-item'> Denunciar </a>
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@ class Peticion{
                     <div class='firmas'>
                     {$arregloAlgFirmas['texto']}
                     </div>
-                    <progress class='progress is-primary' value='{$arregloAlgFirmas['porcentaje']}' id='progress{$this->nroPet}' max='100'>
+                    <progress class='progress is-primary' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}'>
                     
                     </progress>";
         if ($firmada)

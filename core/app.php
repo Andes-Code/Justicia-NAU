@@ -491,6 +491,7 @@ class App{
         $template="peticion.php";
             $this->renderTemplate($template);
     }
+    // IA text generation
     // public function generateFormalText($prompt) {
     //     $openai_key = getenv('OPENAI_API_KEY');
         
@@ -920,9 +921,9 @@ class App{
                     $this->renderTemplate("cabeceraUsuariosAdmin.php");
                     // Usuarios::gestionarUsuarios();
                 }
-                if ($page=="informes")
+                if ($page=="estadisticas")
                 {
-                    $this->renderTemplate("cabeceraInformesAdmin.php");
+                    $this->renderTemplate("cabeceraEstadisticasAdmin.php");
                     // Usuarios::gestionarUsuarios();
                 }
             }
@@ -979,6 +980,11 @@ class App{
                 if ($page=="mis_peticiones")
                 {
                     echo $_SESSION["usuario"]->getUsuario()->misPeticionesFinalizadas();
+                }
+                if ($page=="reportes")
+                {
+                    $this->renderTemplate("cabeceraReportes.php");
+                    // Usuarios::gestionarUsuarios();
                 }
                 
             }
@@ -1263,7 +1269,7 @@ class App{
                         $this->jsonAndExit($e->getMessage());
                     }
                 }
-            }elseif ($_GET["page"]=="informes") 
+            }elseif ($_GET["page"]=="estadisticas") 
             {
                 if (isset($_GET["opcion"]))
                 {

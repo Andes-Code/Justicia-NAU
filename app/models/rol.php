@@ -18,6 +18,12 @@ class Rol{
         if ($this->privilegios==10)
         {
             array_push($opciones,[
+                "icono"=>"statistics0",
+                "texto"=>"Estadisticas",
+                "id"=>"",#"a-no-decorated",
+                "link"=>"options.php?mode=admin&page=estadisticas"
+            ]);
+            array_push($opciones,[
                 "icono"=>"admin",
                 "texto"=>"Peticiones dadas de baja",
                 "id"=>"adm-link",
@@ -75,32 +81,32 @@ class Rol{
             array_push($opciones,[
                 "icono"=>"interests",
                 "texto"=>"Administrar Intereses",
-                "id"=>"",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=intereses"
             ]);
             array_push($opciones,[
                 "icono"=>"edit",
                 "texto"=>"Editar Perfil",
-                "id"=>"edit",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=administrar_perfil"
             ]);
             array_push($opciones,[
                 "icono"=>"check",
                 "texto"=>"Mis peticiones finalizadas",
-                "id"=>"check",
+                "id"=>"a-no-decorated",
                 "link"=>"options.php?page=mis_peticiones"
             ]);
             array_push($opciones,[
                 "icono"=>"statistics",
-                "texto"=>"Informes",
-                "id"=>"",
-                "link"=>"options.php?mode=admin&page=informes"
+                "texto"=>"Reportes",
+                "id"=>"a-no-decorated",
+                "link"=>"options.php?page=reportes"
             ]);
             array_push($opciones,[
                 "icono"=>"donate",
                 "texto"=>"Donar",
-                "id"=>"",
-                "link"=>"options.php?mode=admin&page=informes"
+                "id"=>"a-no-decorated",
+                "link"=>"options.php?page=donate"
             ]);
             array_push($opciones,[
                 "icono"=>"exit",
