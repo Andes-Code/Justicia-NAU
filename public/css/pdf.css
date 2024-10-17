@@ -1,0 +1,89 @@
+/* *{
+   margin: 0; 
+}*/
+body{
+    font-family: 'Courier New', Courier, monospace;
+
+}
+.image-div img{
+    width: 50%;
+}
+/* body{
+    padding: 5px;
+    background-color: rgb(62, 62, 62);
+    text-align: center;
+    width: 100%; 
+} */
+/* .content{
+    border: #000 1px solid;
+    margin: auto;
+    height: 297mm;
+    width: 210mm;
+    background-color: #fff;
+
+} */
+.content{
+    position: relative;
+}
+.fecha{
+    text-align: right;
+    margin-top: 50px;
+}
+.image-div{
+    text-align: center;
+    width: 100%;
+    margin: 10px 0;
+}
+.localidad{
+    text-align: right;
+}
+.destino{
+    text-align: left;
+}
+.cuerpo{
+    text-indent: 50px;
+    margin-top: 20px;
+    /* background-color: aquamarine; */
+}
+.firmas-cont{
+    margin-top: -20px;
+}
+.firmas{
+    margin-top: -20px;
+    margin-left: 20px;
+}
+
+.titulo{
+    padding-top: 25px;
+    border-top: #000 1px solid;
+    padding-bottom: 25px;
+    border-bottom: #000 1px solid;
+    text-align: center;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* background-color: aqua; */
+}
+.info{
+    height: 50mm;
+    width: 100%;
+    position: absolute;
+    margin-bottom: 0;
+    bottom: 0;
+}
+#link{
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+#qrcode{
+    text-align: center;
+    width: 100%;
+    max-height: 50mm;
+}
+#qrcode img{
+    width: 20%;
+}
+
