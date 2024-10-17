@@ -67,6 +67,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     }
     let debounceTimeout;
+    const localidad = document.getElementById("localidad-input")
+
     const tematicaInput = document.getElementById('tematica-input')  
     const botonGuardarPref = document.getElementById("guardar-preferencias")
     if (botonGuardarPref){
@@ -76,16 +78,24 @@ document.addEventListener("DOMContentLoaded",()=>{
         })
     }
     if (tematicaInput){
-    document.getElementById('boton-tematica').addEventListener('click',addTematica);
-    tematicaInput.addEventListener('keyup', function() {
-        clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(predict, 500, "tematica"); // 300 ms de delay
-    });
-    (document.querySelectorAll(".interes") || []).forEach((boton)=>{
-        boton.addEventListener("click",()=>{
-            document.getElementById(boton.value).remove()
-            boton.remove()
+        let botonTematica=document.getElementById('boton-tematica')
+        if (botonTematica)
+            botonTematicaaddEventListener('click',addTematica);
+        tematicaInput.addEventListener('keyup', function() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(predict, 500, "tematica"); // 300 ms de delay
+        });
+        (document.querySelectorAll(".interes") || []).forEach((boton)=>{
+            boton.addEventListener("click",()=>{
+                document.getElementById(boton.value).remove()
+                boton.remove()
+            })
         })
-    })
-}
+    }
+    if (localidad){
+        localidad.addEventListener('keyup', function() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(predict, 500, "localidad"); // 300 ms de delay
+        });
+    }
 })
