@@ -347,4 +347,4 @@ LEFT JOIN
 
 
 
-CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'commonuser';
+-- CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'commonuser';
