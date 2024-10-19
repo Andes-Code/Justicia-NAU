@@ -166,7 +166,7 @@ class Firmas{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    public static function crearFirma(int $nroPet, string $usuario, string $tipoUsuario , string $comentario, bool $anonimo)
+    public static function crearFirma(int $nroPet, string $usuario, string $tipoUsuario , string $comentario, int $anonimo)
     {
         try{
             $conexion=BDconection::conectar("user");
