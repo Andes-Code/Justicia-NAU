@@ -4,18 +4,16 @@
 Este proyecto es una **plataforma web de peticiones** donde los usuarios pueden crear y firmar peticiones de diferentes temas. Similar a Change.org, busca promover la participación social al permitir que las personas apoyen causas y logren cambios mediante la recolección de firmas.
 
 ## Tecnologías Utilizadas
-- **Backend**: PHP (MVC)
+- **Backend**: PHP (Vanila)
 - **Frontend**: HTML5, CSS3 (Bulma), JavaScript 
 - **Base de Datos**: MySQL
 - **API Integradas**: OpenAI (ChatGPT) para sugerencias en redacción de peticiones
 - **Control de Versiones**: Git y GitHub
 
 ## Estructura del Proyecto
-El proyecto sigue el patrón de diseño **MVC (Model-View-Controller)**, lo que garantiza modularidad, seguridad y escalabilidad.
+El proyecto sigue un patrón de diseño **MVC (Model-View-Controller)** simplificado
 
-- **Modelo**: Maneja la lógica de base de datos y operaciones de datos.
-- **Vista**: Gestiona la representación visual del contenido.
-- **Controlador**: Media entre el modelo y la vista, controlando el flujo de datos y la interacción del usuario.
+
 
 ## Características Principales
 1. **Creación de Peticiones**: Los usuarios pueden crear peticiones personalizadas con imágenes y temas relacionados.
@@ -27,27 +25,37 @@ El proyecto sigue el patrón de diseño **MVC (Model-View-Controller)**, lo que 
 ## Instalación
 Para correr el proyecto en tu entorno local:
 
-1. Clona el repositorio:
-    ```bash
-    git clone https://github.com/tu-usuario/Plataforma-Peticiones.git
-    ```
-2. Configura el entorno de desarrollo:
-    - Asegúrate de tener PHP, MySQL y un servidor local como XAMPP o MAMP instalados.
-    - Configura el archivo `.env` con los detalles de tu base de datos.
+1. Debes tener previamente instalado un servidor Apache y MySQL (XAMPP preferentemente para windows, LAMPP para Linux).
+   
+2. Asegúrate de habilitar la extensión `gd` en el archivo `php.ini`:
+   - Esto es necesario para el procesamiento de los códigos QR y las imágenes dentro de los PDF.
+   - Sigue estos pasos para habilitar la extensión:
+     1. Abre el archivo `php.ini`.
+     2. Busca la línea `;extension=gd`.
+     3. Elimina el punto y coma (`;`) al inicio de la línea para descomentarla: `extension=gd`.
+     4. Guarda los cambios y reinicia el servidor Apache (en caso de que haya estado funcionando).
 
-3. Ejecuta las migraciones de la base de datos:
+3. Haz un fork a tu cuenta desde el repositorio original en [Andes Code](https://github.com/Andes-Code/Justicia-NAU)
+
+4. Clona tu nuevo repositorio al entorno local dentro de la carpeta `htdocs`. Esto creará una carpeta con el nombre del proyecto:
+    - En Windows:
     ```bash
-    php artisan migrate
+    cd C:/xampp/htdocs 
+    git clone https://github.com/tu-usuario/Justicia-NAU.git
+    ```
+    - En linux:
+    ```bash
+    cd /opt/lampp/htdocs
+    git clone https://github.com/tu-usuario/Justicia-NAU.git
     ```
 
-4. Inicia el servidor local:
-    ```bash
-    php -S localhost:8000
-    ```
+5. Dentro de la carpeta `docs` del proyecto se encuentra el archivo BD.sql, que contiene la estructura de todas las tablas y vistas de la base de datos, ademas de las tuplas necesarias en ciertas tablas para el correcto funcionamiento de la App. Utilizalo para crear la BD ya sea dentro de phpmyadmin o a traves de la consola.
 
-5. Accede al sitio en tu navegador:
+6. Inicia el servidor php y el servidor de la BD
+
+7. Accede al sitio en tu navegador:
     ```
-    http://localhost:8000
+    http://localhost/Justicia-NAU
     ```
 
 ## Uso del Repositorio
