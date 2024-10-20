@@ -125,7 +125,6 @@ class App{
             {
                 $visitante = new WebUser();
                 echo $usuario->mostrarPerfil($visitante->getIP(),"ip");
-
             }
         else
             echo "Perfil no encontrado";
@@ -771,14 +770,14 @@ class App{
         }else{
             if (($peticion = Peticiones::getPeticionByNumero($nroPet)) && $peticion->esMostrable()){
                 if ($this->validarSesion())
-                    echo $peticion->mostrarPeticion(Firmas::firmaExiste($nroPet,$_SESSION["usuario"]->getUsuario()->getCorreo(),"correo"));
-                else
-                    $this->renderNoProfile();
-                    // else{
-                //     $usuario=new WebUser();
-                //     $_SESSION["usuario"]=$usuario;
-                //     echo $peticion->mostrarPeticion(Firmas::firmaExiste($nroPet,$usuario->getIP(),"ip"));
-                // }
+                    echo $peticion->mostrarPeticion(Firmas::firmaExiste($nroPet,$_SESSION["usuario"]->getUsuario()->getCorreo(),"correo"),$_SESSION["usuario"]->getUsuario()->getCorreo());
+                // else
+                //     $this->renderNoProfile();
+                else{
+                    $usuario=new WebUser();
+                    $_SESSION["usuario"]=$usuario;
+                    echo $peticion->mostrarPeticion(FALSE,"");
+                }
             }
         }
     }
