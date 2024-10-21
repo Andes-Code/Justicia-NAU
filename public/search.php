@@ -16,6 +16,7 @@ $app->evaluarSearchRequest();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">
     <link rel="manifest" href="./js/manifest.json">
+    <script src="https://kit.fontawesome.com/e0fe908279.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -28,11 +29,13 @@ $app->evaluarSearchRequest();
                     </div>
                     <div class="control">
                         <button class="button is-dark">
-                        Search
+                        <span class="icon is-small is-right">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
                         </button>
                     </div>
               
-            </div>
+                </div>
         </form>
     </header>
     <div class="contentMy">
