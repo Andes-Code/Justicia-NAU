@@ -1,13 +1,38 @@
 :root {
-  --primary-color: #000; /* Negro por defecto */
-  --formbg-color: #fff; /* Blanco por defecto */
+  --primary-color: #393e41; /* Negro por defecto */
+  --formbg-color: #fffff8; /* Blanco por defecto */
+  --accent-color: #e94f37; /* Color de acento*/
+  --bulma-primary-h: 8deg;
+  --bulma-primary-s: 80%;
+  --bulma-primary-l: 56%;
+  --bulma-link-h: 203deg;
+  --bulma-link-s: 7%;
+  --bulma-link-l: 24%;
+  --bulma-info-h: 203deg;
+  --bulma-info-s: 7%;
+  --bulma-info-l: 24%;
+  --bulma-success-h: #ccff00;
+  --bulma-success-bg: #92b700;
+  --bulma-success-s: 100%;
+  --bulma-success-l: 50%;
+  --bulma-danger-s: 68%;
+  --bulma-danger-l: 50%;
+  --bulma-scheme-h: 0;
+  --bulma-scheme-s: 8%;
+  --bulma-hover-border-l-delta: 17%;
+  --bulma-body-background-color: #fffff8;
+  --bulma-body-color: hsl(203, 7%, 24%);
+  --bulma-strong-color: hsl(8, 80%, 56%);
+  --bulma-strong-weight: 700;
+  --bulma-skeleton-background: hsl(107, 80%, 56%);
+  font-family: "Inter", sans-serif;
 }
 
 /* Si el tema es oscuro */
 @media (prefers-color-scheme: dark) {
   :root {
-      --primary-color: #fff; /* Blanco en tema oscuro */
-      --formbg-color: #14161a; /* Negro en tema oscuro */
+      --primary-color: #fffff8; /* Blanco en tema oscuro */
+      --formbg-color: #393e41; /* Negro en tema oscuro */
   }
 }
 #my-footer{
@@ -87,11 +112,13 @@ td.is-minus{
   max-height: 40px;
   text-align: center;
   text-transform: capitalize;
-  font-family: cursive;
   display: grid;
   place-items: center;
-  border-bottom: 1px solid;
-  border-image: linear-gradient(to right, var(--formbg-color) 0%, var(--primary-color) 50%, var(--formbg-color) 100%) 1;
+  position: sticky;
+}
+#titulo {
+  color: var(--primary-color);
+  font-weight: 800;
 }
 .post-body{
   word-break: break-word;
@@ -363,6 +390,7 @@ a.search-link{
   border-bottom: #dcdcdc 1px solid;
   padding: 6px 6px;
   gap: 10px;
+  height: 50px;
 }
 .option-icon{
   width: 10%;
@@ -405,4 +433,15 @@ img.icon{
 .comparar-button{
   width: 100%;
   border-radius: 2mm 2mm 2mm 2mm;
+}
+.view-signers {
+  color: var(--primary-color);
+}
+.sign {
+  color:#961400;
+  background-color: var(--accent-color)
+}
+.card {
+  background-color: var(--formbg-color);
+  box-shadow: 0px 5px 11px -4px rgba(0,0,0,0.34);
 }

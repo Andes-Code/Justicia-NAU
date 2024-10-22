@@ -26,7 +26,7 @@ $app->evaluarIndexRequest();
     <header class="appName">
         <div>
             <a href="./index.php">
-                <h1>Justicia NAU</h1>
+                <h1 class="title is-5">Justicia NAU</h1>
             </a>
         </div>
     </header>
