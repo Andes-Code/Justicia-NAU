@@ -92,7 +92,8 @@ class Peticion{
             return $objActual*1.75;
         return $objActual;
     }
-    public function mostrarPeticion(bool $firmada){
+    public function mostrarPeticion(bool $firmada, string $correoVeedor){
+        $opciones=$this->opcionesPeticion($correoVeedor);
         $peticion= "
             <div class='card'>
             <div class='post'>
@@ -127,18 +128,9 @@ class Peticion{
                             </span>
                             </button>
                         </div>
-                        <div class='dropdown-menu' id='dropdown-menu3' role='menu'>
-                            <div class='dropdown-content'>
-                            <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> Ver </a>
-                            <a href='#' class='dropdown-item'> Modifiers </a>
-                            <a href='#' class='dropdown-item'> Grid </a>
-                            <a href='#' class='dropdown-item'> Form </a>
-                            <a href='#' class='dropdown-item'> Elements </a>
-                            <a href='#' class='dropdown-item'> Components </a>
-                            <a href='#' class='dropdown-item'> Compartir </a>
-                            <hr class='dropdown-divider' />
-                            <a href='#' class='dropdown-item'> Denunciar </a>
-                            </div>
+                        <div class='dropdown-menu' id='dropdown-menu3' role='menu'>";
+                        $peticion.=$this->opcionesPeticion($correoVeedor);
+                        $peticion.="
                         </div>
                     </div>
                 </div>
@@ -619,6 +611,48 @@ class Peticion{
         }
         return $arreglo;
         
+    }
+    private function esDe(string $correo):bool{
+        return $this->usuario->getCorreo()==$correo;
+    }
+    private function opcionesPeticion(string $correoVeedor){
+        $div="";
+        // opciones para todo usuario
+        $div.="
+        <div class='dropdown-content'>
+            <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> Ver </a>";
+        if ($correoVeedor!='')
+        {
+            // require_once "../controllers/controladorUsuarios.php";
+            if ($this->usuario->getCorreo()==$correoVeedor)
+            {
+               $div.="
+               <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> finalizar peticion </a>
+               ";
+            }
+            $usuario=Usuarios::getUsuarioByCorreo($correoVeedor);
+            if ($usuario->isAdmin())
+            {
+                $div.="
+                    <hr class='dropdown-divider' />
+                    <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> BAJAR </a>
+                    <a href='#' class='dropdown-item'> Generar PDF </a>";
+            }
+            if ($usuario->isModerador())
+            {
+                $div.="
+                    <hr class='dropdown-divider' />
+                    <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> opcion moder </a>
+                    <a href='#' class='dropdown-item'> opcion moder </a>";
+            }
+            $div.="
+                <hr class='dropdown-divider' />
+                <a href='#' class='dropdown-item'> Denunciar </a>";
+        }
+        $div.="
+            <a href='#' class='dropdown-item'> Compartir </a>
+        </div>";
+        return $div;
     }
 }
 
