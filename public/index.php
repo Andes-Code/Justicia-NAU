@@ -17,14 +17,19 @@ $app->evaluarIndexRequest();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">
     <link rel="manifest" href="./js/manifest.json">
+    <script src="https://kit.fontawesome.com/e0fe908279.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="appName">
-        <div>proyecto change</div>
+        <div>
+            <a href="./index.php">
+                <h1>Justicia NAU</h1>
+            </a>
+        </div>
     </header>
-    <!-- <header>
-        <input type="search" name="search" id="searchInput" placeholder="Buscar peticiones">
-    </header> -->
     <div class="contentMy">
         <?php $app->displayPetitions(0) ?>
     </div>
