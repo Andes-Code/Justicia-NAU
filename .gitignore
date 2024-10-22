@@ -2,6 +2,7 @@ prueba.php
 public/images/**/*.png
 public/images/**/*.jpg
 public/images/**/*.jpeg
+!public/images/profiles/default.png
 !public/images/icons/*
 !public/images/icons/*.png
 !public/images/icons/*.jpg

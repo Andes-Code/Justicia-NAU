@@ -37,6 +37,12 @@ class Peticiones{
             $conexion = BDconection::conectar("user");
             if ($tipoUsuario=="ip")
             {
+                // print_r(json_encode([
+                //     "status"=>"error",
+                //     "message"=>"you cannot interact without session",
+                //     "redirect"=>"login.php"
+                // ]));
+                // exit();
                 $sql="SELECT 
                         nroPet
                         FROM peticion
@@ -49,7 +55,8 @@ class Peticiones{
                     // ":estado"=>$estados[$estado],
                     ":inf"=>$limite_inf
                 ]);
-            }else if ($tipoUsuario=="correo")
+            }
+            else if ($tipoUsuario=="correo")
             {
                 $sql="SELECT DISTINCT p.nroPet
                     FROM peticion p
@@ -73,17 +80,19 @@ class Peticiones{
                     foreach ($result as $pet)
                     {
                         $peticion = Peticiones::getPeticionByNumero($pet["nroPet"]);
-                        $arreglo[].= $peticion->mostrarPeticion(Firmas::firmaExiste($pet["nroPet"],$usuario,"correo"));
+                        // yata
+                        $arreglo[].= $peticion->mostrarPeticion(Firmas::firmaExiste($pet["nroPet"],$usuario,"correo"),$usuario);
                     }
-                }else if ($tipoUsuario=="ip")
+                }
+                else if ($tipoUsuario=="ip")
                 {
                     foreach ($result as $pet)
                     {
                         $peticion = Peticiones::getPeticionByNumero($pet["nroPet"]);
-                        $arreglo[].= $peticion->mostrarPeticion(Firmas::firmaExiste($pet["nroPet"],$usuario,"ip"));
+                        $arreglo[].= $peticion->mostrarPeticion(FALSE,"");
                     }
                 }
-                // $arreglo[].=self::loadMorePetitionsButton();
+                $arreglo[].=self::loadMorePetitionsButton();
                 return $arreglo;
             }
         } catch (PDOException $e) {

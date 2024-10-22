@@ -53,7 +53,7 @@ class Firmas{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    public static function firmaExiste(int $nroPet, string $usuario, string $tipoUsuario)
+    public static function firmaExiste(int $nroPet, string $usuario, string $tipoUsuario="correo")
     {
         try{
             $conexion=BDconection::conectar("user");
@@ -67,17 +67,19 @@ class Firmas{
                     AND
                     correo=:usuario
                     LIMIT 1";
-            }else if ($tipoUsuario=="ip")
-            {
-                $sql="SELECT
-                    1
-                    FROM firma
-                    WHERE 
-                    nroPet=:numero
-                    AND
-                    ip=:usuario
-                    LIMIT 1";
-            }else{
+            }
+            // else if ($tipoUsuario=="ip")
+            // {
+            //     $sql="SELECT
+            //         1
+            //         FROM firma
+            //         WHERE 
+            //         nroPet=:numero
+            //         AND
+            //         ip=:usuario
+            //         LIMIT 1";
+            // }
+            else{
                 // no hay otro modo, se sale del programa
                 exit();
             }
@@ -166,7 +168,7 @@ class Firmas{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    public static function crearFirma(int $nroPet, string $usuario, string $tipoUsuario , string $comentario, bool $anonimo)
+    public static function crearFirma(int $nroPet, string $usuario, string $tipoUsuario , string $comentario, int $anonimo)
     {
         try{
             $conexion=BDconection::conectar("user");

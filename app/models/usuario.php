@@ -96,12 +96,23 @@ class Usuario{
 			</div>
 			<div class='peticiones'>";
 
-			foreach($peticiones as $peticion){
-                if ($tipoUsuario=="correo")
-				    $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante,"correo"));
-                else if ($tipoUsuario=="ip")
-                    $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante,"ip"));
-			}
+            if ($tipoUsuario=="correo")
+            {
+                foreach($peticiones as $peticion){
+                        $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
+                }
+            }
+            else
+            {
+                foreach($peticiones as $peticion){
+                        $usuario.= $peticion->mostrarPeticion(FALSE,"");
+                }
+
+            }
+
+                // else if ($tipoUsuario=="ip")
+                //     $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante,"ip"));
+			
 
 		$usuario.= "
 			</div>
@@ -441,7 +452,12 @@ class Usuario{
         return $div;
         
     }
-
+    public function isAdmin(){
+        return $this->rol->getNombre()=="admin";
+    }
+    public function isModerador(){
+        return $this->rol->getNombre()=="moderador" || $this->isAdmin();
+    }
 
 
 

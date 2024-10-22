@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS pais(
     nombrePais char(25) NOT NULL,
     PRIMARY KEY (nombrePais)
 );
-CREATE TABLE rol(
+CREATE TABLE IF NOT EXISTS rol(
     nombreRol char(10) NOT NULL PRIMARY KEY,
     privilegios int NOT NULL DEFAULT 1
 );
