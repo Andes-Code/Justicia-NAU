@@ -1,0 +1,25 @@
+{
+  "name": "justicia-nau",
+  "version": "1.0.0",
+  "description": "Este proyecto es una **plataforma web de peticiones** donde los usuarios pueden crear y firmar peticiones de diferentes temas. Similar a Change.org, busca promover la participación social al permitir que las personas apoyen causas y logren cambios mediante la recolección de firmas.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "postcss src/styles/styles.css -o public/styles.css",
+    "watch:css": "postcss src/styles/styles.css -o public/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  },
+  "dependencies": {
+    "postcss-cli": "^11.0.0"
+  }
+}
