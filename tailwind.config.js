@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./public/**/*.{php,html,js}"],
+  content: [
+    './app/**/*.{html,js,php}', // Asegúrate de que Tailwind busca clases en los archivos correctos
+    './core/**/*.{html,js,php}',
+    './public/**/*.{html,js,php}',
+    // Agrega las rutas donde uses tus archivos .php o .html
+  ],
   theme: {
     screens: {
       sm: '480px',

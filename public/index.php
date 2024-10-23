@@ -24,14 +24,16 @@ $app->evaluarIndexRequest();
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="grid place-content-center h-10">
+    <div class="pattern-cross pattern-red-400 pattern-bg-white 
+    pattern-size-4 pattern-opacity-10 p-2">
+    <header class="sticky top-0 z-50 backdrop-blur-sm from-white-500">
+        <div class="bg-white grid place-content-center h-10">
             <a href="./index.php">
                 <h1 class="text-xl font-black" >Justicia NAU</h1>
             </a>
         </div>
     </header>
-    <div class="grid-cols-1">
+    <div>
         <?php $app->displayPetitions(0) ?>
     </div>
     <footer id="my-footer">
@@ -46,5 +48,6 @@ $app->evaluarIndexRequest();
     <script src="js/bulma.js"></script>
     <script src="js/index.js"></script>
     <script src="js/themeVariableIcons.js"></script>
+</div>
 </body>
 </html>

@@ -95,29 +95,31 @@ class Peticion{
     public function mostrarPeticion(bool $firmada, string $correoVeedor){
         $opciones=$this->opcionesPeticion($correoVeedor);
         $peticion= "
-            <div class='grid grid-cols-2'>
-            <div class=''>
-                <div class='up'>
+            <div class='inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: inset 0px 0px 8px 1px #00000024'>
+            <div class='flex flex-row items-center p-1 rounded-lg shadow w-full'>
+                <div class='flex space-x-4'>
                     <div class='image-div'>
                         <div>
                             <figure class='image'>
                                 <a href='profile.php?user={$this->usuario->getCorreo()}'>
-                                    <img class='is-rounded' src='images/profiles/{$this->usuario->mostrarImagen()}'>
+                                    <img class='min-w-10 w-10 h-10 rounded-full' src='images/profiles/{$this->usuario->mostrarImagen()}'>
                                 </a>
                             </figure>
                         </div>
                     </div>
                     <div class='post-header'>
-                        <div class='title is-6'>
-                        {$this->titulo}
+                        <div>
+                            <h5 class='text-pretty text-l font-bold tracking-tight text-gray-900 dark:text-white truncate'>{$this->titulo}</h5>
                         </div>
-                        <div class='subtitle is-7'>
+                        <div>
                             <a href='profile.php?user={$this->usuario->getCorreo()}' class='search-link'>
-                                {$this->usuario->getCorreo()}
+                                <p class='font-normal text-gray-100 dark:text-gray-400'>{$this->usuario->getNombre()}</p>
                             </a>
                         </div>
                     </div>
                 </div>
+
+                <!--
                 <div class='options-dropdown'>
                     <div class='dropdown is-right is-hoverable'>
                         <div class='dropdown-trigger'>
@@ -133,14 +135,15 @@ class Peticion{
                         $peticion.="
                         </div>
                     </div>
-                </div>
+                </div> -->
                 </div>
                 <div class='card-content'>
-                    <div class='post-body'> {$this->cuerpo}<br>";
-                    foreach ($this->tematicas as $tematica){
-                        $peticion.="<a href='search.php?search={$tematica->getNombre()}'>#{$tematica->getNombre()} </a>";
-                    }
-                    $peticion.="           
+                    <div class='mt-1.5'> 
+                        <p >{$this->cuerpo}</p><br>";
+                            foreach ($this->tematicas as $tematica){
+                                $peticion.="<a !important class='text-blue-600' href='search.php?search={$tematica->getNombre()}'><p >#{$tematica->getNombre()}</p> </a>";
+                            }
+                                $peticion.="           
                     </div>
                     <div class='post-images {$this->cssClassForImages()}'>";
         $arregloModales=[];
@@ -187,7 +190,7 @@ class Peticion{
                 $peticion.= "<p>";
                 $p=true;
             }
-            $peticion.= " <span>Localidad: {$this->localidad->getNombre()}</span>";
+            $peticion.= " <p>Localidad: {$this->localidad->getNombre()}</p>";
 
         }
         if($p)
@@ -197,13 +200,18 @@ class Peticion{
                 <br>
                 <time datetime='{$this->fecha}'>{$this->getFecha()}</time>
                 </div>
-                <div class='down'>
-                    <div class='firmas'>
+                <div class='mark1'>
                     {$arregloAlgFirmas['texto']}
-                    </div>
-                    <progress class='progress is-primary' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}'>
+                    <progress class='progress is-primary' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}'></progress>";
+
+                    // Calcula el porcentaje de firmas
+                    $progress = ($this->getCantFirmas() * 100) / $this->objFirmas;
+                    $peticion.="
+                 
+                    <div class='w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700'>
+                        <div class='bg-green-600 h-2.5 rounded-full dark:bg-green-500' style='width: <?php echo $progress; ?>%;'></div>
+                    </div>";
                     
-                    </progress>";
         if ($firmada)
         {
             $peticion.="
@@ -289,7 +297,7 @@ class Peticion{
             $porcActual=0;
         }
         $porcActual=number_format($porcActual,2,".");
-        $texto="<span id='percSpan{$this->nroPet}'>$porcActual%: </span><span id='cantSpan{$this->nroPet}'>$cantidad</span><span>/</span><span id='objSpan{$this->nroPet}'>$objetivo</span>";
+        $texto="<p class='text-center'>$cantidad / $objetivo</p>";
         return [
             "texto"=>$texto,
             "porcentaje"=>$porcActual
