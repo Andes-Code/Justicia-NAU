@@ -95,8 +95,8 @@ class Peticion{
     public function mostrarPeticion(bool $firmada, string $correoVeedor){
         $opciones=$this->opcionesPeticion($correoVeedor);
         $peticion= "
-            <div class='card'>
-            <div class='post'>
+            <div class='grid grid-cols-2'>
+            <div class=''>
                 <div class='up'>
                     <div class='image-div'>
                         <div>
