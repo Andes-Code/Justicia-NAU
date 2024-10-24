@@ -95,7 +95,7 @@ class Peticion{
     public function mostrarPeticion(bool $firmada, string $correoVeedor){
         $opciones=$this->opcionesPeticion($correoVeedor);
         $peticion= "
-            <div class='inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: inset 0px 0px 8px 1px #00000024'>
+            <div class='inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
             <div class='flex flex-row items-center p-1 rounded-lg shadow w-full'>
                 <div class='flex space-x-4'>
                     <div class='image-div'>
@@ -138,96 +138,104 @@ class Peticion{
                 </div> -->
                 </div>
                 <div class='card-content'>
-                    <div class='mt-1.5'> 
+                    <div class='mt-1.5 px-4'> 
                         <p >{$this->cuerpo}</p><br>";
                             foreach ($this->tematicas as $tematica){
                                 $peticion.="<a !important class='text-blue-600' href='search.php?search={$tematica->getNombre()}'><p >#{$tematica->getNombre()}</p> </a>";
                             }
                                 $peticion.="           
                     </div>
-                    <div class='post-images {$this->cssClassForImages()}'>";
+                    <div class='grid grid-cols-2 md:grid-cols-4 gap-4 {$this->cssClassForImages()}'>";
         $arregloModales=[];
         foreach ($this->imagenes as $imagen){
             $aux=$imagen->showImagen();
             // echo "
             //             <img src='images/{$imagen->showImagen()}'>";
             $peticion.= "
-                        <div class='post-imagen'>
-                            <img class='js-modal-trigger' data-target='{$aux}' src='images/{$aux}'>
+                        <div>
+                            <button data-modal-target='{$aux}' data-modal-toggle='{$aux}'>
+                                <img class='h-auto max-w-full rounded-lg' data-modal-target='{$aux}' data-modal-toggle='{$aux}' src='images/{$aux}'>
+                            </button>
                         </div>";
             $arregloModales[].="
-                        <div id='{$aux}' class='modal'>
-                            <div class='modal-background'></div>
-                            <div class='modal-content'>
-                                <p class='image'>
-                                <img src='images/{$aux}'>
-                                </p>
+                        <div id='{$aux}' tabindex='-1' aria-hidden='true' class='hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'>
+                            <div class='relative p-4 w-full max-w-2xl max-h-full'>
+                                <div class='relative bg-white rounded-lg shadow dark:bg-gray-700'>
+                                    <p class='image'>
+                                    <img src='images/{$aux}'>
+                                    </p>
+                                </div>
                             </div>
                             <button class='modal-close is-large' aria-label='close'></button>
                         </div>";
         }
         $peticion.=" 
-                    </div>
-                    <div>";
-        foreach ($arregloModales as $modal){
-            $peticion.=$modal;
-        }
-        $peticion.= "            
-                    </div>
-                <!-- aca cierra card content originalmente/div-->";
+                    </div>";
         $p=false;
         if ($this->destino!=NULL && $this->destino->esValido())
         {
-            $peticion.= " 
-                <p>
-                    <span>Destino: {$this->destino->getNombre()}</span><br>";
+            $peticion.= "
+                    <p class='mt-4' >Destino: {$this->destino->getNombre()}</p>";
                     $p=true;
         }
         if ($this->localidad!=NULL)
         {
             if(!$p)
             {
-                $peticion.= "<p>";
                 $p=true;
             }
             $peticion.= " <p>Localidad: {$this->localidad->getNombre()}</p>";
 
         }
         if($p)
-            $peticion.="</p>";
         $arregloAlgFirmas=$this->algoritmoFirmas();
         $peticion.="
-                <br>
-                <time datetime='{$this->fecha}'>{$this->getFecha()}</time>
+                <time class='-mt-4' datetime='{$this->fecha}'>{$this->getFecha()}</time>
+                
                 </div>
                 <div class='mark1'>
                     {$arregloAlgFirmas['texto']}
-                    <progress class='progress is-primary' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}'></progress>";
-
-                    // Calcula el porcentaje de firmas
-                    $progress = ($this->getCantFirmas() * 100) / $this->objFirmas;
-                    $peticion.="
-                 
-                    <div class='w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700'>
-                        <div class='bg-green-600 h-2.5 rounded-full dark:bg-green-500' style='width: <?php echo $progress; ?>%;'></div>
-                    </div>";
-                    
+                    <progress class='h-3 w-full' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}' style='--value: {$this->getCantFirmas()}; --max: {$this->objFirmas};'></progress>";
         if ($firmada)
         {
             $peticion.="
             </div>
+                    <footer class='card-footer mt-4'>
+                        <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
+                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #e94f37; color: #FFDAD4;'>
+                                Quitar Firma
+                            </button>
+                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent shadow-ragnarok rounded-e-lg hover:bg-gray-900 focus:shadow-warm focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #FFC248; color: 3#A06C05;'>
+                                Ver Firmas
+                            </button>
+                        </div>
+                    </footer>
+                    <!-- ANTERIORES BOTONES FUNCIONALES
                         <footer class='card-footer'>
                             <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-danger'>Quitar Firma</button>
                             <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
                         </footer>
+                        -->
                 </div>";
         }else
             $peticion.="
             </div>
+                    <footer class='card-footer mt-4'>
+                        <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
+                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #ccff00; color: #5F7603;'>
+                                Firmar
+                            </button>
+                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-e-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;  background-color: #FFC248; color: 3#A06C05;'>
+                                Ver Firmas
+                            </button>
+                        </div>
+                    </footer>
+                    <!-- ANTERIORES BOTONES FUNCIONALES
                         <footer class='card-footer'>
                             <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-dark'>Firmar</button>
                             <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
                         </footer>
+                        -->
                 </div>";
         {
 
@@ -297,7 +305,7 @@ class Peticion{
             $porcActual=0;
         }
         $porcActual=number_format($porcActual,2,".");
-        $texto="<p class='text-center'>$cantidad / $objetivo</p>";
+        $texto="<p class='font-black text-lg mt-4 text-center'>$cantidad / $objetivo</p>";
         return [
             "texto"=>$texto,
             "porcentaje"=>$porcActual

@@ -69,19 +69,19 @@ class App{
         if ($icono==$pagina)
         {
             return "
-            <div class='footer-button active'>
+            <div class='flex items-center justify-center'>
                 <a>
-                    <!--img src='images/icons/$tema/{$icono}.in.svg'-->
-                    <img data-target='$icono.in' class='footer-img'>
+                    <!--img data-target='$icono.in'-->
+                    <img src='images/icons/light/{$icono}.in.svg' class='h-8 w-8'>
                 </a>
             </div>";
         }else
         {
             return "
-            <div class='footer-button'>
+            <div class='flex items-center justify-center'>
                 <a href='{$icono}.php'>
-                    <!--img src='images/icons/$tema/{$icono}.svg'-->
-                    <img data-target='$icono' class='footer-img'>
+                    <!--img data-target='$icono'-->
+                    <img src='images/icons/light/{$icono}.svg' class='h-8 w-8'>
                 </a>
             </div>";
         }

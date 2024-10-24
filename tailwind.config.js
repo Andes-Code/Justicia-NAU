@@ -7,6 +7,28 @@ module.exports = {
     // Agrega las rutas donde uses tus archivos .php o .html
   ],
   theme: {
+    patterns: {
+      opacities: {
+          100: "1",
+          80: ".80",
+          60: ".60",
+          40: ".40",
+          20: ".20",
+          10: ".10",
+          5: ".05",
+      },
+      sizes: {
+          1: "0.25rem",
+          2: "0.5rem",
+          4: "1rem",
+          6: "1.5rem",
+          8: "2rem",
+          16: "4rem",
+          20: "5rem",
+          24: "6rem",
+          32: "8rem",
+      }
+    },
     screens: {
       sm: '480px',
       md: '768px',
@@ -14,6 +36,8 @@ module.exports = {
       xl: '1440px',
     },
     colors: {
+      'white': '#FFFFFF',
+      'red': '#e94f37',
       'blue': '#1fb6ff',
       'pink': '#ff49db',
       'orange': '#ff7849',
@@ -47,6 +71,8 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-bg-patterns'),
+  ],
 }
 
