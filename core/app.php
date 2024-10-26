@@ -1334,6 +1334,27 @@ class App{
                 if ($_SESSION["usuario"]->getUsuario()->guardarIntereses($tematicas));
                 $this->jsonAndExit("success","",["redirect"=>"options.php"]);
             }
+            if ($page=="reportes")
+            {
+                if (isset($_POST["fecha"]) && isset($_POST["localidad"]) && isset($_POST["tematica"]))
+                {
+                    require_once "../app/controllers/controladorInformes.php";
+                    $fecha=filter_var($_POST["fecha"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $localidad=filter_var($_POST["localidad"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $tematica=filter_var($_POST["tematica"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    if (!Localidades::localidadExiste($localidad))
+                    {
+                        $this->jsonAndExit("error","La localidad no es valida, respete la forma <localidad>, <provincia>, <pais>",["inputError"=>"localidad-input"]);
+                    } 
+                    if (!Tematicas::tematicaExiste($tematica))
+                    {
+                        $this->jsonAndExit("error","La tematica no es valida",["inputError"=>"tematica-input"]);
+                    }
+                    $info= Informes::generarReporte($fecha,$localidad,$tematica);
+                    
+                    $this->jsonAndExit("success","",["result"=>$info]);
+                }
+            }
         }
             
     }

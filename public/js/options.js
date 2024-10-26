@@ -66,9 +66,25 @@ document.addEventListener("DOMContentLoaded",()=>{
             window.location.href=result.redirect
         }
     }
+    async function generarReporte() {
+        const data = new FormData(document.getElementById("formulario-reporte"))
+        const response = await fetch("options.php?page=reportes",{
+            method:"POST",
+            body:data
+        })
+        const result = await response.json();
+        console.log(result)
+        if (result.status=="success")
+        {
+            const content = document.querySelector(".contentMy2")
+            content.innerHTML=result.result
+            // window.location.href=result.redirect
+        }
+        
+    }
     let debounceTimeout;
     const localidad = document.getElementById("localidad-input")
-
+    const botonReporte = document.getElementById("boton-reporte")
     const tematicaInput = document.getElementById('tematica-input')  
     const botonGuardarPref = document.getElementById("guardar-preferencias")
     if (botonGuardarPref){
@@ -97,5 +113,9 @@ document.addEventListener("DOMContentLoaded",()=>{
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(predict, 500, "localidad"); // 300 ms de delay
         });
+    }
+    if (botonReporte)
+    {
+        botonReporte.addEventListener("click",generarReporte)
     }
 })
