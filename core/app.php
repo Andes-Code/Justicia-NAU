@@ -1005,6 +1005,7 @@ class App{
                 $page=filter_var($_GET["page"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $peticion=intval($_POST["peticion"]);
                 if ($peticion<=0) exit();
+                if (!Peticiones::peticionExiste($peticion)) exit();
                 if ($page=="alta") {
                     // poner estado 0 a la peticion
                     if (Peticiones::alta($peticion))
@@ -1060,6 +1061,15 @@ class App{
                     // poner estado -2 a la peticion con el motivo de poder ver las peticiones eliminadas en algun momento
                     print_r(json_encode($_POST));
                     exit();
+                }
+                if ($page=="peticiones_finalizadas")
+                {
+                    if (isset($_GET["option"]) && $_GET["option"]=="archivar")
+                    {
+                        if (Peticiones::archivar($peticion))
+                            $this->jsonAndExit("success");
+                        $this->jsonAndExit();
+                    }
                 }
             }else if ($_GET["page"]=="tematicas")
             {

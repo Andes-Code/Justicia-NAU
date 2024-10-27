@@ -426,24 +426,22 @@ class Peticiones{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    private static function actualizarEstado(int $nroPet, int $estado):void{
+    public static function archivar(int $nroPet) : bool {
         try {
             // Código de conexión y consulta
             $conexion = BDconection::conectar("user");
             $sql="UPDATE peticion
                     SET estado=:estado
-                    WHERE nroPet=:numero";
+                    WHERE nroPet=:numero
+                    AND estado=1";
             $query=$conexion->prepare($sql);
             $query->execute([
                 ":numero"=>$nroPet,
-                ":estado"=>$estado
+                ":estado"=>2
             ]);
-            return;
-            // if ($query->rowCount()==1)
-            // {
-            //     return TRUE;   
-            // }
-            // return FALSE;   
+            if ($query->rowCount()==1)
+                return true;
+            return false;  
         } catch (PDOException $e) {
             // Log error message
             error_log('Database error: ' . $e->getMessage());
@@ -458,35 +456,67 @@ class Peticiones{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    public static function verificarEstado(int $nroPet):void{
-        try {
-            // Código de conexión y consulta
-            $conexion = BDconection::conectar("user");
-            $sql="SELECT estado,objetivo,firmas
-                    FROM peticion_objetivo
-                    WHERE numero=:numero";
-            $query=$conexion->prepare($sql);
-            $query->execute([
-                ":numero"=>$nroPet  
-            ]);
-            $result=$query->fetch();
-            if ($result)
-                if ($result["estado"]==0 && $result["objetivo"]<=$result["firmas"])
-                    self::actualizarEstado($nroPet,1);
-        } catch (PDOException $e) {
-            // Log error message
-            error_log('Database error: ' . $e->getMessage());
-            // Show user-friendly message
-            echo $e->getMessage();
-            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
-        } catch (Exception $e) {
-            // Log error message
-            error_log('General error: ' . $e->getMessage());
-            // Show user-friendly message
-            echo $e->getMessage();
-            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
-        }
-    }
+    // private static function actualizarEstado(int $nroPet, int $estado):void{
+    //     try {
+    //         // Código de conexión y consulta
+    //         $conexion = BDconection::conectar("user");
+    //         $sql="UPDATE peticion
+    //                 SET estado=:estado
+    //                 WHERE nroPet=:numero";
+    //         $query=$conexion->prepare($sql);
+    //         $query->execute([
+    //             ":numero"=>$nroPet,
+    //             ":estado"=>$estado
+    //         ]);
+    //         return;
+    //         // if ($query->rowCount()==1)
+    //         // {
+    //         //     return TRUE;   
+    //         // }
+    //         // return FALSE;   
+    //     } catch (PDOException $e) {
+    //         // Log error message
+    //         error_log('Database error: ' . $e->getMessage());
+    //         // Show user-friendly message
+    //         echo $e->getMessage();
+    //         echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+    //     } catch (Exception $e) {
+    //         // Log error message
+    //         error_log('General error: ' . $e->getMessage());
+    //         // Show user-friendly message
+    //         echo $e->getMessage();
+    //         echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+    //     }
+    // }
+    // public static function verificarEstado(int $nroPet):void{
+    //     try {
+    //         // Código de conexión y consulta
+    //         $conexion = BDconection::conectar("user");
+    //         $sql="SELECT estado,objetivo,firmas
+    //                 FROM peticion_objetivo
+    //                 WHERE numero=:numero";
+    //         $query=$conexion->prepare($sql);
+    //         $query->execute([
+    //             ":numero"=>$nroPet  
+    //         ]);
+    //         $result=$query->fetch();
+    //         if ($result)
+    //             if ($result["estado"]==0 && $result["objetivo"]<=$result["firmas"])
+    //                 self::actualizarEstado($nroPet,1);
+    //     } catch (PDOException $e) {
+    //         // Log error message
+    //         error_log('Database error: ' . $e->getMessage());
+    //         // Show user-friendly message
+    //         echo $e->getMessage();
+    //         echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+    //     } catch (Exception $e) {
+    //         // Log error message
+    //         error_log('General error: ' . $e->getMessage());
+    //         // Show user-friendly message
+    //         echo $e->getMessage();
+    //         echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+    //     }
+    // }
     public static function mostrarPeticionesNuevas(){
         try {
             // Código de conexión y consulta
@@ -529,8 +559,8 @@ class Peticiones{
                     numero
                     FROM peticion_objetivo
                     WHERE 
-                    estado=0
-                    AND objetivo<=firmas
+                    estado=1
+                    -- AND objetivo<=firmas
                     ORDER BY numero DESC";
             $query=$conexion->prepare($sql);
             $query->execute();

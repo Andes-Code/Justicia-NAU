@@ -193,11 +193,11 @@
             editarPeticion(boton,"baja")
         });
     });
-    (document.querySelectorAll(".generarPDF") || []).forEach((boton)=>{
-        boton.addEventListener("click",()=>{
-            editarPeticion(boton,"pdf")
-        });
-    });
+    // (document.querySelectorAll(".generarPDF") || []).forEach((boton)=>{
+    //     boton.addEventListener("click",()=>{
+    //         editarPeticion(boton,"pdf")
+    //     });
+    // });
     (document.querySelectorAll(".admitir-tematica") || []).forEach((boton)=>{
         boton.addEventListener("click",()=>{
             admitirTematica(boton)

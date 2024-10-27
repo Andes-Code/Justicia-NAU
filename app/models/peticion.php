@@ -472,7 +472,7 @@ class Peticion{
         $peticion="
         <div class='card'>
             <header class='card-header'>
-                <p class='card-header-title'>  {$this->titulo}  </p>
+                <p class='card-header-title'> Petición N° {$this->nroPet}: {$this->titulo}  </p>
                 <button class='card-header-icon' aria-label='more options'>
                     <span class='icon'>
                         <i class='fas fa-angle-down' aria-hidden='true'></i>
@@ -534,7 +534,7 @@ class Peticion{
             <footer class='card-footer'>
                 <!--a data-target='{$this->nroPet}' class='card-footer-item admitir'>Admitir</a-->
                 <!--a data-target='{$this->nroPet}' class='card-footer-item'>Editar</a-->
-                <a data-target='{$this->nroPet}' class='card-footer-item is-danger generarPDF'>Generar PDF</a>
+                <a href='petition.php?numero={$this->nroPet}' class='card-footer-item is-danger generarPDF'>Generar PDF</a>
                 <a data-target='{$this->nroPet}' class='card-footer-item is-danger archivar'>Archivar</a>
             </footer>
         </div>";
