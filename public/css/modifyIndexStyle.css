@@ -406,3 +406,9 @@ img.icon{
   width: 100%;
   border-radius: 2mm 2mm 2mm 2mm;
 }
+.oculto {
+    display: none;
+}
+.visible {
+	display: block;
+}

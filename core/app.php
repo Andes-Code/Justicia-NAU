@@ -43,7 +43,7 @@ class App{
                     echo $peticion;
                 }
             }
-            echo Peticiones::loadMorePetitionsButton();
+            // echo Peticiones::loadMorePetitionsButton();
         }
 
     }
@@ -1355,8 +1355,24 @@ class App{
                     $this->jsonAndExit("success","",["result"=>$info]);
                 }
             }
+            if ($page=="finalizar")
+            {
+                if (isset($_POST["nroPet"]) && intval($_POST["nroPet"])>0)
+                {
+                    $nroPet=intval($_POST["nroPet"]);
+                    if (Peticiones::peticionExiste($nroPet) && Peticiones::perteneceA($nroPet,$this->getCorreoSesion()))
+                    {
+                        if (Peticiones::finalizar($nroPet))
+                            $this->jsonAndExit("success","Peticion finalizada");
+                        $this->jsonAndExit();
+                    }
+                }
+            }
         }
             
+    }
+    private function getCorreoSesion():string{
+        return $_SESSION["usuario"]->getUsuario()->getCorreo();
     }
     public function getDirectorioDeTrabajo() : string {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);

@@ -92,7 +92,8 @@ class Peticiones{
                         $arreglo[].= $peticion->mostrarPeticion(FALSE,"");
                     }
                 }
-                $arreglo[].=self::loadMorePetitionsButton();
+                if ($limite_inf==0)
+                    $arreglo[].=self::loadMorePetitionsButton();
                 return $arreglo;
             }
         } catch (PDOException $e) {
@@ -764,6 +765,71 @@ class Peticiones{
                     return TRUE;
                 }return FALSE;
             }
+        } catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
+    public static function perteneceA(int $nroPet, string $correo):bool{
+        try {
+            $conexion = BDconection::conectar("user");
+            $sql="SELECT 
+                    1
+                    FROM 
+                    peticion 
+                    WHERE 
+                    nroPet=:nroPet AND
+                    correo=:correo AND
+                    estado=0 -- o 1 si hay vista exclusiva
+                    ";
+            $query=$conexion->prepare($sql);
+            $query->execute([
+                ":nroPet"=>$nroPet,
+                ":correo"=>$correo
+            ]);
+            if ($query->rowCount()==1)
+                return TRUE;
+            return FALSE;
+        } catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
+    public static function finalizar(int $nroPet):bool{
+        try {
+            $conexion = BDconection::conectar("user");
+            $sql="UPDATE 
+                    peticion 
+                    SET estado=1 -- o 2 si hay vista exclusiva
+                    WHERE 
+                    nroPet=:nroPet AND 
+                    estado=0 -- o 1 si hay vista exclusiva
+                    ";
+            $query=$conexion->prepare($sql);
+            $query->execute([
+                ":nroPet"=>$nroPet
+            ]);
+            if ($query->rowCount()==1)
+                return TRUE;
+            return FALSE;
         } catch (PDOException $e) {
             // Log error message
             error_log('Database error: ' . $e->getMessage());

@@ -94,22 +94,42 @@ class Usuario{
 					</div>
 				</div>
 			</div>
+            <nav class='tabs is-fullwidth'>
+                <ul>
+                    <li class=''>
+                        <a href='#' id='toggle-link'>Ver finalizadas</a>
+                    </li>
+                    <!--li class=''>
+                        <a href='#finalizadas'>Finalizadas</a>
+                    </li-->
+                </ul>
+            </nav>
 			<div class='peticiones'>";
-
+            $activas = "<div class='active-petitions visible' id='activas'>";
+            $finalizadas = "<div class='ended-petitions oculto' id='finalizadas'>";
             if ($tipoUsuario=="correo")
             {
                 foreach($peticiones as $peticion){
-                        $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
+                    if ($peticion->estaTerminada() || $peticion->estaArchivada())
+                        $finalizadas.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
+                    else
+                        $activas.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
                 }
             }
             else
             {
                 foreach($peticiones as $peticion){
-                        $usuario.= $peticion->mostrarPeticion(FALSE,"");
+                    if ($peticion->estaTerminada() || $peticion->estaArchivada())
+                        $finalizadas.=$peticion->mostrarPeticion(FALSE,"");
+                    else
+                        $activas.=$peticion->mostrarPeticion(FALSE,"");
                 }
 
             }
-
+            $activas.= "</div>";
+            $finalizadas.= "</div>";
+            $usuario.=$activas;
+            $usuario.=$finalizadas;
                 // else if ($tipoUsuario=="ip")
                 //     $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante,"ip"));
 			

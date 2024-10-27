@@ -48,7 +48,14 @@ class Peticion{
         "11" => "Noviembre",
         "12" => "Diciembre"
     ];
-    
+    // ESTADOS:
+    //  orden normal  |   orden con vista exclusiva
+    // -2: baja       |  baja
+    // -1: baja       |  nueva
+    //  0: aceptada   |  aceptada y vista exclusiva 
+    //  1: finalizada |  vista al publico
+    //  2: archivada  |  finalizada
+    //  3:     -      |  archivada
     public function __construct(int $nroPet, int $estado, int $objFirmas, string $fecha=NULL, string $titulo=NULL, string $cuerpo=NULL, Usuario|Afiliado $usuario=NULL, array $tematicas=[], array $firmas=[], array $imagenes=[], Destino $destino=NULL, Localidad $localidad=NULL,  PeticionMultiple $pet_multiple=NULL){
         $this->nroPet = $nroPet;
         $this->estado = $estado;
@@ -208,21 +215,30 @@ class Peticion{
         {
             $peticion.="
             </div>
-                        <footer class='card-footer'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-danger'>Quitar Firma</button>
+                        <footer class='card-footer'>";
+            if ($this->estado==0)
+            {
+                $peticion.="
+                           <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-danger'>Quitar Firma</button>";
+            }
+                $peticion.="
                             <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
                         </footer>
                 </div>";
         }else
+        {
             $peticion.="
             </div>
-                        <footer class='card-footer'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-dark'>Firmar</button>
+                        <footer class='card-footer'>";
+            if ($this->estado==0)
+            {
+                $peticion.="
+                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-dark'>Firmar</button>";
+            }
+            $peticion.="
                             <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
                         </footer>
                 </div>";
-        {
-
         }
         return $peticion;
     }
@@ -519,6 +535,7 @@ class Peticion{
                 <!--a data-target='{$this->nroPet}' class='card-footer-item admitir'>Admitir</a-->
                 <!--a data-target='{$this->nroPet}' class='card-footer-item'>Editar</a-->
                 <a data-target='{$this->nroPet}' class='card-footer-item is-danger generarPDF'>Generar PDF</a>
+                <a data-target='{$this->nroPet}' class='card-footer-item is-danger archivar'>Archivar</a>
             </footer>
         </div>";
         echo $peticion;
@@ -526,6 +543,9 @@ class Peticion{
     public function estaTerminada() : bool {
         return $this->estado==1;
         
+    }
+    public function estaArchivada() : bool {
+        return $this->estado==2;
     }
     public function mostrarPeticionFinalizadaVisitante(){
         $peticion="
@@ -612,9 +632,9 @@ class Peticion{
         return $arreglo;
         
     }
-    private function esDe(string $correo):bool{
-        return $this->usuario->getCorreo()==$correo;
-    }
+    // private function esDe(string $correo):bool{
+    //     return $this->usuario->getCorreo()==$correo;
+    // }
     private function opcionesPeticion(string $correoVeedor){
         $div="";
         // opciones para todo usuario
@@ -624,26 +644,27 @@ class Peticion{
         if ($correoVeedor!='')
         {
             // require_once "../controllers/controladorUsuarios.php";
-            if ($this->usuario->getCorreo()==$correoVeedor)
+            if ($this->usuario->getCorreo()==$correoVeedor && $this->estado==0)
             {
                $div.="
-               <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> finalizar peticion </a>
+               <a data-target='{$this->nroPet}' href='#' class='dropdown-item finalizar' > finalizar peticion </a>
                ";
             }
             $usuario=Usuarios::getUsuarioByCorreo($correoVeedor);
-            if ($usuario->isAdmin())
+            if ($usuario->isAdmin() && $this->estado==1)
             {
                 $div.="
-                    <hr class='dropdown-divider' />
-                    <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> BAJAR </a>
-                    <a href='#' class='dropdown-item'> Generar PDF </a>";
+                    <hr class='dropdown-divider' />";
+                // if ($this->estado==0)
+                //     $div.="<a data-target='{$this->nroPet}' href='#' class='dropdown-item bajar'> BAJAR </a>";
+                $div.="<a data-target='{$this->nroPet}' href='petition.php?numero={$this->nroPet}' class='dropdown-item generarPDF'> Generar PDF </a>";
             }
             if ($usuario->isModerador())
             {
                 $div.="
                     <hr class='dropdown-divider' />
-                    <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> opcion moder </a>
-                    <a href='#' class='dropdown-item'> opcion moder </a>";
+                    <!--a href='search.php?petition={$this->nroPet}' class='dropdown-item'> opcion moder </a-->
+                    <a href='#' class='dropdown-item'> < opciones moder > </a>";
             }
             $div.="
                 <hr class='dropdown-divider' />
