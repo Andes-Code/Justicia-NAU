@@ -222,7 +222,7 @@ class Peticion{
             </div>
                     <footer class='card-footer mt-4'>
                         <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #ccff00; color: #5F7603;'>
+                            <button data-modal-target='firma' data-modal-toggle='firma' value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #ccff00; color: #5F7603;'>
                                 Firmar
                             </button>
                             <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-e-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;  background-color: #FFC248; color: 3#A06C05;'>
@@ -270,19 +270,19 @@ class Peticion{
         $enlace="
         <a href='search.php?petition={$this->nroPet}' class='search-link'>
             <div class='search-box'>
-                <div class='post'>
-                    <div class='up'>
-                        <div class='image-div'>
+                <div class='inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
+                    <div class='flex flex-row items-center p-1 rounded-lg shadow w-full space-x-4 mb-3'>
+                        <div class='flex'>
                             <div>
                                 <figure class='image'>
-                                <img class='is-rounded' src='images/profiles/{$this->usuario->mostrarImagen()}'>
+                                <img class='min-w-10 w-10 h-10 rounded-full' src='images/profiles/{$this->usuario->mostrarImagen()}'>
                                 </figure>
                             </div>
                         </div>
                         <div class='post-header'>
-                            <div class='title is-4'> {$this->usuario->getNombre()}
-                            </div>
-                            <div class='subtitle is-7'> {$this->usuario->getCorreo()}
+                            <p class='font-normal text-gray-100 dark:text-gray-400'> {$this->usuario->getNombre()}
+                            </p>
+                            <div class='font-normal text-gray-100 dark:text-gray-400'> {$this->usuario->getCorreo()}
                             </div>
                         </div>
                     </div>

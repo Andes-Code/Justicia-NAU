@@ -45,6 +45,7 @@ module.exports = {
       'gray-dark': '#191b1c',
       'gray': '#393e41',
       'gray-light': '#6f7173',
+      'gray-xlight': '#dbdbdb',
     },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
