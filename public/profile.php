@@ -12,7 +12,7 @@ $app = new App();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Proyecto Change</title>
+    <title>Jusicia NAU</title>
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">
@@ -21,7 +21,7 @@ $app = new App();
 <body>
     <header class="appName">
         <div>
-            Proyecto Change
+            <h1 class="title is-5">Justicia NAU</h1>
         </div>
     </header>
     <div class="contentMy">
