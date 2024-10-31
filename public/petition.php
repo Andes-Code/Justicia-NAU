@@ -93,20 +93,29 @@ ob_start();
         </div>
         <div class="objetivo">
             <?php
-                echo "<p>Esta petición, cuyo objetivo de firmas era <strong>{$arregloPeticion["objFirmas"]}</strong> cuenta con <strong>{$arregloPeticion['firmas']}</strong> firmas, obteniendo la última el día {$fechaUltimaFirma}</p>";
+                echo "<p>   Esta petición cuenta con <strong>{$arregloPeticion['firmas']}</strong> firmas, habiendo obtenido la última el día {$fechaUltimaFirma}</p>";
             ?>
         </div>
         <div class="firmas-cont">
             <?php
             if (count($comentarios)>0)
             {
-                echo "<p>Los firmantes de la misma, comentaron cosas como: </p>";
-                echo " <div class='firmas'> ";
+                echo "<p>   A continuación se listaran las personas que firmaron esta peticion de forma pública, o bien dejaron un comentario: </p>";
+                echo " <table class='firmas'> ";
+                $i=0;
                 foreach ($comentarios as $firma)
                 {
-                    echo $firma;
+                    if ($i==0)
+                        echo "<tr>";
+                    echo "<td class='comentario'>$firma</td>";
+                    $i++;
+                    if ($i==3)
+                    {
+                        echo "</tr>";
+                        $i=0;
+                    }
                 }
-                echo "</div>";
+                echo "</table>";
             } 
             ?> 
         </div>

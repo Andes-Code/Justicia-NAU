@@ -189,11 +189,35 @@ document.addEventListener('DOMContentLoaded', () => {
             boton.textContent=result.message
         }
     }
+    async function finalizarPeticion(peticion){
+        let confirmar = confirm("Esta seguro que desea finalizar la peticion?")
+        if (confirmar!=true)
+            return
+        const data = new FormData()
+        data.append("nroPet",peticion.dataset.target)
+        const response = await fetch("options.php?page=finalizar",{
+            method: "POST",
+            body: data
+        })
+        const result = await response.json()
+        if (result.status=="success")
+        {
+            $trigger.closest(".card").remove()
+            return true
+        }
+        return false
 
+    }
     (document.querySelectorAll('.sign') || []).forEach(($trigger) => {
         // const peticion = $trigger.value;
         $trigger.addEventListener('click', () => {
             firmar1($trigger)
+        });
+    });
+    (document.querySelectorAll('.finalizar') || []).forEach(($trigger) => {
+        // const peticion = $trigger.value;
+        $trigger.addEventListener('click', () => {
+            finalizarPeticion($trigger)    
         });
     });
     (document.querySelectorAll('.view-signers') || []).forEach(($trigger) => {
@@ -234,6 +258,30 @@ document.addEventListener('DOMContentLoaded', () => {
         $el.classList.remove('is-active');
         document.documentElement.classList.remove("is-clipped")
     }
+    const tipoPeticion=document.getElementById('toggle-link')
+    if (tipoPeticion)
+    {
+        tipoPeticion.addEventListener('click', function(event) {
+            event.preventDefault(); // Evitar el comportamiento predeterminado del ancla
     
+            const activas = document.getElementById('activas');
+            const finalizadas = document.getElementById('finalizadas');
+    
+            // Alternar visibilidad
+            if (finalizadas.classList.contains("visible")) {
+                activas.classList.add("visible")
+                activas.classList.remove("oculto")
+                finalizadas.classList.add("oculto")
+                finalizadas.classList.remove("visible")
+                tipoPeticion.innerHTML="Ver finalizadas"
+            } else {
+                finalizadas.classList.add("visible")
+                finalizadas.classList.remove("oculto")
+                activas.classList.add("oculto")
+                activas.classList.remove("visible")
+                tipoPeticion.innerHTML="Ver activas"
+            }
+        });
+    }
     
 })

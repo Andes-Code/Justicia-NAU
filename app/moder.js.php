@@ -1,6 +1,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    async function editarPeticion(activador,estado) {
+    async function editarPeticion(activador,estado,contenedor=".card") {
         const data = new FormData()
         data.append("peticion",activador.dataset.target)
         const response = await fetch("options.php?mode=admin&page="+estado,{
@@ -10,7 +10,7 @@
         const result = await response.json()
         if (result.status=="success"){
             alert(result.message)
-            activador.closest(".card").remove()
+            activador.closest(contenedor).remove()
 
         }
         
@@ -193,11 +193,11 @@
             editarPeticion(boton,"baja")
         });
     });
-    (document.querySelectorAll(".generarPDF") || []).forEach((boton)=>{
-        boton.addEventListener("click",()=>{
-            editarPeticion(boton,"pdf")
-        });
-    });
+    // (document.querySelectorAll(".generarPDF") || []).forEach((boton)=>{
+    //     boton.addEventListener("click",()=>{
+    //         editarPeticion(boton,"pdf")
+    //     });
+    // });
     (document.querySelectorAll(".admitir-tematica") || []).forEach((boton)=>{
         boton.addEventListener("click",()=>{
             admitirTematica(boton)

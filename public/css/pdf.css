@@ -45,8 +45,15 @@ body{
     margin-top: 20px;
     /* background-color: aquamarine; */
 }
-.firmas-cont{
-    margin-top: -20px;
+.firmas-cont table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+.firmas-cont td {
+    width: 33%;
+    padding: 10px;
+    text-align: left;
 }
 .firmas{
     margin-top: -20px;

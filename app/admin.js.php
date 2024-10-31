@@ -91,7 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
     }
-
+    async function archivar(peticion) {
+        let confirmar = confirm("Seguro que desea archivar peticion n°"+peticion.dataset.target+"?")
+        if (confirmar!=true)
+            return
+        const data = new FormData()
+        data.append("peticion",peticion.dataset.target)
+        const response = await fetch("options.php?mode=admin&page=peticiones_finalizadas&option=archivar",{
+            method:"POST",
+            body:data
+        })
+        const result = await response.json()
+        if (result.status=="success")
+        {
+            alert("Peticion archivada")
+            peticion.closest(".card").remove()
+        }
+    }
     async function give(rol,correo) {
         const data = new FormData()
         data.append("rol",rol)
@@ -123,6 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
             generarInforme()
         })
     }
+    (document.querySelectorAll(".archivar") || []).forEach((boton)=>{
+        boton.addEventListener("click",()=>{
+            archivar(boton)
+        });
+    });
 
 
 })

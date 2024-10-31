@@ -94,22 +94,42 @@ class Usuario{
 					</div>
 				</div>
 			</div>
+            <nav class='tabs is-fullwidth'>
+                <ul>
+                    <li class=''>
+                        <a href='#' id='toggle-link'>Ver finalizadas</a>
+                    </li>
+                    <!--li class=''>
+                        <a href='#finalizadas'>Finalizadas</a>
+                    </li-->
+                </ul>
+            </nav>
 			<div class='peticiones'>";
-
+            $activas = "<div class='active-petitions visible' id='activas'>";
+            $finalizadas = "<div class='ended-petitions oculto' id='finalizadas'>";
             if ($tipoUsuario=="correo")
             {
                 foreach($peticiones as $peticion){
-                        $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
+                    if ($peticion->estaTerminada() || $peticion->estaArchivada())
+                        $finalizadas.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
+                    else
+                        $activas.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante),$usuarioVisitante);
                 }
             }
             else
             {
                 foreach($peticiones as $peticion){
-                        $usuario.= $peticion->mostrarPeticion(FALSE,"");
+                    if ($peticion->estaTerminada() || $peticion->estaArchivada())
+                        $finalizadas.=$peticion->mostrarPeticion(FALSE,"");
+                    else
+                        $activas.=$peticion->mostrarPeticion(FALSE,"");
                 }
 
             }
-
+            $activas.= "</div>";
+            $finalizadas.= "</div>";
+            $usuario.=$activas;
+            $usuario.=$finalizadas;
                 // else if ($tipoUsuario=="ip")
                 //     $usuario.= $peticion->mostrarPeticion(Firmas::firmaExiste($peticion->getNumero(),$usuarioVisitante,"ip"));
 			
@@ -141,6 +161,40 @@ class Usuario{
             }else{
 				return [];
 				echo "No se han publicado peticiones";
+                // app::renderUsuarioNoEncontrado($correo)
+            }
+
+        }catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+	}
+	public function cambiarImagen(string $nuevo):bool{
+		try{
+            $conexion = BDconection::conectar("user");
+            $sql = "UPDATE usuario 
+            SET imagen=:nuevo
+            WHERE correo=:correo";
+            $query=$conexion->prepare($sql);
+            $query->execute([
+                ":correo"=>$this->correo,
+                ":nuevo"=>$nuevo
+            ]);
+            if ($query->rowCount()==1){
+				$this->imagen=$nuevo;
+				return true;
+                // return new Usuario($result["correo"],$result["nombre"],$result["sancion"],$result["verificado"],$result["imagen"]);
+            }else{
+				return false;
                 // app::renderUsuarioNoEncontrado($correo)
             }
 
@@ -232,6 +286,38 @@ class Usuario{
                 ":correo"=>$this->correo,
                 ":cantidad"=>$cantidad
             ])){
+                return TRUE;
+            }else{
+                return FALSE;
+                // app::renderUsuarioNoEncontrado($correo)
+            }
+
+        }catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
+	public function cambiarNombre(string $nombre):bool{
+        try{
+            $conexion = BDconection::conectar("user");
+            $sql = "UPDATE usuario 
+                SET nombreUsuario=:nombre
+                WHERE correo=:correo";
+            $query=$conexion->prepare($sql);
+            if ($query->execute([
+                ":correo"=>$this->correo,
+                ":nombre"=>$nombre
+            ])){
+                $this->nombreUsuario=$nombre;
                 return TRUE;
             }else{
                 return FALSE;
@@ -458,6 +544,23 @@ class Usuario{
     public function isModerador(){
         return $this->rol->getNombre()=="moderador" || $this->isAdmin();
     }
+    // public function administrarPerfil(){
+    //     $div="
+    //     <div class='edit-profiel-div'>
+    //         <div class='cabecera'>
+    //             <div class='imagen'>
+    //                 <img src='images/profiles/{$this->imagen}' alt='' class='profile-img'>
+    //             </div>
+    //             <div class='nombre'>
+    //                 <input type='text' class='input' name='username' value='{$this->nombreUsuario}' disabled>
+    //             </div>
+    //             <div class='correo'>
+    //                 <input type='email' class='input' name='useremail' value='{$this->correo}' disabled>
+    //             </div>
+    //         </div>
+    //     </div>";
+    //     return $div;
+    // }
 
 
 
@@ -488,3 +591,4 @@ class Usuario{
 
 
 ?>
+

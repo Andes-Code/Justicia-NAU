@@ -799,6 +799,55 @@ class Informes{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
+    private static function obtenerReporte(string $fecha, string $loc, string $prov, string $pais, string $tematica)
+    {
+        try{
+            $conexion = BDconection::conectar("user");
+            $sql = "CALL obtener_reporte(:pais, :prov, :loc, :tematica, :fecha)";
+            $query=$conexion->prepare($sql);
+            $query->execute([
+                ":pais"=>$pais,
+                ":prov"=>$prov,
+                ":loc"=>$loc,
+                ":tematica"=>$tematica,
+                ":fecha"=>$fecha
+            ]);
+            if ($result=$query->fetch()){
+                return $result;
+            }
+            return [];
+
+        }catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
+    public static function generarReporte(string $fecha, string $localidad, string $tematica):string
+    {
+        [$loc,$prov,$pais]=explode(", ",$localidad);
+        $reporte=self::obtenerReporte($fecha,$loc,$prov,$pais,$tematica);
+        $div="";
+        if (count($reporte)==4)
+        {
+            foreach ($reporte as $key=>$value)
+            {
+                $div.="$key: $value <br>";
+            }
+        }
+        else
+            return "No hay datos registrados para ese mes";
+        return $div;
+        
+    }
 
 }
 

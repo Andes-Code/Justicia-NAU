@@ -40,8 +40,11 @@ $app = new App();
             <?php $app->renderFooter(get_included_files()[0]) ?>
         </div>
     </footer>
-    <?php $app->renderTemplate("firma.php") ?>
-    <?php $app->renderTemplate("firmas.php") ?>
+    <?php 
+    $app->renderTemplate("firma.php"); 
+    $app->renderTemplate("firmas.php");
+    if ($app->validarAdmin()) $app->loadModerJS();
+    ?>
     <script src="js/bulma.js"></script>
     <script src="js/index.js"></script>
     <script src="js/themeVariableIcons.js"></script>

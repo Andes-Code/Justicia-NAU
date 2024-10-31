@@ -1,6 +1,6 @@
 
 <header id="header">
-    <form class="informe">
+    <form class="informe" id="formulario-reporte">
         <div class="control">
             <label for="fecha">Ingrese los datos que desea consultar</label>
         </div>
@@ -18,7 +18,7 @@
             <datalist id="localidad-opciones"></datalist>       
         </div>
         <div class="control comparar-button-div">
-            <button class="button is-dark comparar-button" type="button" id="searchInforme">
+            <button class="button is-dark comparar-button" type="button" id="boton-reporte">
             Consultar
             </button>
         </div>

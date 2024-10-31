@@ -738,3 +738,73 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE obtener_reporte(
+    IN p_pais VARCHAR(100),       -- Nombre del país
+    IN p_provincia VARCHAR(100),   -- Nombre de la provincia
+    IN p_localidad VARCHAR(100),   -- Nombre de la localidad
+    IN p_tematica VARCHAR(100),    -- Nombre de la temática
+    IN p_mes VARCHAR(7)            -- Mes en formato 'YYYY-MM'
+)
+BEGIN
+    SELECT 
+        mes.mes,
+        IFNULL(pets.cantidadPeticiones, 0) AS cantidadPeticiones,
+        IFNULL(local.cantidadPeticionesLocalidad, 0) AS cantidadPeticionesLocalidad,
+        IFNULL(tema.cantidadPeticionesTematica, 0) AS cantidadPeticionesTematica
+    FROM 
+        (
+            -- Subconsulta para generar la lista de meses
+            SELECT DISTINCT DATE_FORMAT(fecha, '%Y-%m') AS mes
+            FROM peticion
+        ) AS mes
+
+    LEFT JOIN
+        (
+            -- Contar peticiones totales por mes
+            SELECT 
+                DATE_FORMAT(fecha, '%Y-%m') AS mes,
+                COUNT(nroPet) AS cantidadPeticiones
+            FROM peticion
+            GROUP BY mes
+        ) pets ON mes.mes = pets.mes
+
+    LEFT JOIN
+        (
+            -- Contar peticiones en una localidad específica
+            SELECT 
+                DATE_FORMAT(fecha, '%Y-%m') AS mes,
+                COUNT(nroPet) AS cantidadPeticionesLocalidad
+            FROM peticion
+            WHERE 
+                nombrePais = p_pais AND    -- Usar parámetro de país
+                nombreProv = p_provincia AND  -- Usar parámetro de provincia
+                nombreLoc = p_localidad   -- Usar parámetro de localidad
+            GROUP BY mes
+        ) local ON mes.mes = local.mes
+
+    LEFT JOIN
+        (
+            -- Contar peticiones en una localidad con una temática específica
+            SELECT 
+                DATE_FORMAT(peticion.fecha, '%Y-%m') AS mes,
+                COUNT(peticion.nroPet) AS cantidadPeticionesTematica
+            FROM peticion
+            INNER JOIN trata ON peticion.nroPet = trata.nroPet
+            WHERE 
+                peticion.nombrePais = p_pais AND   -- Usar parámetro de país
+                peticion.nombreProv = p_provincia AND  -- Usar parámetro de provincia
+                peticion.nombreLoc = p_localidad AND   -- Usar parámetro de localidad
+                trata.nombreTem = p_tematica   -- Usar parámetro de temática
+            GROUP BY mes
+        ) tema ON mes.mes = tema.mes
+    WHERE mes.mes = p_mes;  -- Filtrar por el mes especificado
+END$$
+
+DELIMITER ;
+
+-- Ejemplo de llamada
+-- CALL obtener_reporte('Argentina', 'Buenos Aires', 'La Plata', 'Educación', '2024-10');

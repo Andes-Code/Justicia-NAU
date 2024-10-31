@@ -350,9 +350,10 @@ class Firmas{
                     CASE 
                         WHEN anonimo=1 AND firmas.correo!='' THEN 'Usuario anonimo'
                         WHEN anonimo=0 AND firmas.correo!='' THEN nombreUsuario
-                        WHEN firmas.correo='' AND ip!='0.0.0.0' THEN 'Usuario no registrado'
+                        -- WHEN firmas.correo='' AND ip!='0.0.0.0' THEN 'Usuario no registrado'
                     END AS usuario,
                     comentario,
+                    anonimo,
                     fecha
                     FROM (
                         (SELECT 
@@ -377,7 +378,7 @@ class Firmas{
             if ($result=$query->fetchAll()){
                 $firmas=[];
                 foreach ($result as $firma){
-                    if ($firma["comentario"]!='')
+                    if ($firma["comentario"]!='' || $firma["anonimo"]==0)
                     array_push($firmas,Firma::mostrarComentarioPDF($firma));
                 }
                 // print_r($firmas);

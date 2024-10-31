@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded",()=>{
             datalist.appendChild(option);
         });
     }
+    async function cambiarImagen(imagen) {
+
+        
+    }
     function eliminarTematica(tematica){
         document.getElementById(tematica).remove()
     }
@@ -66,15 +70,118 @@ document.addEventListener("DOMContentLoaded",()=>{
             window.location.href=result.redirect
         }
     }
+    async function generarReporte() {
+        const data = new FormData(document.getElementById("formulario-reporte"))
+        const response = await fetch("options.php?page=reportes",{
+            method:"POST",
+            body:data
+        })
+        const result = await response.json();
+        console.log(result)
+        if (result.status=="success")
+        {
+            const content = document.querySelector(".contentMy2")
+            content.innerHTML=result.result
+            // window.location.href=result.redirect
+        }
+        
+    }
     let debounceTimeout;
     const localidad = document.getElementById("localidad-input")
-
+    const botonReporte = document.getElementById("boton-reporte")
     const tematicaInput = document.getElementById('tematica-input')  
     const botonGuardarPref = document.getElementById("guardar-preferencias")
+    const cambiarNombre = document.getElementById("cambiar-nombre-btn") 
+    const cambiarFoto = document.getElementById("new-profileImg") 
+    const eliminarFoto = document.getElementById("eliminar-imagen-btn") 
     if (botonGuardarPref){
         botonGuardarPref.addEventListener("click",()=>{
             botonGuardarPref.classList.add("is-loading")
             guardarPreferencias()
+        })
+    }
+    if (cambiarNombre)
+    {
+        cambiarNombre.addEventListener("click",()=>{
+            const confirmar = document.getElementById("confirmar-nombre-btn")
+            const cancelar = document.getElementById("cancelar-nombre-btn")
+            const input = document.getElementById("username-input")
+            confirmar.classList.remove("oculto")
+            cancelar.classList.remove("oculto")
+            cambiarNombre.classList.add("oculto")
+            input.disabled = false
+            input.focus()
+            confirmar.addEventListener("click",async ()=>{
+                cancelar.disabled=true
+                confirmar.disabled=true
+                let conf = confirm("Seguro que desea establecer su nuevo nombre?")
+                if (conf!=true)
+                    return
+                const data = new FormData()
+                data.append("new-username",input.value)
+                const response = await fetch("options.php?page=administrar_perfil",{
+                    method: "POST",
+                    body: data
+                })
+                const result = await response.json()
+                if (result.status=="success")
+                    window.location.reload()
+                // console.log(result)
+            })
+            cancelar.addEventListener("click",()=>{
+                confirmar.disabled=true
+                // confirmar.classList.add("oculto")
+                // cancelar.classList.add("oculto")
+                // cambiarNombre.classList.remove("oculto")
+                // input.disabled = false 
+                window.location.reload()
+            })
+        })
+    }
+    if (eliminarFoto){
+        eliminarFoto.addEventListener("click",async ()=>{
+            let conf = confirm("Seguro que desea eliminar la foto?")
+            if (conf!=true)
+                return
+            const data = new FormData()
+            data.append("delete-image",1)
+            const response = await fetch("options.php?page=administrar_perfil",{
+                method: "POST",
+                body: data
+            })
+            const result = await response.json()
+            if (result.status=="success")
+                window.location.reload()
+        })
+
+    }
+    if (cambiarFoto){
+        cambiarFoto.addEventListener("change",()=>{
+            const cancelar = document.getElementById("cancelar-imagen-btn")
+            const confirmar = document.getElementById("confirmar-imagen-btn")
+            confirmar.classList.remove("oculto")
+            cancelar.classList.remove("oculto")
+            cancelar.addEventListener("click",()=>{
+                window.location.reload()
+            })
+            confirmar.addEventListener("click",async ()=>{
+                let conf = confirm("Seguro que desea continuar?")
+                if (conf!=true)
+                    return
+                const archivo = cambiarFoto.files[0]; // Obtiene el archivo seleccionado
+                if (archivo) {
+                    const data = new FormData()
+                    data.append("new-image", archivo);
+                    const response = await fetch("options.php?page=administrar_perfil",{
+                        method: "POST",
+                        body: data
+                    })
+                    const result = await response.json()
+                    if (result.status=="success")
+                        window.location.reload()
+                }
+                else window.location.reload()
+            })
         })
     }
     if (tematicaInput){
@@ -97,5 +204,9 @@ document.addEventListener("DOMContentLoaded",()=>{
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(predict, 500, "localidad"); // 300 ms de delay
         });
+    }
+    if (botonReporte)
+    {
+        botonReporte.addEventListener("click",generarReporte)
     }
 })

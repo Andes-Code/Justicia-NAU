@@ -445,3 +445,9 @@ img.icon{
   background-color: var(--formbg-color);
   box-shadow: 0px 5px 11px -4px rgba(0,0,0,0.34);
 }
+.oculto {
+    display: none;
+}
+.visible {
+	display: block;
+}
