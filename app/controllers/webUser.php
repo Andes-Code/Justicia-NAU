@@ -127,9 +127,6 @@ class WebUser{
     //         return TRUE;
     //     }
     // }
-    public function administrarPerfil(){
-
-    }
 }
 
 if (__FILE__ == get_included_files()[0]) {

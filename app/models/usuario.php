@@ -178,6 +178,40 @@ class Usuario{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
 	}
+	public function cambiarImagen(string $nuevo):bool{
+		try{
+            $conexion = BDconection::conectar("user");
+            $sql = "UPDATE usuario 
+            SET imagen=:nuevo
+            WHERE correo=:correo";
+            $query=$conexion->prepare($sql);
+            $query->execute([
+                ":correo"=>$this->correo,
+                ":nuevo"=>$nuevo
+            ]);
+            if ($query->rowCount()==1){
+				$this->imagen=$nuevo;
+				return true;
+                // return new Usuario($result["correo"],$result["nombre"],$result["sancion"],$result["verificado"],$result["imagen"]);
+            }else{
+				return false;
+                // app::renderUsuarioNoEncontrado($correo)
+            }
+
+        }catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+	}
 	public function cantidadFirmas():int{
 		try{
             $conexion = BDconection::conectar("user");
@@ -252,6 +286,38 @@ class Usuario{
                 ":correo"=>$this->correo,
                 ":cantidad"=>$cantidad
             ])){
+                return TRUE;
+            }else{
+                return FALSE;
+                // app::renderUsuarioNoEncontrado($correo)
+            }
+
+        }catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
+	public function cambiarNombre(string $nombre):bool{
+        try{
+            $conexion = BDconection::conectar("user");
+            $sql = "UPDATE usuario 
+                SET nombreUsuario=:nombre
+                WHERE correo=:correo";
+            $query=$conexion->prepare($sql);
+            if ($query->execute([
+                ":correo"=>$this->correo,
+                ":nombre"=>$nombre
+            ])){
+                $this->nombreUsuario=$nombre;
                 return TRUE;
             }else{
                 return FALSE;
@@ -478,6 +544,23 @@ class Usuario{
     public function isModerador(){
         return $this->rol->getNombre()=="moderador" || $this->isAdmin();
     }
+    // public function administrarPerfil(){
+    //     $div="
+    //     <div class='edit-profiel-div'>
+    //         <div class='cabecera'>
+    //             <div class='imagen'>
+    //                 <img src='images/profiles/{$this->imagen}' alt='' class='profile-img'>
+    //             </div>
+    //             <div class='nombre'>
+    //                 <input type='text' class='input' name='username' value='{$this->nombreUsuario}' disabled>
+    //             </div>
+    //             <div class='correo'>
+    //                 <input type='email' class='input' name='useremail' value='{$this->correo}' disabled>
+    //             </div>
+    //         </div>
+    //     </div>";
+    //     return $div;
+    // }
 
 
 
@@ -508,3 +591,4 @@ class Usuario{
 
 
 ?>
+
