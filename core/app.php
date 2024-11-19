@@ -69,19 +69,19 @@ class App{
         if ($icono==$pagina)
         {
             return "
-            <div class='footer-button active'>
+            <div class='flex items-center justify-center'>
                 <a>
-                    <!--img src='images/icons/$tema/{$icono}.in.svg'-->
-                    <img data-target='$icono.in' class='footer-img'>
+                    <!--img data-target='$icono.in'-->
+                    <img src='images/icons/light/{$icono}.in.svg' class='h-8 w-8'>
                 </a>
             </div>";
         }else
         {
             return "
-            <div class='footer-button'>
+            <div class='flex items-center justify-center'>
                 <a href='{$icono}.php'>
-                    <!--img src='images/icons/$tema/{$icono}.svg'-->
-                    <img data-target='$icono' class='footer-img'>
+                    <!--img data-target='$icono'-->
+                    <img src='images/icons/light/{$icono}.svg' class='h-8 w-8'>
                 </a>
             </div>";
         }
@@ -133,9 +133,9 @@ class App{
     public function renderNoProfile(){
         $_SESSION["redirect"]= 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         echo '
-        <div class="notification is-link is-light">
+        <div class="p-4 bg-red rounded-lg">
             <!--button class="delete"></button-->
-            <p>Vaya! vemos que no has iniciado sesion aun. </p>
+            <p>Vaya! vemos que no has iniciado sesión aún. </p>
             <p><strong>Si tienes una cuenta</strong> <a href="login.php">haz click aqui para iniciar sesion.</a></p>
             <p><strong>Sino </strong><a href="register.php">haz click aqui para registrarte.</a></p>
         </div>';
@@ -788,9 +788,8 @@ class App{
             echo $peticion;
         }
         echo "
-        <div class='is-centered'>
-            <button class='button is-rounded load-more-pet' type='button' id='load-more-search'>+</button>
-        
+        <div class='flex justify-around items-center'>
+            <button type='button' class='flex justify-around items-center rounded-full w-48 my-8' id='load-more-search' style='box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: #e94f37; color: #FFDAD4;'>Ver más...</button>
         </div>";
     }
     public function evaluarSearchRequest() {

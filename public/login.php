@@ -22,7 +22,7 @@ if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])){
         <form id="form" class="form">
             <div class="field">
                 <label for="correo" class="label">Correo eléctronico</label>
-                <input type="email" class="input" name="correo" id="correo" placeholder="example@mail.com">                    
+                <input type="email" class="input" name="correo" id="correo" placeholder="ejemplo@mail.com">                    
             </div>
             <div class="field">
                 <label for="psw" class="label">Contraseña</label>

@@ -39,11 +39,12 @@ class Usuario{
 	public function mostrarPerfil(string $usuarioVisitante='',string $tipoUsuario){
 		$peticiones=$this->getPeticiones();
 		$usuario = "
-		<div class='perfil'>
+		<div class='perfil mb-4'>
 			<div class='presentacion'>
-				<div class='imagen'>
-					<img class='js-modal-trigger' data-target='{$this->imagen}' src='images/profiles/{$this->imagen}'>
+				<div class='flex justify-center'>
+					<img class='js-modal-trigger rounded-full  mt-8' data-target='{$this->imagen}' src='images/profiles/{$this->imagen}' style='width: 200px; height: 200px;'>
 				</div>
+                <!--
                 <div id='{$this->imagen}' class='modal'>
                     <div class='modal-background'></div>
                     <div class='modal-content'>
@@ -53,10 +54,11 @@ class Usuario{
                     </div>
                     <button class='modal-close is-large' aria-label='close'></button>
                 </div>
-				<div class='info'>
-					<div class='nombre'>
-						<p>{$this->nombreUsuario}</p>
-						<p>{$this->correo}</p>
+                -->
+				<div class='info grid gap-4 justify-center max-w-full'>
+					<div class='nombre grid col-span-3 justify-self-center'>
+						<h2 class='text-3xl font-bold text-center'>{$this->nombreUsuario}</h2>
+						<p class='text-center'>{$this->correo}</p>
 					</div>
 					<!--div class='numeros'>
 						<div class='cantidad-peticiones'>".
@@ -71,24 +73,18 @@ class Usuario{
 						$this->valoracion
 						."<br>valoracion
 						</div-->
-                        <nav class='level is-mobile'>
-                            <div class='level-item has-text-centered'>
-                                <div>
-                                    <p class='heading'>Peticiones</p>
-                                    <p class='title'>".count($peticiones)."</p>
-                                </div>
+                        <nav class='level is-mobile grid col-span-3 grid-cols-3'>
+                            <div class='text-center'>
+                                    <p class='font-semibold'>Peticiones</p>
+                                    <p class='text-xl'>".count($peticiones)."</p>
                             </div>
-                            <div class='level-item has-text-centered'>
-                                <div>
-                                    <p class='heading'>Peticiones firmadas</p>
-                                    <p class='title'>".$this->cantidadFirmas()."</p>
-                                </div>
+                            <div class='text-center'>
+                                    <p class='font-semibold'>Peticiones Firmadas</p>
+                                    <p class='text-xl'>".$this->cantidadFirmas()."</p>
                             </div>
-                            <div class='level-item has-text-centered'>
-                                <div>
-                                    <p class='heading'>Valoracion</p>
-                                    <p class='title'>".$this->valoracion."</p>
-                                </div>
+                            <div class='text-center'>
+                                    <p class='font-semibold'>Valoración</p>
+                                    <p class='text-xl'>".$this->valoracion."</p>
                             </div>
                         </nav>
 					</div>
