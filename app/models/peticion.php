@@ -138,7 +138,7 @@ class Peticion{
                             </button>
                         </div>
                         <div class='dropdown-menu' id='dropdown-menu3' role='menu'>";
-                        $peticion.=$this->opcionesPeticion($correoVeedor);
+                        // $peticion.=$this->opcionesPeticion($correoVeedor);
                         $peticion.="
                         </div>
                     </div>
@@ -178,23 +178,17 @@ class Peticion{
         }
         $peticion.=" 
                     </div>";
-        $p=false;
+        
         if ($this->destino!=NULL && $this->destino->esValido())
         {
             $peticion.= "
-                    <p class='mt-4' >Destino: {$this->destino->getNombre()}</p>";
-                    $p=true;
+                    <p class='mt-4' >Destino: {$this->destino->getNombre()}</p>";       
         }
         if ($this->localidad!=NULL)
         {
-            if(!$p)
-            {
-                $p=true;
-            }
-            $peticion.= " <p>Localidad: {$this->localidad->getNombre()}</p>";
-
+            $peticion.= " 
+                    <p>Localidad: {$this->localidad->getNombre()}</p>";
         }
-        if($p)
         $arregloAlgFirmas=$this->algoritmoFirmas();
         $peticion.="
                 <time class='-mt-4' datetime='{$this->fecha}'>{$this->getFecha()}</time>
@@ -203,69 +197,40 @@ class Peticion{
                 <div class='mark1'>
                     {$arregloAlgFirmas['texto']}
                     <progress class='h-3 w-full' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}' style='--value: {$this->getCantFirmas()}; --max: {$this->objFirmas};'></progress>";
-        if ($firmada)
+        $peticion.="
+                </div>
+                <footer class='card-footer mt-4'>";
+
+        if ($this->estado>0)
+            $peticion.="
+                    <div class='grid grid-cols-1 rounded-md shadow-sm' role='group'>";
+        else if ($this->estado==0)
         {
             $peticion.="
-            </div>
-<<<<<<< HEAD
-                        <footer class='card-footer'>";
-            if ($this->estado==0)
+                    <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>";
+            if ($firmada)
             {
                 $peticion.="
-                           <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-danger'>Quitar Firma</button>";
-            }
-                $peticion.="
-=======
-                    <footer class='card-footer mt-4'>
-                        <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #5C6BF3; color: #09168D;'>
+                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium text-gray-900 rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #5C6BF3; color: #09168D;'>
                                 Quitar Firma
-                            </button>
-                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent shadow-ragnarok rounded-e-lg hover:bg-gray-900 focus:shadow-warm focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #EAEAEA; color: #7B7B7B;'>
-                                Ver Firmas
-                            </button>
-                        </div>
-                    </footer>
-                    <!-- ANTERIORES BOTONES FUNCIONALES
-                        <footer class='card-footer'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-danger'>Quitar Firma</button>
->>>>>>> 975f51f9b0d22442460e265387e3ca947745405d
-                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
-                        </footer>
-                        -->
-                </div>";
-        }else
-        {
-            $peticion.="
-            </div>
-<<<<<<< HEAD
-                        <footer class='card-footer'>";
-            if ($this->estado==0)
+                            </button>";
+            }else
             {
                 $peticion.="
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-dark'>Firmar</button>";
-            }
-            $peticion.="
-=======
-                    <footer class='card-footer mt-4'>
-                        <div class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
-                            <button data-modal-target='firma' data-modal-toggle='firma' value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;  background-color: #5C6BF3; color: #09168D;'>
+                            <button data-modal-target='firma' data-modal-toggle='firma' value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;  background-color: #5C6BF3; color: #09168D;'>
                                 Firmar
-                            </button>
-                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-e-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #EAEAEA; color: #7B7B7B;'>
+                            </button>";
+            }
+        }
+        $peticion.="
+        
+                        <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' type='button' class='view-signers px-4 py-2 text-sm font-medium text-gray-900 bg-transparent shadow-ragnarok rounded-e-lg hover:bg-gray-900 focus:shadow-warm focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #EAEAEA; color: #7B7B7B;'>
                                 Ver Firmas
                             </button>
                         </div>
                     </footer>
-                    <!-- ANTERIORES BOTONES FUNCIONALES
-                        <footer class='card-footer'>
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' class='button card-footer-item sign is-dark'>Firmar</button>
->>>>>>> 975f51f9b0d22442460e265387e3ca947745405d
-                            <button value='{$this->nroPet}' id='verFirmas{$this->nroPet}' class='button card-footer-item view-signers is-dark'>Ver firmas</button>
-                        </footer>
-                        -->
                 </div>";
-        }
+
         return $peticion;
     }
     public function getCantFirmas():int{
