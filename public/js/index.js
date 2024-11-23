@@ -1,3 +1,4 @@
+import { initFlowbite } from 'flowbite'
 document.addEventListener('DOMContentLoaded', () => {
     function actualizarFirmas(peticion,numero){
         const cantidad = document.getElementById("cantSpan"+peticion)
@@ -122,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     async function loadMorePets(boton) {
         boton.classList.add("is-loading")
-        const container = document.querySelector('.contentMy');
-        const postCount = container.querySelectorAll('.post').length;
+        const container = document.getElementById('peticiones');
+        const postCount = container.querySelectorAll('.peticion').length;
         const response = await fetch("index.php?getPeticiones="+postCount)
         const result = await response.json()
         if (result.status=="no sesion")
@@ -181,7 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             boton.classList.remove("is-loading")
-            container.appendChild(boton.closest(".is-centered"))
+            container.appendChild(boton.closest(".load-more-div"))
+            initFlowbite();
         }
         else if (result.status=="wait")
         {
@@ -208,6 +210,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return false
 
     }
+    function closeDropdowns(){
+        (document.querySelectorAll('.pet-dropdown-menu') || []).forEach(($trigger) => {
+            $trigger.classList.add("hidden")
+        })
+    }
+    // (document.querySelectorAll('.pet-dropdown-btn') || []).forEach(($trigger) => {
+    //     $trigger.addEventListener('click', () => {
+    //         const menu = document.getElementById    ($trigger.dataset.dropdownToggle)
+    //         menu.className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block"
+    //         menu.style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(328.8px, 66.4px, 0px);"
+    //         menu.ariaHidden="false"
+    //     });
+    // });
     (document.querySelectorAll('.sign') || []).forEach(($trigger) => {
         // const peticion = $trigger.value;
         $trigger.addEventListener('click', () => {

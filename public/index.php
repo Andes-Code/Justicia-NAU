@@ -62,9 +62,11 @@ $app->evaluarIndexRequest();
     <?php $app->renderTemplate("firma.php") ?>
     <?php $app->renderTemplate("firmas.php") ?>
     
+    <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>
     <script src="js/bulma.js"></script>
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
     <script src="js/themeVariableIcons.js"></script>
+    
 </div>
 </body>
 </html>
