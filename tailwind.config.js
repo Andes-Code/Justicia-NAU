@@ -4,9 +4,11 @@ module.exports = {
     './app/**/*.{html,js,php}', // Asegúrate de que Tailwind busca clases en los archivos correctos
     './core/**/*.{html,js,php}',
     './public/**/*.{html,js,php}',
+    "./node_modules/flowbite/**/*.js",
     // Agrega las rutas donde uses tus archivos .php o .html
   ],
   theme: {
+    extend: {},
     patterns: {
       opacities: {
           100: "1",
@@ -74,6 +76,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-bg-patterns'),
+    require('flowbite/plugin')
   ],
 }
 

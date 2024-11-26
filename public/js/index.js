@@ -1,5 +1,72 @@
-import { initFlowbite } from 'flowbite'
+// import { initFlowbite } from '../../node_modules/flowbite'
+// import { Flowbite } from 'https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    function closeDropdowns(except = null) {
+        const dropdownMenus = document.querySelectorAll(".pet-dropdown-menu");
+        dropdownMenus.forEach(drpdwn => {
+            if (drpdwn !== except && drpdwn.classList.contains("block")) {
+                drpdwn.classList.remove('block');
+                drpdwn.classList.add('hidden');
+            }
+        });
+    }
+    function initializeDropdowns() {
+        const dropdownToggles = document.querySelectorAll('.pet-dropdown-btn');
+        dropdownToggles.forEach(toggle => {
+            const dropdownId = toggle.getAttribute('data-dropdown-toggle');
+            const dropdownMenu = document.getElementById(dropdownId);
+    
+            if (dropdownMenu && !toggle.dataset.initialized) {
+                toggle.addEventListener('click', () => {
+                    // Cerrar otros dropdowns excepto el actual
+                    closeDropdowns(dropdownMenu);
+    
+                    // Obtener dimensiones del botón
+                    const rect = toggle.getBoundingClientRect();
+                    dropdownMenu.style.transform = 'none';
+                    dropdownMenu.classList.toggle('hidden');
+                    dropdownMenu.classList.toggle('block');
+                    // Configurar posición dinámica
+                    dropdownMenu.style.position = 'absolute';
+                    dropdownMenu.style.top = `${rect.bottom + window.scrollY}px`; // Posición debajo del botón
+    
+                    // Calcular posición hacia la izquierda
+                    const menuWidth = dropdownMenu.offsetWidth;
+                    const menuLeft = rect.right - menuWidth;
+    
+                    if (menuLeft < 0) {
+                        // Si el menú desborda hacia la izquierda, alinearlo al borde izquierdo del botón
+                        dropdownMenu.style.left = `${rect.left + window.scrollX}px`;
+                    } else {
+                        // Posición normal hacia la izquierda
+                        dropdownMenu.style.left = `${menuLeft + window.scrollX}px`;
+                    }
+    
+                    
+                });
+    
+                toggle.dataset.initialized = true; // Marcar como inicializado
+            }
+        });
+    
+        // Cerrar dropdowns al hacer scroll
+        window.addEventListener('scroll', () => closeDropdowns());
+    
+        // Cerrar dropdowns al hacer clic fuera
+        document.addEventListener('click', (event) => {
+            const isDropdownButton = event.target.closest('.pet-dropdown-btn');
+            const isDropdownMenu = event.target.closest('.pet-dropdown-menu');
+            if (!isDropdownButton && !isDropdownMenu) {
+                closeDropdowns();
+            }
+        });
+    }
+    
+    
+    // Llama a esta función después de cargar nuevos elementos
+    // initializeDropdowns();
+    
     function actualizarFirmas(peticion,numero){
         const cantidad = document.getElementById("cantSpan"+peticion)
         const perc = document.getElementById("percSpan"+peticion)
@@ -173,6 +240,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeModal($target);
                 });
               });
+            // tempDiv.querySelectorAll('[data-dropdown-toggle]').forEach((drpdwn)=>{
+            //     new Flowbite.Dropdown(drpdwn);
+            // });
             while (tempDiv.firstChild) {
                 // Verifica si el primer hijo es un nodo de tipo 'DIV'
                 if (tempDiv.firstChild.nodeName === 'DIV') {
@@ -183,7 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             boton.classList.remove("is-loading")
             container.appendChild(boton.closest(".load-more-div"))
-            initFlowbite();
+            initializeDropdowns();
+
+            // Flowbite.init()
+            // initDropdowns();
         }
         else if (result.status=="wait")
         {
@@ -298,5 +371,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+    initializeDropdowns()
 })

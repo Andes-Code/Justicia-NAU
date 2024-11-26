@@ -16,6 +16,7 @@ $app->evaluarIndexRequest();
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">-->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
     <link href="styles.css" rel="stylesheet">
     <link rel="manifest" href="./js/manifest.json">
     <script src="https://kit.fontawesome.com/e0fe908279.js" crossorigin="anonymous"></script>
@@ -62,10 +63,11 @@ $app->evaluarIndexRequest();
     <?php $app->renderTemplate("firma.php") ?>
     <?php $app->renderTemplate("firmas.php") ?>
     
-    <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>
+    <!-- <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script> -->
     <script src="js/bulma.js"></script>
-    <script type="module" src="js/index.js"></script>
+    <script src="js/index.js"></script>
     <script src="js/themeVariableIcons.js"></script>
+    
     
 </div>
 </body>

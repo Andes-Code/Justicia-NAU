@@ -134,18 +134,19 @@ class Peticion{
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id='dropdown{$this->nroPet}' class='pet-dropdown-menu z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(416.8px, 66.4px, 0px);' aria-hidden='true' data-popper-placement='bottom'>
-                        <ul class='py-2 text-sm text-gray-700 dark:text-gray-200' aria-labelledby='dropdownMenuIconButton'>
-                        <li>
-                            <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Settings</a>
-                        </li>
-                        <li>
-                            <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Earnings</a>
-                        </li>
-                        </ul>
+                    <div id='dropdown{$this->nroPet}' class='pet-dropdown-menu z-10 z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; /*transform: translate3d(277.6px, 4568.8px, 0px);*/' aria-hidden='true' data-popper-placement='bottom'>
+                        <ul class='py-2 text-sm text-gray-700 dark:text-gray-200' aria-labelledby='dropdownMenuIconButton'>";
+                        $peticion.=$opciones;
+                            // <!-- <li>
+                            //     <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>{$this->nroPet}</a>
+                            // </li>
+                            // <li>
+                            //     <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Settings</a>
+                            // </li>
+                            // <li>
+                            //     <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Earnings</a>
+                            // </li> -->
+                        $peticion.="
                         <div class='py-2'>
                         <a href='#' class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>Separated link</a>
                         </div>
@@ -637,41 +638,53 @@ class Peticion{
     private function opcionesPeticion(string $correoVeedor){
         $div="";
         // opciones para todo usuario
+        // <li>
+        //     <a href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Settings</a>
+        // </li>
         $div.="
-        <div class='dropdown-content'>
-            <a href='search.php?petition={$this->nroPet}' class='dropdown-item'> Ver </a>";
+            <li>
+                <a href='search.php?petition={$this->nroPet}' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>Ver</a>
+            </li>";
         if ($correoVeedor!='')
         {
             // require_once "../controllers/controladorUsuarios.php";
             if ($this->usuario->getCorreo()==$correoVeedor && $this->estado==0)
             {
                $div.="
-               <a data-target='{$this->nroPet}' href='#' class='dropdown-item finalizar' > finalizar peticion </a>
+                <li>
+                    <a data-target='{$this->nroPet}' href='#' class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white finalizar'> Finalizar Petición </a>
+                </li>
+            </ul>
                ";
             }
             $usuario=Usuarios::getUsuarioByCorreo($correoVeedor);
             if ($usuario->isAdmin() && $this->estado==1)
             {
-                $div.="
-                    <hr class='dropdown-divider' />";
+                $div.="<div class='py-2'>
+                        <a href='petition.php?numero={$this->nroPet}' class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>Generar PDF</a>
+                        </div>
+                    ";
                 // if ($this->estado==0)
                 //     $div.="<a data-target='{$this->nroPet}' href='#' class='dropdown-item bajar'> BAJAR </a>";
-                $div.="<a data-target='{$this->nroPet}' href='petition.php?numero={$this->nroPet}' class='dropdown-item generarPDF'> Generar PDF </a>";
+                // $div.="<a data-target='{$this->nroPet}' href='petition.php?numero={$this->nroPet}' class='dropdown-item generarPDF'>  </a>";
             }
             if ($usuario->isModerador())
             {
-                $div.="
-                    <hr class='dropdown-divider' />
-                    <!--a href='search.php?petition={$this->nroPet}' class='dropdown-item'> opcion moder </a-->
-                    <a href='#' class='dropdown-item'> < opciones moder > </a>";
+                // $div.="
+                //     <hr class='dropdown-divider' />
+                //     <!--a href='search.php?petition={$this->nroPet}' class='dropdown-item'> opcion moder </a-->
+                //     <a href='#' class='dropdown-item'> < opciones moder > </a>";
             }
             $div.="
-                <hr class='dropdown-divider' />
-                <a href='#' class='dropdown-item'> Denunciar </a>";
+            <div class='py-2'>
+                <a href='#' class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>Denunciar</a>
+            </div>";
         }
         $div.="
-            <a href='#' class='dropdown-item'> Compartir </a>
-        </div>";
+        <div class='py-2'>
+                <a href='#' class='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>Compartir</a>
+            </div>
+        ";
         return $div;
     }
 }

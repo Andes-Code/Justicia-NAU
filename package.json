@@ -21,6 +21,7 @@
     "tailwindcss-bg-patterns": "^0.3.0"
   },
   "dependencies": {
+    "flowbite": "^2.5.2",
     "postcss-cli": "^11.0.0"
   }
 }
