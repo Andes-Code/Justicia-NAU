@@ -51,7 +51,7 @@ $app->evaluarIndexRequest();
         </section>
     </header>
 
-    <div class="m-2 mt-4" id='peticiones'>
+    <div class="m-2 mt-4 mb-8" id='peticiones'>
         <?php $app->displayPetitions(0) ?>
     </div>
     <footer id="footer" class='fixed bottom-0 left-0 w-full backdrop-blur-sm'>

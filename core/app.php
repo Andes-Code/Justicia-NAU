@@ -790,7 +790,7 @@ class App{
             echo $peticion;
         }
         echo "
-        <div class='flex justify-around items-center'>
+        <div class='flex justify-around items-center load-more-div'>
             <button type='button' class='flex justify-around items-center rounded-full w-48 my-8' id='load-more-search' style='box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background-color: #e94f37; color: #FFDAD4;'>Ver más...</button>
         </div>";
     }

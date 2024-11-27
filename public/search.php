@@ -61,7 +61,7 @@ $app->evaluarSearchRequest();
         </form>
         -->
     </header>
-    <div class="contentMy">
+    <div class="m-2 mt-4 mb-8" id='peticiones'>
         
         <?php  
             if (isset($_GET["petition"])){
@@ -85,7 +85,7 @@ $app->evaluarSearchRequest();
     <?php $app->renderTemplate("firma.php") ?>
     <?php $app->renderTemplate("firmas.php") ?>
     
-    <script src="js/bulma.js"></script>
+    <!-- <script src="js/bulma.js"></script> -->
     <script src="js/index.js"></script>
     <script src="js/search.js"></script>
     <script src="js/themeVariableIcons.js"></script>

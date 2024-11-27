@@ -142,21 +142,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     async function verFirmas(boton) {
-        boton.classList.add("is-loading")
+        // boton.classList.add("is-loading")
         peticion=boton.value
         const modal = document.getElementById("visualizador-firmas")
         const contenedor = document.getElementById("contenedor-firmas")
-        const response = await fetch("index.php?verFirmas="+peticion+"&limite="+(contenedor.childElementCount-1))
+        const response = await fetch("index.php?verFirmas="+peticion+"&limite="+(contenedor.childElementCount))
         const result = await response.json()
+        // openModal(modal)
+        // console.log(result)
+        // return
         const btnLoadMore = modal.querySelector("#load-more-signs")
         btnLoadMore.value=peticion
         if (result.status=="no sesion")
             window.location.href=result.redirect
         else if (result.status=="success"){
             // console.log(result)
-            boton.classList.remove("is-loading")
+            // boton.classList.remove("is-loading")
             wasOpen=true
-            if (!(modal.classList.contains("is-active")))
+            if ((modal.classList.contains("hidden")))
             {
                 openModal(modal)
                 wasOpen=false
@@ -164,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(result.firmas)
             // return
             insertarFirmas(contenedor,result.firmas)
-            contenedor.appendChild(btnLoadMore.closest("div"))
+            // contenedor.appendChild(btnLoadMore.closest("div"))
+            // contenedor.appendChild(btnLoadMore)
             if (wasOpen && result.firmas.length==0)
             {
                 boton.textContent="-"
@@ -389,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalFirma = document.getElementById("firma");
     const closeButton = modalFirma.querySelector('[data-modal-hide="firma"]');
     const cancelarLink = document.getElementById("cancelar-firma");
-
+    const modalVisualizador = document.getElementById("visualizador-firmas")
     // Función para cerrar el modal
     
     function openModal($el) {
@@ -401,6 +405,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeModal($el) {
         if ($el.id=="firma")
             document.getElementById("firmar").value=""
+        if ($el.id=="visualizador-firmas")
+        {
+            document.getElementById("contenedor-firmas").innerHTML=""
+            document.getElementById("load-more-signs").innerHTML="Cargar más"
+            document.getElementById("load-more-signs").disabled=false
+        }
         $el.classList.add('hidden');
     }
     // Detectar clic fuera del modal
@@ -418,11 +428,23 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         closeModal(modalFirma);
     });
-
+    modalVisualizador.addEventListener("click", (event) => {
+        if (event.target === modalVisualizador || event.target.classList.contains("opacity-50")) {
+            closeModal(modalVisualizador);
+        }
+    });
     // Opcional: Cerrar con la tecla Escape
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !modalFirma.classList.contains("hidden")) {
-            closeModal(modalFirma);
+        if (event.key === "Escape") 
+        {
+
+            if(!modalFirma.classList.contains("hidden")) {
+                closeModal(modalFirma);
+            }
+            
+            if(!modalVisualizador.classList.contains("hidden")) {
+                closeModal(modalVisualizador);
+            }
         }
     });
     initializeDropdowns()

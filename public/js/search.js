@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     async function loadMoreSearch(boton) {
         boton.classList.add("is-loading")
-        const contenedor = document.querySelector(".contentMy")
+        const contenedor = document.querySelector("#peticiones")
         const params = new URLSearchParams(window.location.search);
         const response = await fetch("search.php?search="+params.get("search")+"&limite="+(contenedor.childElementCount-1))
         const result = await response.json()
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             // boton.classList.remove("is-loading")
-            contenedor.appendChild(boton.closest(".is-centered"))
+            contenedor.appendChild(boton.closest(".load-more-div"))
 
         }
         else if (result.status=="wait") {
