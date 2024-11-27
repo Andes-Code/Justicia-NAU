@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function initializeDropdowns() {
         const dropdownToggles = document.querySelectorAll('.pet-dropdown-btn');
-        dropdownToggles.forEach(toggle => {
+        dropdownToggles.forEach((toggle) => {
             const dropdownId = toggle.getAttribute('data-dropdown-toggle');
             const dropdownMenu = document.getElementById(dropdownId);
     
@@ -68,15 +68,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // initializeDropdowns();
     
     function actualizarFirmas(peticion,numero){
-        const cantidad = document.getElementById("cantSpan"+peticion)
-        const perc = document.getElementById("percSpan"+peticion)
-        const obj = document.getElementById("objSpan"+peticion)
-        const progresBar = document.getElementById("progress"+peticion)
-        cant = parseInt(cantidad.innerHTML)+numero
-        ob=parseInt(obj.innerHTML)
-        cantidad.innerHTML = cant
-        progresBar.value=cant
-        perc.innerHTML = `${parseFloat(cant / ob * 100)}`.slice(0,4)+"%: "
+        // ==== version con porcentaje ====
+        // const cantidad = document.getElementById("cantSpan"+peticion)
+        // // console.log(cantidad.innerHTML)
+        // // const perc = document.getElementById("percSpan"+peticion)
+        // // const obj = document.getElementById("objSpan"+peticion)
+        // const progresBar = document.getElementById("progress"+peticion)
+        // cant = parseInt(progresBar.value)+numero
+        // // ob=parseInt(obj.innerHTML)
+        // cantidad.innerHTML = cant
+        // progresBar.value=cant
+        // // perc.innerHTML = `${parseFloat(cant / ob * 100)}`.slice(0,4)+"%: "
+        const cantidad = document.getElementById("cantSpan" + peticion);
+        const progresBar = document.getElementById("progress" + peticion);
+        const cant = parseInt(progresBar.value || 0) + numero;
+        cantidad.innerHTML = cant;
+        progresBar.value = cant;
     }
     async function firmar1(boton){
         const formulario = new FormData()
@@ -113,22 +120,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const formulario = new FormData(document.getElementById("form"))
         const firmar = document.getElementById("firmar")
         const boton = document.getElementById(`firmar${firmar.value}`);
-        boton.classList.add("is-loading")
+        // boton.classList.add("is-loading")
         let response = await fetch("./index.php",{
             method: "POST",
             body: formulario
         })
         let result = await response.json()
+        // console.log(result)
+        // return
         if(result.status=="success"){
             document.getElementById("firma-comentario").value=""
             document.getElementsByName("anonimo").value=0
-            closeModal(document.getElementById("firma"))
+            document.getElementsByName("anon").checked=false
             boton.classList.add("is-danger")
             boton.classList.remove("is-dark")
             boton.classList.remove("is-loading")
             boton.innerHTML="Quitar firma"
             actualizarFirmas(firmar.value,result.firmas)
             firmar.value=""
+            closeModal(document.getElementById("firma"))
         }
     }
     async function verFirmas(boton) {
@@ -277,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json()
         if (result.status=="success")
         {
-            $trigger.closest(".card").remove()
+            $trigger.closest(".peticion").remove()
             return true
         }
         return false
@@ -296,6 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //         menu.ariaHidden="false"
     //     });
     // });
+    const inputAnonimo = document.getElementById("anon");
+    if (inputAnonimo){
+        inputAnonimo.addEventListener("change",()=>{
+            document.getElementById("anonimo").value = inputAnonimo.checked ? 1 : 0
+        })
+    }
     (document.querySelectorAll('.sign') || []).forEach(($trigger) => {
         // const peticion = $trigger.value;
         $trigger.addEventListener('click', () => {
@@ -338,14 +354,13 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal(document.getElementById("visualizador-firmas"))
     })
     
-    function openModal($el) {
-        $el.classList.add('is-active');
-        document.documentElement.classList.add("is-clipped")
-    }
-    function closeModal($el) {
-        $el.classList.remove('is-active');
-        document.documentElement.classList.remove("is-clipped")
-    }
+    // function openModal($el) {
+    //     $el.classList.remove('hidden');
+    //     // document.documentElement.classList.add("is-clipped")
+    // }
+    // function closeModal($el) {
+    //     $el.classList.add('hidden');
+    // }
     const tipoPeticion=document.getElementById('toggle-link')
     if (tipoPeticion)
     {
@@ -371,5 +386,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    const modalFirma = document.getElementById("firma");
+    const closeButton = modalFirma.querySelector('[data-modal-hide="firma"]');
+    const cancelarLink = document.getElementById("cancelar-firma");
+
+    // Función para cerrar el modal
+    
+    function openModal($el) {
+        $el.classList.remove('hidden');
+        $el.role="dialog"
+        $el.ariaHidden="false"
+        // document.documentElement.classList.add("is-clipped")
+    }
+    function closeModal($el) {
+        if ($el.id=="firma")
+            document.getElementById("firmar").value=""
+        $el.classList.add('hidden');
+    }
+    // Detectar clic fuera del modal
+    modalFirma.addEventListener("click", (event) => {
+        if (event.target === modalFirma || event.target.classList.contains("opacity-50")) {
+            closeModal(modalFirma);
+        }
+    });
+
+    // Cerrar con el botón de cerrar
+    closeButton.addEventListener("click",()=>{ closeModal(modalFirma)});
+
+    // Cerrar con el enlace "Cancelar"
+    cancelarLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        closeModal(modalFirma);
+    });
+
+    // Opcional: Cerrar con la tecla Escape
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !modalFirma.classList.contains("hidden")) {
+            closeModal(modalFirma);
+        }
+    });
     initializeDropdowns()
 })

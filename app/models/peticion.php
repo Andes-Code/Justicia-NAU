@@ -305,7 +305,7 @@ class Peticion{
             $porcActual=0;
         }
         $porcActual=number_format($porcActual,2,".");
-        $texto="<p class='font-black text-lg mt-4 text-center'>$cantidad / $objetivo</p>";
+        $texto="<p class='font-black text-lg mt-4 text-center'><span id='cantSpan{$this->nroPet}'>$cantidad</span> / $objetivo</p>";
         return [
             "texto"=>$texto,
             "porcentaje"=>$porcActual

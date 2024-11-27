@@ -1,92 +1,46 @@
 
+<div id="firma" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full flex bg-black opacity-50 backdrop-blur-sm">
+    <!-- <div class="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div> -->
 
-<!-- Modal toggle -->
-<button data-modal-target="firma" data-modal-toggle="firma" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-  Toggle modal
-</button>
-
-<!-- Main modal -->
-<div id="firma" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- contenido -->
-            <div class='formulario'>
-		<form id='form' class='form'>
-			<div class='field'>
-				<label for='comentario' class='label'>Comentario</label>
-				<textarea type='textarea' class='textarea' name='comentario' id='firma-comentario' placeholder='Comenta por que estas de acuerdo con esta petición' rows='3'></textarea>
-			</div>
-			<div class="field">
-				<div class='checkbox-new'>
-					<label for='anonimo' class='checkbox'>
-					Deseas que tu firma sea anonima?
-					</label>
-					<div class="control">
-						<label class="radio">
-							<input type="radio" name="anonimo" value="1"/>
-							<span>Si</span>
-						</label>
-						<label class="radio">
-							<input type="radio" name="anonimo" value="0"checked/>
-							<span>No</span>
-						</label>
-					</div>
-					
-				</div>
-				
-			</div>
-			<div class="field has-addons give-top-margin-25">
-				<div class="control button-assistant give-bottom-margin-10">
-					<button type="button" id="cancelar-firma" class="button is-black">Cancelar</button>
-				</div>
-				<div class="control button-assistant give-bottom-margin-10">
-					<button type="button" id="confirmar-firma" class="button is-primary">Firmar petición</button>
-				</div>
-			</div>
-            <input type="hidden" name="firmar" id="firmar">
-		</form>
-		</div>
-
-
-            <!-- Modal header 
+            <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Sign in to our platform
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-black">
+                    Firmar peticion
                 </h3>
-                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="firma">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
-            </div>-->
-            <!-- Modal body 
+            </div>
+            <!-- Modal body -->
             <div class="p-4 md:p-5">
-                <form class="space-y-4" action="#">
+                <form class="space-y-4" id='form'>
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                        <label for="comentario-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Comentario</label>
+                        <textarea name='comentario' id='firma-comentario' placeholder='Comenta por que estas de acuerdo con esta petición' rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                     </div>
                     <div class="flex justify-between">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                                <input id="anon" name="" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
                             </div>
-                            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+                            <label for="anon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Deseo que mi firma sea anonima</label>
                         </div>
-                        <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
                     </div>
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
-                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                        Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+                    <button type="button" class="text-black inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="confirmar-firma">
+                    Firmar
+                    </button>   
+                    <div class="text-sm font-medium text-gray-500 dark:text-gray-300"><a href="#" id="cancelar-firma" class="text-blue-700 hover:underline dark:text-blue-500">Cancelar</a>
                     </div>
+                    <input type="hidden" name="firmar" id="firmar">
+                    <input type="hidden" name="anonimo" id="anonimo" value="0">
                 </form>
-            </div> -->
+            </div>
         </div>
     </div>
 </div> 

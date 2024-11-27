@@ -667,6 +667,7 @@ class App{
                             }
                         }
                         else if(isset($_POST["comentario"]) && isset($_POST["anonimo"])){
+                            // $this->jsonAndExit("","",[var_dump($_POST)]);
                             $comentario=filter_var($_POST["comentario"],FILTER_SANITIZE_SPECIAL_CHARS);
                             $anonimo=intval($_POST["anonimo"]);
                             if ($anonimo<0 || $anonimo>1){
@@ -697,6 +698,7 @@ class App{
                             }
                         }else
                         {
+                            // $this->jsonAndExit("wait","",$_POST);
                             print_r(json_encode([
                                 "status"=>"wait"
                             ]));
