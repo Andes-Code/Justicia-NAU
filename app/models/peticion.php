@@ -116,7 +116,7 @@ class Peticion{
                     </div>
                     <div class='post-header'>
                         <div>
-                            <h5 class='text-pretty text-l font-bold tracking-tight text-gray-900 dark:text-white truncate'>{$this->titulo}</h5>
+                            <h5 class='text-pretty text-l font-bold tracking-tight text-gray-900 dark:text-black truncate'>{$this->titulo}</h5>
                         </div>
                         <div>
                             <a href='profile.php?user={$this->usuario->getCorreo()}' class='search-link'>
@@ -124,14 +124,14 @@ class Peticion{
                             </a>
                         </div>
                     </div>
-                </div>
-
-                <div>
                     <button id='dropdownMenuIconButton' data-dropdown-toggle='dropdown{$this->nroPet}' data-dropdown-delay='500' data-dropdown-trigger='hover' class='pet-dropdown-btn inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-black focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600' type='button'>
                     <svg class='w-5 h-5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 4 15'>
                     <path d='M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z'/>
                     </svg>
                     </button>
+                </div>
+
+                <div>
 
                     <!-- Dropdown menu -->
                     <div id='dropdown{$this->nroPet}' class='pet-dropdown-menu z-10 z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; /*transform: translate3d(277.6px, 4568.8px, 0px);*/' aria-hidden='true' data-popper-placement='bottom'>
