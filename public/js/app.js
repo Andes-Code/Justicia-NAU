@@ -8,11 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
             body: formulario
         })
         let result = await response.json()
+        console.log(result)
         if(result.status=="failed"){
-            alert(result.message)
+            document.getElementById("estatuto-modal").classList.add("hidden")
+            // alert(result.message)
         }
+        if (result.message)
+            alert(result.message)
+        if(result.status=="error")
+            document.getElementById("estatuto-modal").classList.add("hidden")
         if (result.inputError)
         {
+            document.getElementById("estatuto-modal").classList.add("hidden")
             document.getElementById(result.inputError).focus()
             document.getElementById(result.inputError).classList.add("is-danger")
         }
@@ -37,7 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (botonRegister){    
         botonRegister.addEventListener("click",() => {
-            logTo("register");
+            document.getElementById("estatuto-modal").classList.remove("hidden")
+            document.getElementById("aceptar-estatuto").addEventListener("click",()=>{
+                document.getElementById("estatuto-input").value=1
+                logTo("register")
+            })
+            document.getElementById("rechazar-estatuto").addEventListener("click",()=>{
+                document.getElementById("estatuto-input").value=0
+                logTo("register")
+            })
         })
     }
     if (botonLogout){
@@ -57,9 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function validarCorreo(correo) {
         let response = await fetch("register.php?correo="+correo.value)
         let result = await response.json()
+        console.log(result)
         if (result.email=="valid")
         {
-            correo.classList.remove("is-danger")
+            // correo.classList.remove("is-danger")
             correo.classList.add("is-primary")
 
         }

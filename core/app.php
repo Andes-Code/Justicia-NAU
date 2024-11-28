@@ -194,7 +194,7 @@ class App{
         );
         exit();
     }
-    public function register(string $correo, string $nombre, string $psw, bool $validEmail=FALSE){
+    public function register(string $correo, string $nombre, string $psw, int $tyc, int $estatuto, bool $validEmail=FALSE){
         if ($validEmail)
         {
             $correo=strtolower($correo);
@@ -219,7 +219,7 @@ class App{
             }
             exit();
         }
-        if ($this->validarSesion())
+        else if ($this->validarSesion())
         {
             print_r(
                 json_encode([
@@ -230,6 +230,8 @@ class App{
                 );
             exit();
         }
+        if ($tyc!=1)
+            $this->jsonAndExit();
         if (!filter_var($correo, FILTER_VALIDATE_EMAIL))
         {
             session_destroy();
@@ -267,7 +269,7 @@ class App{
             exit();
         }
         $psw=password_hash(filter_var($psw,FILTER_SANITIZE_FULL_SPECIAL_CHARS),PASSWORD_DEFAULT);
-        if (Usuarios::registrarUsuario($correo,$nombre,$psw)){
+        if (Usuarios::registrarUsuario($correo,$nombre,$psw,$estatuto)){
             print_r(json_encode([
                 "status"=>"success",
                 "message"=>"Se ha creado tu cuenta, seras redirigido al inicio de sesión",

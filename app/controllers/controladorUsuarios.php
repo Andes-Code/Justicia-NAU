@@ -58,7 +58,7 @@ class Usuarios{
         }
         return NULL;
     }
-    public static function registrarUsuario(string $correo, string $nombre, string $psw):bool{
+    public static function registrarUsuario(string $correo, string $nombre, string $psw, $estatuto):bool{
         try{
             $correo=strtolower($correo);
             $conexion = BDconection::conectar("user");
@@ -72,6 +72,17 @@ class Usuarios{
                 ":nombre"=>$nombre
             ]);
             if ($query->rowCount()==1){
+                if ($estatuto==1)
+                {
+                    $sql = "INSERT INTO 
+                    estatuto (correo)
+                    VALUES
+                    (:correo)";
+                    $query=$conexion->prepare($sql);
+                    $query->execute([
+                        ":correo"=>$correo,
+                    ]);
+                }
                 return TRUE;
             }else{
                 return FALSE;
