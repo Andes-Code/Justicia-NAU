@@ -685,8 +685,6 @@ class Peticiones{
             {
                 foreach ($result as $fila)
                 {   
-                    // print_r($coso);
-                    // exit();
                     Firmas::crearFirma($numero,$fila["correo"],"correo","",0);
                 }
             }
