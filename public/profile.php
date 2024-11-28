@@ -49,7 +49,7 @@ $app = new App();
     $app->renderTemplate("firmas.php");
     if ($app->validarAdmin()) $app->loadModerJS();
     ?>
-    <script src="js/bulma.js"></script>
+    <!-- <script src="js/bulma.js"></script> -->
     <script src="js/index.js"></script>
     <script src="js/themeVariableIcons.js"></script>
 
