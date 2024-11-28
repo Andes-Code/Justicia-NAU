@@ -1,14 +1,89 @@
+// import { initFlowbite } from '../../node_modules/flowbite'
+// import { Flowbite } from 'https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    function closeDropdowns(except = null) {
+        const dropdownMenus = document.querySelectorAll(".pet-dropdown-menu");
+        dropdownMenus.forEach(drpdwn => {
+            if (drpdwn !== except && drpdwn.classList.contains("block")) {
+                drpdwn.classList.remove('block');
+                drpdwn.classList.add('hidden');
+            }
+        });
+    }
+    function initializeDropdowns() {
+        const dropdownToggles = document.querySelectorAll('.pet-dropdown-btn');
+        dropdownToggles.forEach((toggle) => {
+            const dropdownId = toggle.getAttribute('data-dropdown-toggle');
+            const dropdownMenu = document.getElementById(dropdownId);
+    
+            if (dropdownMenu && !toggle.dataset.initialized) {
+                toggle.addEventListener('click', () => {
+                    // Cerrar otros dropdowns excepto el actual
+                    closeDropdowns(dropdownMenu);
+    
+                    // Obtener dimensiones del botón
+                    const rect = toggle.getBoundingClientRect();
+                    dropdownMenu.style.transform = 'none';
+                    dropdownMenu.classList.toggle('hidden');
+                    dropdownMenu.classList.toggle('block');
+                    // Configurar posición dinámica
+                    dropdownMenu.style.position = 'absolute';
+                    dropdownMenu.style.top = `${rect.bottom + window.scrollY}px`; // Posición debajo del botón
+    
+                    // Calcular posición hacia la izquierda
+                    const menuWidth = dropdownMenu.offsetWidth;
+                    const menuLeft = rect.right - menuWidth;
+    
+                    if (menuLeft < 0) {
+                        // Si el menú desborda hacia la izquierda, alinearlo al borde izquierdo del botón
+                        dropdownMenu.style.left = `${rect.left + window.scrollX}px`;
+                    } else {
+                        // Posición normal hacia la izquierda
+                        dropdownMenu.style.left = `${menuLeft + window.scrollX}px`;
+                    }
+    
+                    
+                });
+    
+                toggle.dataset.initialized = true; // Marcar como inicializado
+            }
+        });
+    
+        // Cerrar dropdowns al hacer scroll
+        window.addEventListener('scroll', () => closeDropdowns());
+    
+        // Cerrar dropdowns al hacer clic fuera
+        document.addEventListener('click', (event) => {
+            const isDropdownButton = event.target.closest('.pet-dropdown-btn');
+            const isDropdownMenu = event.target.closest('.pet-dropdown-menu');
+            if (!isDropdownButton && !isDropdownMenu) {
+                closeDropdowns();
+            }
+        });
+    }
+    
+    
+    // Llama a esta función después de cargar nuevos elementos
+    // initializeDropdowns();
+    
     function actualizarFirmas(peticion,numero){
-        const cantidad = document.getElementById("cantSpan"+peticion)
-        const perc = document.getElementById("percSpan"+peticion)
-        const obj = document.getElementById("objSpan"+peticion)
-        const progresBar = document.getElementById("progress"+peticion)
-        cant = parseInt(cantidad.innerHTML)+numero
-        ob=parseInt(obj.innerHTML)
-        cantidad.innerHTML = cant
-        progresBar.value=cant
-        perc.innerHTML = `${parseFloat(cant / ob * 100)}`.slice(0,4)+"%: "
+        // ==== version con porcentaje ====
+        // const cantidad = document.getElementById("cantSpan"+peticion)
+        // // console.log(cantidad.innerHTML)
+        // // const perc = document.getElementById("percSpan"+peticion)
+        // // const obj = document.getElementById("objSpan"+peticion)
+        // const progresBar = document.getElementById("progress"+peticion)
+        // cant = parseInt(progresBar.value)+numero
+        // // ob=parseInt(obj.innerHTML)
+        // cantidad.innerHTML = cant
+        // progresBar.value=cant
+        // // perc.innerHTML = `${parseFloat(cant / ob * 100)}`.slice(0,4)+"%: "
+        const cantidad = document.getElementById("cantSpan" + peticion);
+        const progresBar = document.getElementById("progress" + peticion);
+        const cant = parseInt(progresBar.value || 0) + numero;
+        cantidad.innerHTML = cant;
+        progresBar.value = cant;
     }
     async function firmar1(boton){
         const formulario = new FormData()
@@ -45,40 +120,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const formulario = new FormData(document.getElementById("form"))
         const firmar = document.getElementById("firmar")
         const boton = document.getElementById(`firmar${firmar.value}`);
-        boton.classList.add("is-loading")
+        // boton.classList.add("is-loading")
         let response = await fetch("./index.php",{
             method: "POST",
             body: formulario
         })
         let result = await response.json()
+        // console.log(result)
+        // return
         if(result.status=="success"){
             document.getElementById("firma-comentario").value=""
             document.getElementsByName("anonimo").value=0
-            closeModal(document.getElementById("firma"))
+            document.getElementsByName("anon").checked=false
             boton.classList.add("is-danger")
             boton.classList.remove("is-dark")
             boton.classList.remove("is-loading")
             boton.innerHTML="Quitar firma"
             actualizarFirmas(firmar.value,result.firmas)
             firmar.value=""
+            closeModal(document.getElementById("firma"))
         }
     }
     async function verFirmas(boton) {
-        boton.classList.add("is-loading")
+        // boton.classList.add("is-loading")
         peticion=boton.value
         const modal = document.getElementById("visualizador-firmas")
         const contenedor = document.getElementById("contenedor-firmas")
-        const response = await fetch("index.php?verFirmas="+peticion+"&limite="+(contenedor.childElementCount-1))
+        const response = await fetch("index.php?verFirmas="+peticion+"&limite="+(contenedor.childElementCount))
         const result = await response.json()
+        // openModal(modal)
+        // console.log(result)
+        // return
         const btnLoadMore = modal.querySelector("#load-more-signs")
         btnLoadMore.value=peticion
         if (result.status=="no sesion")
             window.location.href=result.redirect
         else if (result.status=="success"){
             // console.log(result)
-            boton.classList.remove("is-loading")
+            // boton.classList.remove("is-loading")
             wasOpen=true
-            if (!(modal.classList.contains("is-active")))
+            if ((modal.classList.contains("hidden")))
             {
                 openModal(modal)
                 wasOpen=false
@@ -86,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(result.firmas)
             // return
             insertarFirmas(contenedor,result.firmas)
-            contenedor.appendChild(btnLoadMore.closest("div"))
+            // contenedor.appendChild(btnLoadMore.closest("div"))
+            // contenedor.appendChild(btnLoadMore)
             if (wasOpen && result.firmas.length==0)
             {
                 boton.textContent="-"
@@ -122,8 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     async function loadMorePets(boton) {
         boton.classList.add("is-loading")
-        const container = document.querySelector('.contentMy');
-        const postCount = container.querySelectorAll('.post').length;
+        const container = document.getElementById('peticiones');
+        const postCount = container.querySelectorAll('.peticion').length;
         const response = await fetch("index.php?getPeticiones="+postCount)
         const result = await response.json()
         if (result.status=="no sesion")
@@ -172,6 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeModal($target);
                 });
               });
+            // tempDiv.querySelectorAll('[data-dropdown-toggle]').forEach((drpdwn)=>{
+            //     new Flowbite.Dropdown(drpdwn);
+            // });
             while (tempDiv.firstChild) {
                 // Verifica si el primer hijo es un nodo de tipo 'DIV'
                 if (tempDiv.firstChild.nodeName === 'DIV') {
@@ -181,7 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             boton.classList.remove("is-loading")
-            container.appendChild(boton.closest(".is-centered"))
+            container.appendChild(boton.closest(".load-more-div"))
+            initializeDropdowns();
+
+            // Flowbite.init()
+            // initDropdowns();
         }
         else if (result.status=="wait")
         {
@@ -202,11 +291,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json()
         if (result.status=="success")
         {
-            $trigger.closest(".card").remove()
+            $trigger.closest(".peticion").remove()
             return true
         }
         return false
 
+    }
+    function closeDropdowns(){
+        (document.querySelectorAll('.pet-dropdown-menu') || []).forEach(($trigger) => {
+            $trigger.classList.add("hidden")
+        })
+    }
+    // (document.querySelectorAll('.pet-dropdown-btn') || []).forEach(($trigger) => {
+    //     $trigger.addEventListener('click', () => {
+    //         const menu = document.getElementById    ($trigger.dataset.dropdownToggle)
+    //         menu.className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block"
+    //         menu.style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(328.8px, 66.4px, 0px);"
+    //         menu.ariaHidden="false"
+    //     });
+    // });
+    const inputAnonimo = document.getElementById("anon");
+    if (inputAnonimo){
+        inputAnonimo.addEventListener("change",()=>{
+            document.getElementById("anonimo").value = inputAnonimo.checked ? 1 : 0
+        })
     }
     (document.querySelectorAll('.sign') || []).forEach(($trigger) => {
         // const peticion = $trigger.value;
@@ -250,14 +358,13 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal(document.getElementById("visualizador-firmas"))
     })
     
-    function openModal($el) {
-        $el.classList.add('is-active');
-        document.documentElement.classList.add("is-clipped")
-    }
-    function closeModal($el) {
-        $el.classList.remove('is-active');
-        document.documentElement.classList.remove("is-clipped")
-    }
+    // function openModal($el) {
+    //     $el.classList.remove('hidden');
+    //     // document.documentElement.classList.add("is-clipped")
+    // }
+    // function closeModal($el) {
+    //     $el.classList.add('hidden');
+    // }
     const tipoPeticion=document.getElementById('toggle-link')
     if (tipoPeticion)
     {
@@ -283,5 +390,62 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    const modalFirma = document.getElementById("firma");
+    const closeButton = modalFirma.querySelector('[data-modal-hide="firma"]');
+    const cancelarLink = document.getElementById("cancelar-firma");
+    const modalVisualizador = document.getElementById("visualizador-firmas")
+    // Función para cerrar el modal
     
+    function openModal($el) {
+        $el.classList.remove('hidden');
+        $el.role="dialog"
+        $el.ariaHidden="false"
+        // document.documentElement.classList.add("is-clipped")
+    }
+    function closeModal($el) {
+        if ($el.id=="firma")
+            document.getElementById("firmar").value=""
+        if ($el.id=="visualizador-firmas")
+        {
+            document.getElementById("contenedor-firmas").innerHTML=""
+            document.getElementById("load-more-signs").innerHTML="Cargar más"
+            document.getElementById("load-more-signs").disabled=false
+        }
+        $el.classList.add('hidden');
+    }
+    // Detectar clic fuera del modal
+    modalFirma.addEventListener("click", (event) => {
+        if (event.target === modalFirma || event.target.classList.contains("opacity-50")) {
+            closeModal(modalFirma);
+        }
+    });
+
+    // Cerrar con el botón de cerrar
+    closeButton.addEventListener("click",()=>{ closeModal(modalFirma)});
+
+    // Cerrar con el enlace "Cancelar"
+    cancelarLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        closeModal(modalFirma);
+    });
+    modalVisualizador.addEventListener("click", (event) => {
+        if (event.target === modalVisualizador || event.target.classList.contains("opacity-50")) {
+            closeModal(modalVisualizador);
+        }
+    });
+    // Opcional: Cerrar con la tecla Escape
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") 
+        {
+
+            if(!modalFirma.classList.contains("hidden")) {
+                closeModal(modalFirma);
+            }
+            
+            if(!modalVisualizador.classList.contains("hidden")) {
+                closeModal(modalVisualizador);
+            }
+        }
+    });
+    initializeDropdowns()
 })
