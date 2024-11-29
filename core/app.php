@@ -1,10 +1,12 @@
 <?php
 require_once "../vendor/autoload.php";
 class App{
-    public function getGoogleClient() {
+    public function getGoogleClient(string $page) {
+        // needs credentials.json in app floder
+        // credentials.json is obtained in console.developers.google.com
         $client = new Google\Client();
         $client->setAuthConfig("../app/credentials.json");
-        $client->setRedirectUri('http://localhost/Justicia-NAU/public/register.php'); // Cambia esto
+        $client->setRedirectUri("http://localhost/Justicia-NAU/public/$page.php"); // Cambia esto
         $client->addScope(Google\Service\Oauth2::USERINFO_EMAIL);
         $client->addScope(Google\Service\Oauth2::USERINFO_PROFILE);
         $client->setAccessType('offline');
@@ -148,9 +150,13 @@ class App{
             <p><strong>Sino </strong><a href="register.php">haz click aqui para registrarte.</a></p>
         </div>';
     }
-    public function login(string $correo, string $psw){
+    public function login( string $correo, string $psw, ?string $googleID){
         if (isset($_SESSION["usuario"]) && isset($_SESSION["time"]))
         {
+            if ($googleID){
+                header("location: index.php");
+                exit();
+            }
             print_r(
                 json_encode([
                     "status"=>"failed",
@@ -174,7 +180,7 @@ class App{
         }
         $usuario = new WebUser();
         $psw=filter_var($psw,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if (!$usuario->iniciarSesion($correo,$psw))
+        if (!$usuario->iniciarSesion($correo,$psw,$googleID))
         {
             session_destroy();
             print_r(json_encode([
@@ -194,6 +200,10 @@ class App{
         }
         if (isset($_SESSION["forzarFirma"]))
             unset($_SESSION["forzarFirma"]);
+        if ($googleID){
+            header("location: index.php");
+            exit();
+        }
         print_r(json_encode([
             "status"=>"success",
             "message"=>"None",
@@ -251,6 +261,7 @@ class App{
             );
             exit();
         }
+        // $this->jsonAndExit($googleID);
         if (self::accountExists($correo)){
             print_r(json_encode([
                 "status"=>"failed",
@@ -277,7 +288,10 @@ class App{
             exit();
         }
         $psw=password_hash(filter_var($psw,FILTER_SANITIZE_FULL_SPECIAL_CHARS),PASSWORD_DEFAULT);
-        $googleID=filter_var($googleID,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        // $googleID=filter_var($googleID,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($googleID!=NULL)
+            $googleID=password_hash($googleID,PASSWORD_DEFAULT);
+        // $this->jsonAndExit($googleID);
         if (Usuarios::registrarUsuario($correo,$nombre,$psw,$estatuto,$googleID)){
             print_r(json_encode([
                 "status"=>"success",

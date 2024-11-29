@@ -103,11 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
     }
     const urlParams = new URLSearchParams(window.location.search);
-
+    const url = window.location.href.split("?")[0]
+    let page = url.split("/")
+    page = page[page.length-1]
     // Verificar si "google_auth" y "code" están presentes en la URL
     // console.log("Parametros de la URL:", urlParams);
-
-    if (urlParams.has("code")) {
+    // register with google
+    if (urlParams.has("code") && page=="register.php") {
+        
         const code = urlParams.get("code");  // Obtiene el valor del parámetro 'code'
         // console.log("Valor de 'code':", code); // Imprime el valor de 'code'
 
