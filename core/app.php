@@ -1,10 +1,10 @@
 <?php
 require_once "../vendor/autoload.php";
 class App{
-    public function getGoogleClient() {
+    public function getGoogleClient(string $page) {
         $client = new Google\Client();
         $client->setAuthConfig("../app/credentials.json");
-        $client->setRedirectUri('http://localhost/Justicia-NAU/public/register.php'); // Cambia esto
+        $client->setRedirectUri("http://localhost/Justicia-NAU/public/$page.php"); // Cambia esto
         $client->addScope(Google\Service\Oauth2::USERINFO_EMAIL);
         $client->addScope(Google\Service\Oauth2::USERINFO_PROFILE);
         $client->setAccessType('offline');

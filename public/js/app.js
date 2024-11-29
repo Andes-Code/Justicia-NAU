@@ -106,8 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Verificar si "google_auth" y "code" están presentes en la URL
     // console.log("Parametros de la URL:", urlParams);
-
+    // register with google
     if (urlParams.has("code")) {
+        const url = window.location.href.split("?")[0]
+        let page = url.split("/")
+        page = page[page.length-1]
         const code = urlParams.get("code");  // Obtiene el valor del parámetro 'code'
         // console.log("Valor de 'code':", code); // Imprime el valor de 'code'
 

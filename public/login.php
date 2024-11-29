@@ -3,10 +3,10 @@ require_once "../app/init.php";
 require_once "../core/init.php";
 session_start();
 $app = new App();
-if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])){
+if ((isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])) || (isset($_GET) && isset($_GET["authuser"]) && isset($_GET["code"]))){
     $app->login($_POST["correo"],$_POST["psw"]);
 }
-$client=$app->getGoogleClient();
+$client=$app->getGoogleClient("login");
 $authURL=$client->createAuthUrl();
 ?>
 <!DOCTYPE html>

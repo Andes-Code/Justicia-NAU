@@ -3,7 +3,7 @@ require_once "../app/init.php";
 require_once "../core/init.php";
 $app= new App();
 session_start();
-$client=$app->getGoogleClient();
+$client=$app->getGoogleClient("register");
 $authURL=$client->createAuthUrl();
 if ((isset($_POST) && isset($_POST["correo"]) && isset($_POST["nombreUsuario"]) && isset($_POST["psw"])) || (isset($_POST) && isset($_POST["google_auth"]) && isset($_POST["code"]) && isset($_POST["tyc"]) && isset($_POST["estatuto"]) && isset($_SESSION["google"]["mail"]) && isset($_SESSION["google"]["user"]) && isset($_SESSION["google"]["id"]))){
     if (!isset($_POST["tyc"]))
