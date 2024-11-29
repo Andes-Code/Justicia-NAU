@@ -671,6 +671,39 @@ class Peticiones{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
+    private static function firmaAutomaticaEstatuto(int $numero):void{
+        try{
+            $conexion=BDconection::conectar("user");
+            $sql="SELECT 
+                correo
+                FROM
+                estatuto";
+            $query=$conexion->prepare($sql);
+            $query->execute();
+            $result=$query->fetchAll();
+            if ($result)
+            {
+                foreach ($result as $fila)
+                {   
+                    Firmas::crearFirma($numero,$fila["correo"],"correo","",0);
+                }
+            }
+
+
+        } catch (PDOException $e) {
+            // Log error message
+            error_log('Database error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        } catch (Exception $e) {
+            // Log error message
+            error_log('General error: ' . $e->getMessage());
+            // Show user-friendly message
+            echo $e->getMessage();
+            echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
+        }
+    }
     public static function alta(int $numero):bool{
         try {
             if (self::peticionExiste($numero))
@@ -689,6 +722,7 @@ class Peticiones{
                 ]);
                 if ($query->rowCount()==1)
                 {
+                    self::firmaAutomaticaEstatuto($numero);
                     $sql="SELECT
                             correo
                             FROM 

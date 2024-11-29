@@ -375,17 +375,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const finalizadas = document.getElementById('finalizadas');
     
             // Alternar visibilidad
-            if (finalizadas.classList.contains("visible")) {
-                activas.classList.add("visible")
-                activas.classList.remove("oculto")
-                finalizadas.classList.add("oculto")
-                finalizadas.classList.remove("visible")
+            if (!finalizadas.classList.contains("hidden")) {
+                activas.classList.remove("hidden")
+                // activas.classList.remove("oculto")
+                finalizadas.classList.add("hidden")
+                // finalizadas.classList.remove("visible")
                 tipoPeticion.innerHTML="Ver finalizadas"
             } else {
-                finalizadas.classList.add("visible")
-                finalizadas.classList.remove("oculto")
-                activas.classList.add("oculto")
-                activas.classList.remove("visible")
+                // finalizadas.classList.add("visible")
+                finalizadas.classList.remove("hidden")
+                activas.classList.add("hidden")
+                // activas.classList.remove("visible")
                 tipoPeticion.innerHTML="Ver activas"
             }
         });

@@ -1,7 +1,15 @@
 <?php
-
-
+require_once "../vendor/autoload.php";
 class App{
+    public function getGoogleClient() {
+        $client = new Google\Client();
+        $client->setAuthConfig("../app/credentials.json");
+        $client->setRedirectUri('http://localhost/Justicia-NAU/public/register.php'); // Cambia esto
+        $client->addScope(Google\Service\Oauth2::USERINFO_EMAIL);
+        $client->addScope(Google\Service\Oauth2::USERINFO_PROFILE);
+        $client->setAccessType('offline');
+        return $client;
+    }
     public function displayPetitions(int $cant,bool $ajax=FALSE){
         require_once "../app/controllers/controladorPeticiones.php";
         if ($ajax)
@@ -194,10 +202,10 @@ class App{
         );
         exit();
     }
-    public function register(string $correo, string $nombre, string $psw, int $tyc, int $estatuto, bool $validEmail=FALSE){
+    public function register(string $correo, string $nombre, string $psw, int $tyc, int $estatuto, ?string $googleID, bool $validEmail=FALSE){
+        $correo=strtolower($correo);
         if ($validEmail)
         {
-            $correo=strtolower($correo);
             if (filter_var($correo,FILTER_VALIDATE_EMAIL))
             {
                 if (!self::accountExists($correo))
@@ -269,7 +277,8 @@ class App{
             exit();
         }
         $psw=password_hash(filter_var($psw,FILTER_SANITIZE_FULL_SPECIAL_CHARS),PASSWORD_DEFAULT);
-        if (Usuarios::registrarUsuario($correo,$nombre,$psw,$estatuto)){
+        $googleID=filter_var($googleID,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (Usuarios::registrarUsuario($correo,$nombre,$psw,$estatuto,$googleID)){
             print_r(json_encode([
                 "status"=>"success",
                 "message"=>"Se ha creado tu cuenta, seras redirigido al inicio de sesión",
