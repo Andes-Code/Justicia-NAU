@@ -58,18 +58,21 @@ class Usuarios{
         }
         return NULL;
     }
-    public static function registrarUsuario(string $correo, string $nombre, string $psw, $estatuto):bool{
+    public static function registrarUsuario(string $correo, string $nombre, string $psw, int $estatuto, string $googleID){#:bool{
         try{
+            // print_r(json_encode([$googleID]));
+            // exit();
             $correo=strtolower($correo);
             $conexion = BDconection::conectar("user");
-            $sql = "INSERT INTO usuario (correo,nombreUsuario,contrasena,sancion,verificado,valoracion)
+            $sql = "INSERT INTO usuario (correo,nombreUsuario,contrasena,sancion,verificado,valoracion,google_id)
                 VALUES
-                (:correo,:nombre,:contrasena,0,0,0)";
+                (:correo,:nombre,:contrasena,0,0,0,:gid)";
             $query=$conexion->prepare($sql);
             $query->execute([
                 ":correo"=>$correo,
                 ":contrasena"=>$psw,
-                ":nombre"=>$nombre
+                ":nombre"=>$nombre,
+                ":gid"=>$googleID
             ]);
             if ($query->rowCount()==1){
                 if ($estatuto==1)

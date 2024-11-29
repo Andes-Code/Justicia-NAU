@@ -1,12 +1,13 @@
 <?php
+require_once "../app/init.php";
+require_once "../core/init.php";
+session_start();
+$app = new App();
 if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])){
-    require_once "../app/init.php";
-    require_once "../core/init.php";
-    session_start();
-    $app = new App();
     $app->login($_POST["correo"],$_POST["psw"]);
 }
-
+$client=$app->getGoogleClient();
+$authURL=$client->createAuthUrl();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +34,9 @@ if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])){
             </div>
             <div class="field form-link">
                 <a href="register.php">No tienes una cuenta? <strong>Registrate</strong></a>
+            </div>
+            <div class="field form-link text-white">
+                <a href="<?php echo $authURL?>">Inicia sesion con google</a>
             </div>
         </form>
     </div>

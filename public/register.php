@@ -1,7 +1,11 @@
 <?php
-if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["nombreUsuario"]) && isset($_POST["psw"])){
-    require_once "../app/init.php";
-    require_once "../core/init.php";
+require_once "../app/init.php";
+require_once "../core/init.php";
+$app= new App();
+session_start();
+$client=$app->getGoogleClient();
+$authURL=$client->createAuthUrl();
+if ((isset($_POST) && isset($_POST["correo"]) && isset($_POST["nombreUsuario"]) && isset($_POST["psw"])) || (isset($_POST) && isset($_POST["google_auth"]) && isset($_POST["code"]) && isset($_POST["tyc"]) && isset($_POST["estatuto"]) && isset($_SESSION["google"]["mail"]) && isset($_SESSION["google"]["user"]) && isset($_SESSION["google"]["id"]))){
     if (!isset($_POST["tyc"]))
     {
         print_r(json_encode([
@@ -10,21 +14,93 @@ if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["nombreUsuario"]) &
         ]));
         exit();
     }
-    session_start();
-    $app = new App();
+    $correo="";
+    $nombreUsuario="";
+    $id="";
+    $psw="";
+    if (isset($_POST["google_auth"])){
+        // print_r(json_encode($_SESSION));
+        // exit();
+        $correo=$_SESSION["google"]["mail"];
+        $nombreUsuario=$_SESSION["google"]["user"];
+        $id=$_SESSION["google"]["id"];
+        $psw=password_hash($correo.$nombreUsuario.$id.strval(rand(0,1000000000)),PASSWORD_DEFAULT);
+        session_destroy();
+    }else{
+        $correo=$_POST["correo"];
+        $nombreUsuario=$_POST["nombreUsuario"];
+        $id=NULL;
+        $psw=$_POST["psw"];
+    }
     $tyc=1;
     $estatuto=intval($_POST["estatuto"]);
-    $app->register($_POST["correo"],$_POST["nombreUsuario"],$_POST["psw"],$tyc,$estatuto);
+    $app->register($correo,$nombreUsuario,$psw,$tyc,$estatuto,$id);
 }
 else if (isset($_GET["correo"]) && count($_GET)==1)
 {
-    require_once "../app/init.php";
-    require_once "../core/init.php";
-    session_start();
-    $app= new App();
-    $app->register($_GET["correo"],"","",0,0,TRUE);
+    // Aqui se valida la disponibilidad del correo
+    
+    $app->register($_GET["correo"],"","",0,0,"",TRUE);
     exit();
 }
+// Manejo del inicio de sesión con Google
+else if (isset($_GET["authuser"])) {
+    // $client = getGoogleClient();
+
+    // Si no hay código, redirigir a Google para autorización
+    if (!isset($_GET["code"])) {
+        // $authUrl = $client->createAuthUrl();
+        header("Location: $authUrl");
+        exit();
+    }
+
+    // Procesar el código de autorización de Google
+    try {
+        $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
+        if (isset($token['error'])) {
+            throw new Exception('Error al obtener el token: ' . $token['error']);
+        }
+
+        $client->setAccessToken($token['access_token']);
+
+        // Obtener información del usuario desde Google
+        $oauth2 = new Google\Service\Oauth2($client);
+        $userInfo = $oauth2->userinfo->get();
+
+        // Enviar los datos a la lógica de registro o inicio de sesión
+        $correo = $userInfo->email;
+        $nombreUsuario = $userInfo->name;
+        $googleId = $userInfo->id;
+        
+        session_start();
+        $_SESSION["google"]=[
+            "mail"=>$correo,
+            "user"=>$nombreUsuario,
+            "id"=>$googleId
+        ];
+        
+        // Registrar o iniciar sesión con Google
+        // $app->register($correo, $nombreUsuario, '', 1, 0);
+
+        // Redirigir al usuario o mostrar un mensaje
+        // echo json_encode([
+        //     "status" => "success",
+        //     "message" => "Inicio de sesión exitoso con Google",
+        //     "user" => [
+        //         "correo" => $correo,
+        //         "nombreUsuario" => $nombreUsuario
+        //     ]
+        // ]);
+    } catch (Exception $e) {
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()
+        ]);
+        exit();
+    }
+}
+// $client=$app->getGoogleClient();
+// $authURL=$client->createAuthUrl();
 
 ?>
 <!DOCTYPE html>
@@ -66,8 +142,11 @@ else if (isset($_GET["correo"]) && count($_GET)==1)
             <div class="field form-link">
                 <button type="button" class="button button-assistant is-link" id="register">registrarse</button>
             </div>
-            <div class="field form-link">
+            <div class="field form-link text-white">
                 <a href="login.php">Ya tienes una cuenta? <strong>Inicia sesión</strong></a>
+            </div>
+            <div class="field form-link text-white">
+                <a href="<?php echo $authURL?>">Registrate con google</a>
             </div>
             <input type="hidden" name="estatuto" id="estatuto-input" value="0">
         </form>
@@ -85,7 +164,7 @@ else if (isset($_GET["correo"]) && count($_GET)==1)
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-black">
                         Estatuto de la aplicacion
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="estatuto-modal">
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" id="cerrar-estatuto">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
