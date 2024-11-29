@@ -271,8 +271,8 @@ class Peticion{
     public function mostrarEnlace(){
         $enlace="
         <a href='search.php?petition={$this->nroPet}' class='search-link'>
-            <div class='search-box'>
-                <div class='inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
+            <div class='search-box w-full'>
+                <div class='inline-block mb-4 p-3 rounded-lg w-full' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
                     <div class='flex flex-row items-center p-1 rounded-lg shadow w-full space-x-4 mb-3'>
                         <div class='flex'>
                             <div>
@@ -282,14 +282,14 @@ class Peticion{
                             </div>
                         </div>
                         <div class='post-header'>
-                            <p class='font-normal text-gray-100 dark:text-gray-400'> {$this->usuario->getNombre()}
+                            <p class='font-bold text-black dark:text-white'> {$this->usuario->getNombre()}
                             </p>
-                            <div class='font-normal text-gray-100 dark:text-gray-400'> {$this->usuario->getCorreo()}
+                            <div class='text-xs text-gray-500 dark:text-white'><p class='text-pretty break-words'> {$this->usuario->getCorreo()}</p>
                             </div>
                         </div>
                     </div>
-                    <div class='middle'>
-                        <div class='post-body'> {$this->cuerpo}           
+                    <div class='mt-1.5 px-4 text-wrap'>
+                        <div class='post-body'><p class='text-pretty break-words'> {$this->cuerpo}</p>           
                         </div>
                     </div>
                 </div>

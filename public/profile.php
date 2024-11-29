@@ -12,7 +12,7 @@ $app = new App();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Jusicia NAU | Perfil</title>
+    <title>Moción NAU | Perfil</title>
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
     <link href="styles.css" rel="stylesheet">
     <link rel="manifest" href="./js/manifest.json">
@@ -23,7 +23,7 @@ $app = new App();
 <body>
     <header class="appName">
         <div class="grid align-center items-center backdrop-blur-s max-w-screen-xl text-center">
-            <h1 class="-pt-10 text-3xl text-black font-black mt-4 mb-2" >Justicia NAU</h1>
+            <h1 class="-pt-10 text-3xl text-black font-black mt-4 mb-2" >Moción NAU</h1>
         </div>
     </header>
     <div class="contentMy p-4">
