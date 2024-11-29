@@ -3,8 +3,65 @@ require_once "../app/init.php";
 require_once "../core/init.php";
 session_start();
 $app = new App();
-if ((isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])) || (isset($_GET) && isset($_GET["authuser"]) && isset($_GET["code"]))){
-    $app->login($_POST["correo"],$_POST["psw"]);
+$client = $app->getGoogleClient("login");
+$authURL = $client->createAuthUrl();
+$correo = "";
+$psw = "";
+$googleId = NULL;
+if (isset($_POST) && isset($_POST["correo"]) && isset($_POST["psw"])){
+    $correo=$_POST["correo"];
+    $psw=$_POST["psw"];
+    $app->login($correo,$psw,$googleId);
+}else if (isset($_GET) && isset($_GET["authuser"])) {
+    // $client = getGoogleClient();
+
+    // Si no hay código, redirigir a Google para autorización
+    if (!isset($_GET["code"])) {
+        // $authUrl = $client->createAuthUrl();
+        header("Location: $authUrl");
+        exit();
+    }
+
+    // Procesar el código de autorización de Google
+    try {
+        $token = $client->fetchAccessTokenWithAuthCode($_GET["code"]);
+        if (isset($token['error'])) {
+            throw new Exception('Error al obtener el token: ' . $token['error']);
+        }
+
+        $client->setAccessToken($token['access_token']);
+
+        // Obtener información del usuario desde Google
+        $oauth2 = new Google\Service\Oauth2($client);
+        $userInfo = $oauth2->userinfo->get();
+
+        // Enviar los datos a la lógica de registro o inicio de sesión
+        $correo = $userInfo->email;
+        $psw = strval(random_int(0,10000000000));
+        $googleId = $userInfo->id;
+        $app->login($correo,$psw,$googleId);
+
+        
+        
+        // Registrar o iniciar sesión con Google
+        // $app->register($correo, $nombreUsuario, '', 1, 0);
+
+        // Redirigir al usuario o mostrar un mensaje
+        // echo json_encode([
+        //     "status" => "success",
+        //     "message" => "Inicio de sesión exitoso con Google",
+        //     "user" => [
+        //         "correo" => $correo,
+        //         "nombreUsuario" => $nombreUsuario
+        //     ]
+        // ]);
+    } catch (Exception $e) {
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()
+        ]);
+        exit();
+    }
 }
 $client=$app->getGoogleClient("login");
 $authURL=$client->createAuthUrl();

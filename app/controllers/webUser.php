@@ -31,7 +31,9 @@ class WebUser{
     public function isModer():bool{
         return $this->usuario->getRol()=="moderador" || $this->isAdmin();;
     }
-    public function iniciarSesion(string $correo,string $psw){
+    public function iniciarSesion(string $correo,string $psw, ?string $googleID){
+        // print_r(json_encode($googleID));
+        // exit();
         $conexion = BDconection::conectar("user");
         $sql = "SELECT 
                 correo,
@@ -41,6 +43,7 @@ class WebUser{
                 verificado,
                 imagen,
                 valoracion,
+                google_id as gid,
                 nombreRol as rol,
                 privilegios
                 FROM usuario NATURAL JOIN rol 
@@ -50,7 +53,13 @@ class WebUser{
         $result = $query->fetch();
         // print_r( $result);
         if ($result) {
-            if (password_verify($psw,$result["psw"]))
+            $gid=false;
+            // print_r(json_encode($googleID));
+            // exit();
+
+            if ($googleID!=NULL)
+                $gid=password_verify($googleID,$result["gid"]);
+            if (password_verify($psw,$result["psw"]) || $gid)
             {
                 $sqlAfiliado="SELECT firmaAnon,fechaN,TFA,nombrePais,nombreProv,nombreLoc,estado
                                 FROM afiliado NATURAL JOIN localidad
