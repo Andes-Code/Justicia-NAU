@@ -102,9 +102,9 @@ class Peticion{
     public function mostrarPeticion(bool $firmada, string $correoVeedor){
         $opciones=$this->opcionesPeticion($correoVeedor);
         $peticion= "
-            <div class='peticion inline-block bg-red-50 mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
-            <div class='flex flex-row items-center p-1 rounded-lg shadow w-full'>
-                <div class='flex space-x-4'>
+            <div class='peticion w-full inline-block bg-white mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
+            <div class='flex flex-row items-center p-1 rounded-lg shadow w-full mb-4'>
+                <div class='flex items-center space-x-4 w-full justify-between'>
                     <div class='image-div'>
                         <div>
                             <figure class='image'>
@@ -114,13 +114,13 @@ class Peticion{
                             </figure>
                         </div>
                     </div>
-                    <div class='post-header'>
+                    <div class='post-header '>
                         <div>
-                            <h5 class='text-pretty text-l font-bold tracking-tight text-gray-900 dark:text-black truncate'>{$this->titulo}</h5>
+                            <h5 class='text-center text-pretty break-words text-l font-bold tracking-tight text-gray-900 dark:text-black'>{$this->titulo}</h5>
                         </div>
                         <div>
                             <a href='profile.php?user={$this->usuario->getCorreo()}' class='search-link'>
-                                <p class='font-normal text-gray-100 dark:text-gray-400'>{$this->usuario->getNombre()}</p>
+                                <p class='text-center font-normal text-black dark:text-gray-400'>{$this->usuario->getNombre()}</p>
                             </a>
                         </div>
                     </div>
@@ -154,12 +154,14 @@ class Peticion{
                 </div>
                 </div>
                 <div class='card-content'>
-                    <div class='mt-1.5 px-4'> 
-                        <p >{$this->cuerpo}</p><br>";
+                    <div class='mt-1.5 px-4 text-wrap'> 
+                        <p class='text-pretty break-words'>{$this->cuerpo}</p><br>
+                        <div class='flex flex-row flex-wrap '>";
                             foreach ($this->tematicas as $tematica){
-                                $peticion.="<a !important class='text-blue-600' href='search.php?search={$tematica->getNombre()}'><p >#{$tematica->getNombre()}</p> </a>";
+                                $peticion.="<a !important class='text-red text-sm flex-auto' href='search.php?search={$tematica->getNombre()}'><p >#{$tematica->getNombre()}</p> </a>";
                             }
-                                $peticion.="           
+                                $peticion.="
+                        </div>
                     </div>
                     <div class='grid grid-cols-2 md:grid-cols-4 gap-4 {$this->cssClassForImages()}'>";
         $arregloModales=[];
@@ -205,7 +207,7 @@ class Peticion{
                 </div>
                 <div class='mark1'>
                     {$arregloAlgFirmas['texto']}
-                    <progress class='h-3 w-full' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}' style='--value: {$this->getCantFirmas()}; --max: {$this->objFirmas};'></progress>";
+                    <progress class='h-3 w-full rounded bg-red' value='{$this->getCantFirmas()}' id='progress{$this->nroPet}' max='{$this->objFirmas}' style='--value: {$this->getCantFirmas()}; --max: {$this->objFirmas};'></progress>";
         $peticion.="
                 </div>
                 <footer class='card-footer mt-4'>";
@@ -220,13 +222,13 @@ class Peticion{
             if ($firmada)
             {
                 $peticion.="
-                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium text-gray-900 rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #5C6BF3; color: #09168D;'>
+                            <button value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium bg-red text-white rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;'>
                                 Quitar Firma
                             </button>";
             }else
             {
                 $peticion.="
-                            <button data-modal-target='firma' data-modal-toggle='firma' value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium text-gray-900 bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;  background-color: #5C6BF3; color: #09168D;'>
+                            <button data-modal-target='firma' data-modal-toggle='firma' value='{$this->nroPet}' id='firmar{$this->nroPet}' type='button' class='sign px-4 py-2 text-sm font-medium bg-red text-white bg-transparent box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;'>
                                 Firmar
                             </button>";
             }
@@ -401,9 +403,9 @@ class Peticion{
     }
     public function mostrarPeticionNueva(){
         $peticion="
-        <div class='card'>
+        <div class='cardw-full inline-block bg-white mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
             <header class='card-header'>
-                <p class='card-header-title'>  {$this->titulo}  </p>
+                <p class='text-center text-pretty break-words text-l font-bold tracking-tight text-gray-900 dark:text-black'>  {$this->titulo}  </p>
                 <button class='card-header-icon' aria-label='more options'>
                     <span class='icon'>
                         <i class='fas fa-angle-down' aria-hidden='true'></i>
@@ -411,15 +413,17 @@ class Peticion{
                 </button>
             </header>
             <div class='card-content'>
-                <div class='content'>
-                {$this->cuerpo}
-                <br />";
+                <div class='mt-1.5 px-4 text-wrap'><p class='text-pretty break-words'>
+                {$this->cuerpo}</p>
+                <br />
+                <div class='flex flex-row flex-wrap '>";
             foreach ($this->tematicas as $tematica){
                 $peticion.="
-                <a href='#'>  #{$tematica->getNombre()}</a>";
+                <a class='text-red text-sm flex-auto' href='search.php?search={$tematica->getNombre()}'>  #{$tematica->getNombre()}</a>";
     
             }
             $peticion.="
+            </div>
             <br />
             <div class='post-images {$this->cssClassForImages()}'>";
         $arregloModales=[];
@@ -428,16 +432,19 @@ class Peticion{
             // echo "
             //             <img src='images/{$imagen->showImagen()}'>";
             $peticion.= "
-                        <div class='post-imagen'>
-                            <img class='js-modal-trigger' data-target='{$aux}' src='images/{$aux}'>
+                        <div>
+                            <button data-modal-target='{$aux}' data-modal-toggle='{$aux}'>
+                                <img class='h-auto max-w-full rounded-lg' data-modal-target='{$aux}' data-modal-toggle='{$aux}' src='images/{$aux}'>
+                            </button>
                         </div>";
             $arregloModales[].="
-                        <div id='{$aux}' class='modal'>
-                            <div class='modal-background'></div>
-                            <div class='modal-content'>
-                                <p class='image'>
-                                <img src='images/{$aux}'>
-                                </p>
+                        <div id='{$aux}' tabindex='-1' aria-hidden='true' class='hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'>
+                            <div class='relative p-4 w-full max-w-2xl max-h-full'>
+                                <div class='relative bg-white rounded-lg shadow dark:bg-gray-700'>
+                                    <p class='image'>
+                                    <img src='images/{$aux}'>
+                                    </p>
+                                </div>
                             </div>
                             <button class='modal-close is-large' aria-label='close'></button>
                         </div>";
@@ -460,19 +467,19 @@ class Peticion{
                     <time datetime='{$this->fecha}'>{$this->getFecha()}</time>
             </div>
             </div>
-            <footer class='card-footer'>
-                <a data-target='{$this->nroPet}' class='card-footer-item admitir'>Admitir</a>
+            <footer class='mt-4 card-footer grid grid-cols-2 rounded-md shadow-sm' role='group'>
+                <a data-target='{$this->nroPet}' class='card-footer-item admitir text-center px-4 py-2 text-sm font-medium bg-red text-white rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;'>Admitir</a>
                 <!--a data-target='{$this->nroPet}' class='card-footer-item'>Editar</a-->
-                <a data-target='{$this->nroPet}' class='card-footer-item is-danger bajar'>Eliminar</a>
+                <a data-target='{$this->nroPet}' class='card-footer-item is-danger bajar text-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent shadow-ragnarok rounded-e-lg hover:bg-gray-900 focus:shadow-warm focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #EAEAEA; color: #7B7B7B;'>Eliminar</a>
             </footer>
         </div>";
         echo $peticion;
     }
     public function mostrarPeticionFinalizadaAdmin(){
         $peticion="
-        <div class='card'>
+        <div class='card w-full inline-block bg-white mb-2 p-3 rounded-lg' style='box-shadow: 0 3px 10px rgb(0,0,0,0.2);'>
             <header class='card-header'>
-                <p class='card-header-title'> Petición N° {$this->nroPet}: {$this->titulo}  </p>
+                <p class='card-header-title'> <b>Petición N° {$this->nroPet}</b>: {$this->titulo}  </p>
                 <button class='card-header-icon' aria-label='more options'>
                     <span class='icon'>
                         <i class='fas fa-angle-down' aria-hidden='true'></i>
@@ -485,7 +492,7 @@ class Peticion{
                 <br />";
             foreach ($this->tematicas as $tematica){
                 $peticion.="
-                <a href='#'>  #{$tematica->getNombre()}</a>";
+                <a href='search.php?search={$tematica->getNombre()}'><p >#{$tematica->getNombre()}</p> </a>";
     
             }
             $peticion.="
@@ -497,16 +504,19 @@ class Peticion{
             // echo "
             //             <img src='images/{$imagen->showImagen()}'>";
             $peticion.= "
-                        <div class='post-imagen'>
-                            <img class='js-modal-trigger' data-target='{$aux}' src='images/{$aux}'>
+                        <div>
+                            <button data-modal-target='{$aux}' data-modal-toggle='{$aux}'>
+                                <img class='h-auto max-w-full rounded-lg' data-modal-target='{$aux}' data-modal-toggle='{$aux}' src='images/{$aux}'>
+                            </button>
                         </div>";
             $arregloModales[].="
-                        <div id='{$aux}' class='modal'>
-                            <div class='modal-background'></div>
-                            <div class='modal-content'>
-                                <p class='image'>
-                                <img src='images/{$aux}'>
-                                </p>
+                        <div id='{$aux}' tabindex='-1' aria-hidden='true' class='hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'>
+                            <div class='relative p-4 w-full max-w-2xl max-h-full'>
+                                <div class='relative bg-white rounded-lg shadow dark:bg-gray-700'>
+                                    <p class='image'>
+                                    <img src='images/{$aux}'>
+                                    </p>
+                                </div>
                             </div>
                             <button class='modal-close is-large' aria-label='close'></button>
                         </div>";
@@ -531,11 +541,11 @@ class Peticion{
                     <time datetime='{$this->fecha}'>{$this->getFecha()}</time>
             </div>
             </div>
-            <footer class='card-footer'>
-                <!--a data-target='{$this->nroPet}' class='card-footer-item admitir'>Admitir</a-->
+            <footer class='grid grid-cols-2 rounded-md shadow-sm' role='group'>
+                <!--a data-target='{$this->nroPet}' class='card-footer-item admitir '>Admitir</a-->
                 <!--a data-target='{$this->nroPet}' class='card-footer-item'>Editar</a-->
-                <a href='petition.php?numero={$this->nroPet}' class='card-footer-item is-danger generarPDF'>Generar PDF</a>
-                <a data-target='{$this->nroPet}' class='card-footer-item is-danger archivar'>Archivar</a>
+                <a href='petition.php?numero={$this->nroPet}' class='mt-2 card-footer-item is-danger generarPDF px-4 py-2 text-sm text-center font-medium bg-red text-white rounded-s-lg hover:bg-gray-900  focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900  dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;'>Generar PDF</a>
+                <a data-target='{$this->nroPet}' class='mt-2 card-footer-item is-danger archivar px-4 py-2 text-sm font-medium text-center text-gray-900 bg-transparent shadow-ragnarok rounded-e-lg hover:bg-gray-900 focus:shadow-warm focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700' style='box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px; background-color: #EAEAEA; color: #7B7B7B;'>Archivar</a>
             </footer>
         </div>";
         echo $peticion;

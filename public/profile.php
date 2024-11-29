@@ -26,7 +26,7 @@ $app = new App();
             <h1 class="-pt-10 text-3xl text-black font-black mt-4 mb-2" >Justicia NAU</h1>
         </div>
     </header>
-    <div class="contentMy">
+    <div class="contentMy p-4">
     
         <?php
             if (isset($_GET) && isset($_GET["user"])){
@@ -38,6 +38,7 @@ $app = new App();
             }
         ?>
     </div>
+    <div class="w-full h-[50px]"></div>
     <footer id="footer" class='fixed bottom-0 left-0 w-full backdrop-blur-sm'>
         <div class="flex justify-around items-center py-2 backdrop-blur-sm">
             <?php $app->renderFooter(get_included_files()[0]) ?>

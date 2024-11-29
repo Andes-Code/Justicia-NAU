@@ -19,10 +19,10 @@ class Tematica{
 	public function mostrarTematicaAdmin(): string {
 		if ($this->estado==0){
 			$tematica="
-			<div class='dropdown is-hoverable'>
+			<div class='dropdown is-hoverable m-4'>
 				<div class='dropdown-trigger'>
 					<button class='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
-						<span>{$this->nombre}</span>
+						<span><b>{$this->nombre}</b></span>
 						<span class='icon is-small'>
 							<i class='fas fa-angle-down' aria-hidden='true'></i>
 						</span>
@@ -36,19 +36,21 @@ class Tematica{
 							</p>
 						</div>
 						<hr class='dropdown-divider' />
-						<a class='dropdown-item admitir-tematica' data-target='{$this->nombre}'> Admitir </a>
-						<a class='dropdown-item combinar-tematica' data-target='{$this->nombre}'> Combinar con </a>
-						<a class='dropdown-item eliminar-tematica' data-target='{$this->nombre}'> Eliminar </a>
+						<div class='flex flex-row justify-between'>
+							<a class='dropdown-item admitir-tematica' data-target='{$this->nombre}'> Admitir </a>
+							<a class='dropdown-item combinar-tematica' data-target='{$this->nombre}'> Combinar con </a>
+							<a class='dropdown-item eliminar-tematica' data-target='{$this->nombre}'> Eliminar </a>
+						</div>
 					</div>
 				</div>
 			</div>";
 		}
 		else if ($this->estado==1){
 			$tematica="
-			<div class='dropdown is-hoverable'>
+			<div class='dropdown is-hoverable m-4'>
 				<div class='dropdown-trigger'>
 					<button class='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
-						<span>{$this->nombre}</span>
+						<span><b>{$this->nombre}</b></span>
 						<span class='icon is-small'>
 							<i class='fas fa-angle-down' aria-hidden='true'></i>
 						</span>

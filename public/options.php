@@ -14,21 +14,25 @@ $app->validarOptionsRequest();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Proyecto Change</title>
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-    <link rel="stylesheet" href="./css/modifyIndexStyle.css">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="manifest" href="./js/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="contentMy">
+    <div class="contentMy flex flex-col p-4">
         <?php 
             $app->renderContenidoOptions();
             
         ?>
     </div>
-    <footer id="my-footer">
-        <div class="footer ">
+    <div class="w-full h-[50px]"></div>
+    <footer id="footer" class='fixed bottom-0 left-0 w-full backdrop-blur-sm'>
+        <div class="flex justify-around items-center py-2 backdrop-blur-sm">
             <?php $app->renderFooter(get_included_files()[0]) ?>
         </div>
-
+        
     </footer>
     <script src="js/app.js"></script>
     <script src="js/bulma.js"></script>

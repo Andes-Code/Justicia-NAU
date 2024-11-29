@@ -90,7 +90,7 @@
 
             <label class=" block mb-8 text-xl font-bold text-gray dark:text-white">Imágenes</label>
             
-            
+<!--       
 <div class="flex items-center justify-center w-full file-upload">
     <label for="dropzone-file" class="mb-8 flex flex-col items-center justify-center w-full h-64 border-2 border-gray-light border-dashed rounded-lg cursor-pointer bg-gray-xlight dark:hover:bg-gray dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -102,42 +102,42 @@
         </div>
         <input id="dropzone-file" type="file" class="hidden" name="imagenes[]" accept="image/*" />
     </label>
-</div> 
+</div> -->
 
             
-<!-- antiguo file upload 
+<!-- antiguo file upload -->
             <div class="file-upload">
                 <div>
                     <input type="file" id="fileInput1" class="file fileInput" name="imagenes[]" accept="image/*">
                     <label for="fileInput1" class="custom-file-label">
-                        <span class="plus-sign plus-sign1">+</span>
+                        <span class="plus-sign plus-sign1"></span>
                         <img id="previewImage1" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
                     <input type="file" id="fileInput2" class="file fileInput" name="imagenes[]" accept="image/*">
                     <label for="fileInput2" class="custom-file-label">
-                        <span class="plus-sign plus-sign2">+</span>
+                        <span class="plus-sign plus-sign2"></span>
                         <img id="previewImage2" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
                     <input type="file" id="fileInput3" class="file fileInput" name="imagenes[]" accept="image/*">
                     <label for="fileInput3" class="custom-file-label">
-                        <span class="plus-sign plus-sign3">+</span>
+                        <span class="plus-sign plus-sign3"></span>
                         <img id="previewImage3" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
                     <input type="file" id="fileInput4" class="file fileInput" name="imagenes[]" accept="image/*">
                     <label for="fileInput4" class="custom-file-label">
-                        <span class="plus-sign plus-sign4">+</span>
+                        <span class="plus-sign plus-sign4"></span>
                         <img id="previewImage4" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
             </div>
             
-            <p class="help">Sube hasta cuatro imágenes que acompañen a tu petición</p>-->
+            <p class="help">Sube hasta cuatro imágenes que acompañen a tu petición</p>
         </div>
         
         <!-- <button type="button" id="uploadPetition" class="button">

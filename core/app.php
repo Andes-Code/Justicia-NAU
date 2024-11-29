@@ -78,7 +78,7 @@ class App{
         {
             return "
             <div class='flex items-center justify-center'>
-                <a>
+                <a href='{$icono}.php'>
                     <!--img data-target='$icono.in'-->
                     <img src='images/icons/light/{$icono}.in.svg' class='h-8 w-8'>
                 </a>
@@ -874,22 +874,24 @@ class App{
         if ($link=="")
         {
             $div="
-        <div class='option' id='{$id}'>
-            <div class='option-icon'>
-                {$this->getIcono($icono,$tema)}
-            </div>
-            <div class='option-text'>
-                <p>{$text}</p>
-            </div>
-        </div>";
-        }else{
-            $div="
-        <a href='{$link}'>
-            <div class='option' id='{$id}'>
-                <div class='option-icon'>
+        <a class='' href='{$link}'>
+            <div class='option h-[40px] w-full flex items-center my-2' id='{$id}'>
+                <div class='option-icon h-[35px] w-[35px]'>
                     {$this->getIcono($icono,$tema)}
                 </div>
-                <div class='option-text'>
+                <div class='option-text ml-4'>
+                    <p>{$text}</p>
+                </div>
+            </div>
+        </a>";
+        }else{
+            $div="
+        <a class='' href='{$link}'>
+            <div class='option h-[40px] w-full flex items-center my-2' id='{$id}'>
+                <div class='option-icon h-[35px] w-[35px]'>
+                    {$this->getIcono($icono,$tema)}
+                </div>
+                <div class='option-text ml-4'>
                     <p>{$text}</p>
                 </div>
             </div>

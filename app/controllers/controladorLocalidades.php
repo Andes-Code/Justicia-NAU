@@ -156,13 +156,13 @@ class Localidades{
                 $div="
                 <div class='modal' id='visualizador-localidades-existentes'>
                     <div class='modal-background'></div>
-                        <div class='modal-content' id='contenedor-firmas'>
+                        <div class='modal-content flex flex-row flex-wrap justify-stretch' id='contenedor-firmas'>
                         
                     ";
                 foreach ($result as $resultado){
                     $aux = new Pais($resultado["pais"]);
                     $aux = new Provincia($aux,$resultado["prov"]);
-                    $div.= (new Localidad($aux,$resultado["loc"],$resultado["estado"]))->enlaceCombinarLocalidad();
+                    $div.= (new Localidad($aux,$resultado["loc"],$resultado["estado"]))->enlaceCombinarLocalidad() . " | ";
                 }
                 $div.="
                     </div>

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-red {
+    background-color: #5C6BF3;
+}
+.text-red {
+    color:#5C6BF3;
+}
