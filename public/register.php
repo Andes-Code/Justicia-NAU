@@ -33,9 +33,10 @@ else if (isset($_GET["correo"]) && count($_GET)==1)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">
-    <!-- <link rel="stylesheet" href="./css/modifyRegisterStyle.css"> -->
+    <link rel="stylesheet" href="./css/modifyRegisterStyle.css"> -->
     <link href="styles.css" rel="stylesheet">
     <link rel="manifest" href="./js/manifest.json">
     <script src="https://kit.fontawesome.com/e0fe908279.js" crossorigin="anonymous"></script>
@@ -45,26 +46,29 @@ else if (isset($_GET["correo"]) && count($_GET)==1)
 
 </head>
 <body>
-    <div class="formulario">
-        <form id="form" class="form">
-            <div class="field">
-                <label for="correo" class="label">Correo eléctronico</label>
-                <input type="email" class="input" name="correo" id="correo" placeholder="example@mail.com">
+    <div class="formulario p-4">
+        <form id="form" class="form max-w-sm mx-auto border-2 border-black border-dashed rounded-lg p-4">
+        <h2 class="text-xl font-bold mb-5">Creá tu cuenta gratuita</h2>
+            <div class="field mb-5">
+                <label for="correo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-Mail</label>
+                <input type="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="correo" id="correo" placeholder="anthonydiaz@mail.com">
             </div>
-            <div class="field">
-                <label for="psw" class="label">Contraseña</label>
-                <input type="password" class="input" name="psw" id="psw" placeholder="********">
+            <div class="field mb-5">
+                <label for="psw" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                <input type="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="psw" id="psw" placeholder="********">
             </div>
-            <div class="field">
-                <label for="nombreUsuario" class="label">Nombre de usuario</label>
-                <input type="text" class="input" name="nombreUsuario" id="nombreUsuario" placeholder="Pepe Honguito">
+            <div class="field mb-5">
+                <label for="nombreUsuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de usuario</label>
+                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="nombreUsuario" id="nombreUsuario" placeholder="Antonio Díaz">
             </div>
-            <div class="field">
-                <label for="terminos" class="label">Acepto los <a href="#">Términos y Condiciones</a></label>
-                <input type="checkbox" name="tyc" id="tyc">
+            <div class="flex items-start mb-5">
+                <div class="flex items-center h-5">
+                <input type="checkbox" name="tyc" id="tyc" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+                </div>
+                <label for="terminos" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Acepto los <a href="#"><b>Términos y Condiciones</b></a></label>
             </div>
-            <div class="field form-link">
-                <button type="button" class="button button-assistant is-link" id="register">registrarse</button>
+            <div class="field form-link mb-5">
+                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="register">Registrarse</button>
             </div>
             <div class="field form-link">
                 <a href="login.php">Ya tienes una cuenta? <strong>Inicia sesión</strong></a>

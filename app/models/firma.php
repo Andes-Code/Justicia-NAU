@@ -59,15 +59,15 @@ class Firma{
         //     </article>
         // </div>";
         $div="
-            <div class='flex w-full flex-row items-start justify-start gap-3 p-4'>
-                <div class='bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0' style='background-image: url(images/profiles/{$firma["imagen"]});'><img src='images/profiles/{$firma["imagen"]}' alt='Image' /></div>
-                <div class='flex h-full flex-1 flex-col items-start justify-start'>
-                    <div class='flex w-full flex-row items-start justify-start gap-x-3'>
+            <div class='flex w-full flex-row items-start justify-between text-wrap break-words gap-3'>
+                <div class='bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 shrink-0 text-wrap break-words' style='background-image: url(images/profiles/{$firma["imagen"]});'><img src='images/profiles/{$firma["imagen"]}' alt='Image' /></div>
+                <div class='flex h-full flex-1 flex-col items-start leading-normal text-wrap break-words'>
+                    <div class='flex w-full flex-row items-start justify-between break-words gap-x-3'>
                         <p class='text-[#111418] text-sm font-bold leading-normal tracking-[0.015em]'>{$firma["usuario"]}</p>
                         <p class='text-[#637588] text-sm font-normal leading-normal'>{$firma["fecha"]}</p>
                     </div>
-                    <p class='text-[#111418] text-sm font-normal leading-normal'>{$firma["comentario"]}</p>
-                    <div class='flex w-full flex-row items-center justify-start gap-9 pt-2'>
+                    <p class='text-pretty break-words max-w-[200px] text-black text-sm font-normal'>{$firma["comentario"]}</p>
+                    <div class='flex flex-row items-center justify-start gap-9 pt-2'>
                         <div class='flex items-center gap-2'>
                         <!--div class='text-[#637588]' data-icon='ThumbsUp' data-size='20px' data-weight='regular'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='20px' height='20px' fill='currentColor' viewBox='0 0 256 256'>

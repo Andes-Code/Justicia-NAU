@@ -20,10 +20,10 @@ class Localidad{
 	public function mostrarLocalidadAdmin(): string {
 		if ($this->estado==0){
 			$localidad="
-			<div class='dropdown is-hoverable'>
+			<div class='dropdown is-hoverable m-4'>
 				<div class='dropdown-trigger'>
 					<button class='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
-						<span>{$this->getNombre()}</span>
+						<span><b>{$this->getNombre()}</b></span>
 						<span class='icon is-small'>
 							<i class='fas fa-angle-down' aria-hidden='true'></i>
 						</span>
@@ -37,19 +37,21 @@ class Localidad{
 							</p>
 						</div-->
 						<hr class='dropdown-divider' />
-						<a class='dropdown-item admitir-localidad' data-target='{$this->getNombre()}'> Admitir </a>
-						<a class='dropdown-item combinar-localidad' data-target='{$this->getNombre()}'> Combinar con </a>
-						<a class='dropdown-item eliminar-localidad' data-target='{$this->getNombre()}'> Eliminar </a>
+						<div class='flex flex-row justify-between'>
+							<a class='dropdown-item admitir-localidad' data-target='{$this->getNombre()}'> Admitir </a>
+							<a class='dropdown-item combinar-localidad' data-target='{$this->getNombre()}'> Combinar con </a>
+							<a class='dropdown-item eliminar-localidad' data-target='{$this->getNombre()}'> Eliminar </a>
+						</div>
 					</div>
 				</div>
 			</div>";
 		}
 		else if ($this->estado==1){
 			$localidad="
-			<div class='dropdown is-hoverable'>
+			<div class='dropdown is-hoverable m-4'>
 				<div class='dropdown-trigger'>
 					<button class='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
-						<span>{$this->getNombre()}</span>
+						<span><b>{$this->getNombre()}</b></span>
 						<span class='icon is-small'>
 							<i class='fas fa-angle-down' aria-hidden='true'></i>
 						</span>

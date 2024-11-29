@@ -90,10 +90,10 @@ class Usuario{
 					</div>
 				</div>
 			</div>
-            <nav class='tabs is-fullwidth'>
+            <nav class='flex justify-center my-4 tabs is-fullwidth'>
                 <ul>
-                    <li class=''>
-                        <a href='#' id='toggle-link'>Ver finalizadas</a>
+                    <li class='border rounded-full bg-red text-white'>
+                        <a class='m-2' href='#' id='toggle-link'>Ver finalizadas</a>
                     </li>
                     <!--li class=''>
                         <a href='#finalizadas'>Finalizadas</a>

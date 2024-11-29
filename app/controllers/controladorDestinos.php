@@ -135,11 +135,11 @@ class Destinos{
                 $div="
                 <div class='modal' id='visualizador-destinos-existentes'>
                     <div class='modal-background'></div>
-                        <div class='modal-content' id='contenedor-firmas'>
+                        <div class='modal-content flex flex-row flex-wrap justify-stretch' id='contenedor-firmas'>
                         
                     ";
                 foreach ($result as $resultado){
-                    $div.= (new Destino ($resultado["nombreDest"],$resultado["descr"],$resultado["estado"]))->enlaceCombinarDestino();
+                    $div.= (new Destino ($resultado["nombreDest"],$resultado["descr"],$resultado["estado"]))->enlaceCombinarDestino() . " | ";
                 }
                 $div.="
                     </div>
