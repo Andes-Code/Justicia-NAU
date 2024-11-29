@@ -12,7 +12,7 @@ $app->evaluarIndexRequest();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Justicia NAU</title>
+    <title>Moción NAU</title>
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">-->
@@ -30,7 +30,7 @@ $app->evaluarIndexRequest();
     <!-- KBD -->
         <section class="-mt-16 bg-center max-h-full bg-no-repeat bg-[url('images/hands.png')] bg-gray-700 bg-blend-multiply">
             <div class=" backdrop-blur-sm px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-                <h1 class="-pt-10 mb-8 text-4xl text-white font-black" >Justicia NAU</h1>
+                <h1 class="-pt-10 mb-8 text-4xl text-white font-black" >Moción NAU</h1>
                 <h2 class="mb-4 text-3xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Por una sociedad mas justa</h2>
                 <p class="my-[15px] text-lg font-normal text-white lg:text-xl sm:px-16 lg:px-48">El cambio comienza con una sola voz, pero el eco de miles puede transformar el mundo.</p>
                 <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">

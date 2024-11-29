@@ -71,7 +71,7 @@ $authURL=$client->createAuthUrl();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Moción NAU | Login</title>
     <!-- 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <link rel="stylesheet" href="./css/modifyIndexStyle.css">
@@ -84,6 +84,11 @@ $authURL=$client->createAuthUrl();
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header class="appName">
+        <div class="grid align-center items-center backdrop-blur-s max-w-screen-xl text-center">
+            <h1 class="-pt-10 text-3xl text-black font-black mt-4 mb-2" >Moción NAU</h1>
+        </div>
+    </header>
     <div class="formulario p-4">
         <form id="form" class="form max-w-sm mx-auto border-2 border-black border-dashed rounded-lg p-4">
         <h2 class="text-xl font-bold mb-5">Ingresá en tu cuenta</h2>

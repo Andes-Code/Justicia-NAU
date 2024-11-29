@@ -12,7 +12,7 @@ $app->validarOptionsRequest();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Proyecto Change</title>
+    <title>Moción NAU | Opciónes</title>
     <!-- <link rel="stylesheet" href="./css/indexStyle.css"> -->
     <link href="styles.css" rel="stylesheet">
     <link rel="manifest" href="./js/manifest.json">
@@ -21,6 +21,11 @@ $app->validarOptionsRequest();
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header class="appName">
+        <div class="grid align-center items-center backdrop-blur-s max-w-screen-xl text-center">
+            <h1 class="-pt-10 text-3xl text-black font-black mt-4 mb-2" >Moción NAU</h1>
+        </div>
+    </header>
     <div class="contentMy flex flex-col p-4">
         <?php 
             $app->renderContenidoOptions();

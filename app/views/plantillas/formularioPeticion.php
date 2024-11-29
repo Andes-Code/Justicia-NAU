@@ -106,31 +106,31 @@
 
             
 <!-- antiguo file upload -->
-            <div class="file-upload">
-                <div>
-                    <input type="file" id="fileInput1" class="file fileInput" name="imagenes[]" accept="image/*">
-                    <label for="fileInput1" class="custom-file-label">
+            <div class="file-upload flex flex-col">
+                <div class="">
+                    <input type="file" id="fileInput1" class="file fileInput bg-red text-white rounded-full mb-4 shrink max-w-full" name="imagenes[]" accept="image/*">
+                    <label for="fileInput1" class="custom-file-label border-2 rounded-full">
                         <span class="plus-sign plus-sign1"></span>
                         <img id="previewImage1" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
-                    <input type="file" id="fileInput2" class="file fileInput" name="imagenes[]" accept="image/*">
-                    <label for="fileInput2" class="custom-file-label">
+                    <input type="file" id="fileInput2" class="file fileInput bg-red text-white rounded-full mb-4 shrink max-w-full" name="imagenes[]" accept="image/*">
+                    <label for="fileInput2" class="custom-file-label border-2 rounded-full">
                         <span class="plus-sign plus-sign2"></span>
                         <img id="previewImage2" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
-                    <input type="file" id="fileInput3" class="file fileInput" name="imagenes[]" accept="image/*">
-                    <label for="fileInput3" class="custom-file-label">
+                    <input type="file" id="fileInput3" class="file fileInput bg-red text-white rounded-full mb-4 shrink max-w-full" name="imagenes[]" accept="image/*">
+                    <label for="fileInput3" class="custom-file-label border-2 rounded-full">
                         <span class="plus-sign plus-sign3"></span>
                         <img id="previewImage3" src="" alt="Image preview" style="display: none;">
                     </label>
                 </div>    
                 <div>
-                    <input type="file" id="fileInput4" class="file fileInput" name="imagenes[]" accept="image/*">
-                    <label for="fileInput4" class="custom-file-label">
+                    <input type="file" id="fileInput4" class="file fileInput bg-red text-white rounded-full mb-4 shrink max-w-full" name="imagenes[]" accept="image/*">
+                    <label for="fileInput4" class="custom-file-label border-2 rounded-full">
                         <span class="plus-sign plus-sign4"></span>
                         <img id="previewImage4" src="" alt="Image preview" style="display: none;">
                     </label>

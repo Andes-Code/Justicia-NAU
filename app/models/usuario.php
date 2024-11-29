@@ -58,7 +58,7 @@ class Usuario{
 				<div class='info grid gap-4 justify-center max-w-full'>
 					<div class='nombre grid col-span-3 justify-self-center'>
 						<h2 class='text-3xl font-bold text-center'>{$this->nombreUsuario}</h2>
-						<p class='text-center'>{$this->correo}</p>
+						<p class='text-center text-sm text-gray-400'>{$this->correo}</p>
 					</div>
 					<!--div class='numeros'>
 						<div class='cantidad-peticiones'>".
