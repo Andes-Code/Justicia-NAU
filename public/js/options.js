@@ -81,7 +81,11 @@ document.addEventListener("DOMContentLoaded",()=>{
         if (result.status=="success")
         {
             const content = document.querySelector(".contentMy2")
-            content.innerHTML=result.result
+            // result.data.mes
+            // result.data.cantidadPeticiones
+            // result.data.cantidadPeticionesLocalidad
+            // result.data.cantidadPeticionesTematica
+            content.innerHTML=result.data
             // window.location.href=result.redirect
         }
         
