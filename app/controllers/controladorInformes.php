@@ -831,20 +831,20 @@ class Informes{
             echo 'Lo sentimos, ha ocurrido un problema. Por favor, inténtelo de nuevo más tarde.';
         }
     }
-    public static function generarReporte(string $fecha, string $localidad, string $tematica):string
+    public static function generarReporte(string $fecha, string $localidad, string $tematica):array
     {
         [$loc,$prov,$pais]=explode(", ",$localidad);
         $reporte=self::obtenerReporte($fecha,$loc,$prov,$pais,$tematica);
-        $div="";
+        $div=[];
         if (count($reporte)==4)
         {
             foreach ($reporte as $key=>$value)
             {
-                $div.="$key: $value <br>";
+                $div[$key]= $value;
             }
         }
         else
-            return "No hay datos registrados para ese mes";
+            return ["failed","No hay datos registrados para ese mes"];
         return $div;
         
     }

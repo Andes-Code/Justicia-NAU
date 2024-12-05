@@ -1446,7 +1446,7 @@ class App{
                     }
                     $info= Informes::generarReporte($fecha,$localidad,$tematica);
                     
-                    $this->jsonAndExit("success","",["result"=>$info]);
+                    $this->jsonAndExit("success","",["data"=>$info]);
                 }
             }
             if ($page=="finalizar")
