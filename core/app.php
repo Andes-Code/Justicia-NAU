@@ -183,6 +183,10 @@ class App{
         if (!$usuario->iniciarSesion($correo,$psw,$googleID))
         {
             session_destroy();
+            if ($googleID!=NULL){
+                echo "Hubo un error al iniciar sesion, si te has registrado sin usar tu cuenta de google,<a href='login.php'> intenta iniciar sesion con tu correo y contraseña</a>";
+                exit();
+            }
             print_r(json_encode([
                 "status"=>"failed",
                 "message"=>"invalid credentials",
@@ -214,6 +218,12 @@ class App{
     }
     public function register(string $correo, string $nombre, string $psw, int $tyc, int $estatuto, ?string $googleID, bool $validEmail=FALSE){
         $correo=strtolower($correo);
+        $usingGoogle=false;
+        if ($googleID!=NULL)
+        {
+            $googleID=password_hash($googleID,PASSWORD_DEFAULT);
+            $usingGoogle=true;
+        }
         if ($validEmail)
         {
             if (filter_var($correo,FILTER_VALIDATE_EMAIL))
@@ -263,6 +273,8 @@ class App{
         }
         // $this->jsonAndExit($googleID);
         if (self::accountExists($correo)){
+            if ($usingGoogle)
+                $this->jsonAndExit("failed","Email already registered",["redirect"=>"register.php"]);
             print_r(json_encode([
                 "status"=>"failed",
                 "message"=>"Email already used",
@@ -289,8 +301,7 @@ class App{
         }
         $psw=password_hash(filter_var($psw,FILTER_SANITIZE_FULL_SPECIAL_CHARS),PASSWORD_DEFAULT);
         // $googleID=filter_var($googleID,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ($googleID!=NULL)
-            $googleID=password_hash($googleID,PASSWORD_DEFAULT);
+        
         // $this->jsonAndExit($googleID);
         if (Usuarios::registrarUsuario($correo,$nombre,$psw,$estatuto,$googleID)){
             print_r(json_encode([
