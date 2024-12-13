@@ -51,6 +51,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (botonRegister){    
         botonRegister.addEventListener("click",() => {
+            const validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+            const correo = document.getElementById("correo")
+            const psw = document.getElementById("psw")
+            const user = document.getElementById("nombreUsuario")
+            if(!validEmail.test(correo.value)){
+                alert("Ingrese un email valido")
+                correo.focus()
+                return
+            }
+            if(psw.value.length<8){
+                alert("La contraseña debe ser de al menos 8 caracteres")
+                psw.focus()
+                return
+            }
+            if(user.value.length<3){
+                alert("Tu nombre de usuario debe ser de al menos 3 caracteres")
+                user.focus()
+                return
+            }
             const modal=document.getElementById("estatuto-modal")
             modal.classList.remove("hidden")
             modal.ariaHidden="false"
